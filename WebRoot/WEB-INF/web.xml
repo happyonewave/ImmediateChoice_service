@@ -31,17 +31,31 @@
   	<servlet-name>ImageTextServlet</servlet-name>
   	<servlet-class>com.qczt.xg.ImageTextServlet</servlet-class>
   </servlet>
+  
+  
     <servlet>
   	<servlet-name>UploadServlet</servlet-name>
   	<servlet-class>com.qczt.xg.UploadServlet</servlet-class>
   </servlet>
   
+    <servlet>
+  	<servlet-name>RegisterServlet</servlet-name>
+  	<servlet-class>com.qczt.xg.RegisterServlet</servlet-class>
+  </servlet>
+  
+  
+  
+  <servlet-mapping>
+  	<servlet-name>RegisterServlet</servlet-name>
+    <url-pattern>/RegisterServlet</url-pattern>
+  </servlet-mapping>
   
   
   <servlet-mapping>
   	<servlet-name>ImageTextServlet</servlet-name>
     <url-pattern>/ImageTextServlet</url-pattern>
   </servlet-mapping>
+  
   <servlet-mapping>
   	<servlet-name>UploadServlet</servlet-name>
     <url-pattern>/UploadServlet</url-pattern>

@@ -21,7 +21,7 @@ import net.qzct.server.DatabaseConnection;
 import net.qzct.server.Tools;
 import net.sf.json.JSONArray;
 
-public class UploadServlet extends HttpServlet implements Servlet {
+public class RegisterServlet extends HttpServlet implements Servlet {
 
 	@Override
 	public void destroy() {
@@ -73,7 +73,6 @@ public class UploadServlet extends HttpServlet implements Servlet {
         response.setContentType("text/html");
 		OutputStream out = response.getOutputStream();
 		
-		
 //		
 //		 FileItemFactory factory = new DiskFileItemFactory();    
 //         ServletFileUpload upload = new ServletFileUpload(factory);    
@@ -105,31 +104,51 @@ public class UploadServlet extends HttpServlet implements Servlet {
 //		
 		
 		
-		String image_left_path = request.getParameter("image_left_path");
-		String image_right_path = request.getParameter("image_right_path");
-		String question_content = request.getParameter("question_content");
-		String username = request.getParameter("username");
-		image_left_path = new String(image_left_path.getBytes("iso8859-1"),"utf-8");
-		image_right_path = new String(image_right_path.getBytes("iso8859-1"),"utf-8");
-		question_content = new String(question_content.getBytes("iso8859-1"),"utf-8");
-		username = new String(username.getBytes("iso8859-1"),"utf-8");
-		System.out.println(image_left_path);
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");
+		String phone_number = request.getParameter("phone_number");
+		String sex = request.getParameter("sex");
+		name = new String(name.getBytes("iso8859-1"),"utf-8");
+		password = new String(password.getBytes("iso8859-1"),"utf-8");
+		phone_number = new String(phone_number.getBytes("iso8859-1"),"utf-8");
+		sex = new String(sex.getBytes("iso8859-1"),"utf-8");
+		System.out.println(name + "/t" + sex);
 		DatabaseConnection db;
 //		try {
-			try {
-				db = new DatabaseConnection();
-				Connection conn = db.getConnection();
+		
+
+		String sql1 = "select  * from userin where name='" + name + "'";
+
+		try {db = new DatabaseConnection();
+		Connection conn = db.getConnection();
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(sql1);
+		if (rs.next()) {
+			out.write("0".getBytes("utf-8"));
+			System.out.println("注册失败");
+			rs.close();
+			stmt.close();
+		} else {
 				// 
-				String sql = "INSERT INTO question(image_left,image_right,question_content,quizzer_name) VALUES (?,?,?,?) ";
+				String sql = "INSERT INTO userin(name,password,phone_number,sex) VALUES (?,?,?,?) ";
 				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, image_left_path);
-				pstmt.setString(2, image_right_path);
-				pstmt.setString(3, question_content);
-				pstmt.setString(4, username);
+				pstmt.setString(1, name);
+				pstmt.setString(2, password);
+				pstmt.setString(3, phone_number);
+				pstmt.setString(4, sex);
 				pstmt.executeUpdate();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			out.write("1".getBytes("utf-8"));
+			System.out.println("注册成功");
+			rs.close();
+			stmt.close();
+		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+
 		
 //		json测试
 //        JSONArray json =Tools.getJsonFromDatabase(out,"question");
