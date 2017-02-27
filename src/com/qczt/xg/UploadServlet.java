@@ -1,4 +1,4 @@
-package com.qczt.xg;
+﻿ package com.qczt.xg;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -109,23 +109,26 @@ public class UploadServlet extends HttpServlet implements Servlet {
 		String image_right_path = request.getParameter("image_right_path");
 		String question_content = request.getParameter("question_content");
 		String username = request.getParameter("username");
+		String locations = request.getParameter("locations");
 		image_left_path = new String(image_left_path.getBytes("iso8859-1"),"utf-8");
 		image_right_path = new String(image_right_path.getBytes("iso8859-1"),"utf-8");
 		question_content = new String(question_content.getBytes("iso8859-1"),"utf-8");
 		username = new String(username.getBytes("iso8859-1"),"utf-8");
-		System.out.println(image_left_path);
+		locations = new String(locations.getBytes("iso8859-1"),"utf-8");
+		System.out.println(locations);
 		DatabaseConnection db;
 //		try {
 			try {
 				db = new DatabaseConnection();
 				Connection conn = db.getConnection();
 				// 
-				String sql = "INSERT INTO question(image_left,image_right,question_content,quizzer_name) VALUES (?,?,?,?) ";
+				String sql = "INSERT INTO question(image_left,image_right,question_content,quizzer_name,locations) VALUES (?,?,?,?,?) ";
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, image_left_path);
 				pstmt.setString(2, image_right_path);
 				pstmt.setString(3, question_content);
 				pstmt.setString(4, username);
+				pstmt.setString(5, locations);
 				pstmt.executeUpdate();
 			} catch (Exception e) {
 				e.printStackTrace();
