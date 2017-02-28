@@ -10,7 +10,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class Tools {
-	public static JSONArray getJsonFromDatabase(OutputStream out ,String listname ) {
+	public static JSONArray getJsonFromDatabase(String listname ) {
 		String sql = "select  * from " + listname;
 		try {
 			ResultSet rs = queryDatabase(sql);

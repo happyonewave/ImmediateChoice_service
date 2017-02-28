@@ -2,63 +2,57 @@ package com.qczt.xg;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.qzct.server.DatabaseConnection;
-import net.qzct.server.Tools;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
-public class LoginServlet implements Servlet {
+/**
+ * Servlet implementation class Login
+ */
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LoginServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-
-	@Override
-	public void destroy() {
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		doPost(request, response);
 	}
 
-	@Override
-	public ServletConfig getServletConfig() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out =response.getWriter();
 
-	@Override
-	public String getServletInfo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void init(ServletConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void service(ServletRequest request, ServletResponse response)
-			throws ServletException, IOException {
 		
 		//登录
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
-		name = new String(name.getBytes("iso8859-1"),"utf-8");
-		password = new String(password.getBytes("iso8859-1"),"utf-8");
 		
 		System.out.println(name + "\t" + password);
-		
-		OutputStream out = response.getOutputStream();
 
 		String sql1 = "select  * from userin where name='" + name + "'" + "and password='" + password + "'";
 		DatabaseConnection db;
@@ -69,19 +63,18 @@ public class LoginServlet implements Servlet {
 			ResultSet rs = stmt.executeQuery(sql1);
 			if (rs.next()) {
 				//登录成功
-				out.write("1".getBytes("utf-8"));
+				out.print("1");
 				System.out.println("登录成功");
 			} else {
 				//登录失败
-				out.write("0".getBytes("utf-8"));
+				out.print("0");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
         
+	
 	}
-
-
 
 }

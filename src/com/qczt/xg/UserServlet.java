@@ -2,52 +2,50 @@ package com.qczt.xg;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.qzct.server.Tools;
 import net.sf.json.JSONArray;
 
-public class UserServlet implements Servlet {
+/**
+ * Servlet implementation class User
+ */
+@WebServlet("/UserServlet")
+public class UserServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public UserServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public void destroy() {
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		doPost(request, response);
 	}
 
-	@Override
-	public ServletConfig getServletConfig() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	@Override
-	public String getServletInfo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void init(ServletConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void service(ServletRequest request, ServletResponse response)
-			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html");
-		OutputStream out = response.getOutputStream();
+		PrintWriter out = response.getWriter();
 //		json测试
-        JSONArray json =Tools.getJsonFromDatabase(out,"conversation");
-		out.write(json.toString().getBytes("utf-8"));
-
+        JSONArray json =Tools.getJsonFromDatabase("conversation");
+		out.print(json.toString());
 	}
-
 }
