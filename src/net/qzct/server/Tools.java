@@ -67,6 +67,20 @@ public class Tools {
 				json.put("comment", comment);
 				jsonArray.add(json);
 				break;
+				
+			case "userin":
+				String name= rs.getString(2);
+				String password= rs.getString(3);
+				String phone_number= rs.getString(4);
+				String sex= rs.getString(5);
+				String portrait_path= rs.getString(6);
+				json.put("name", name);
+				json.put("password", password);
+				json.put("phone_number", phone_number);
+				json.put("sex", sex);
+				json.put("portrait_path", portrait_path);
+				jsonArray.add(json);
+				break;
 
 			default:
 				break;

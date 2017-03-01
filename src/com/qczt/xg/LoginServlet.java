@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.qzct.server.DatabaseConnection;
+import net.qzct.server.Tools;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * Servlet implementation class Login
@@ -63,7 +66,21 @@ public class LoginServlet extends HttpServlet {
 			ResultSet rs = stmt.executeQuery(sql1);
 			if (rs.next()) {
 				//登录成功
-				out.print("1");
+				JSONObject json = new JSONObject();
+					String phone_number= rs.getString(4);
+					String sex= rs.getString(5);
+					String portrait_path= rs.getString(6);
+					json.put("name", name);
+					json.put("password", password);
+					json.put("phone_number", phone_number);
+					json.put("sex", sex);
+					json.put("portrait_path", portrait_path);
+				
+				
+				out.print(json.toString());
+				System.out.println(json.toString());
+				
+//				out.print("1");
 				System.out.println("登录成功");
 			} else {
 				//登录失败

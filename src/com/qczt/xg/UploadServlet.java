@@ -62,8 +62,9 @@ public class UploadServlet extends HttpServlet {
 			 image_right.write(image_right_name);
 			 
 			String question_content = request.getParameter("question_content");
-			String username = request.getParameter("username");
+//			String username = request.getParameter("username");
 			String locations = request.getParameter("locations");
+			String quizzer_name = request.getParameter("quizzer_name");
 			String url_img = "http://172.16.101.51:8080/Server/img/";
 			String image_left_path = url_img + image_left_name;
 			String image_right_path = url_img + image_right_name;
@@ -79,7 +80,7 @@ public class UploadServlet extends HttpServlet {
 					pstmt.setString(1, image_left_path);
 					pstmt.setString(2, image_right_path);
 					pstmt.setString(3, question_content);
-					pstmt.setString(4, username);
+					pstmt.setString(4, quizzer_name);
 					pstmt.setString(5, locations);
 					pstmt.executeUpdate();
 					out.print("1");
