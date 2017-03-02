@@ -21,7 +21,7 @@ import net.qzct.server.DatabaseConnection;
  * Servlet implementation class Register
  */
 @WebServlet("/RegisterServlet")
-@MultipartConfig(location = "E:\\apache-tomcat-7.0.56\\webapps\\Server\\img")
+@MultipartConfig(location = "/yjdata/www/www/ImmediateChoice_service/img")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -63,7 +63,7 @@ public class RegisterServlet extends HttpServlet {
 		String portrait_name = phone_number + ".jpg";
 		portrait.write(portrait_name);
 		
-		String url_img = "http://172.16.101.51:8080/Server/img/";
+		String url_img = "http://123.207.31.213/ImmediateChoice_service/img/";
 		String portrait_path = url_img + portrait_name;
 		
 		System.out.println(name + "/t" + sex);

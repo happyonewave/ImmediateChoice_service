@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 		//登录
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
-		
+
 		System.out.println(name + "\t" + password);
 
 		String sql1 = "select  * from userin where name='" + name + "'" + "and password='" + password + "'";

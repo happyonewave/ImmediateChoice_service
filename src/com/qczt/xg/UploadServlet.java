@@ -21,7 +21,7 @@ import net.qzct.server.DatabaseConnection;
  */
 @WebServlet("/UploadServlet")
 @MultipartConfig(
-		location="E:\\apache-tomcat-7.0.56\\webapps\\Server\\img"
+		location="/yjdata/www/www/ImmediateChoice_service/img"
 		)
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -65,7 +65,7 @@ public class UploadServlet extends HttpServlet {
 //			String username = request.getParameter("username");
 			String locations = request.getParameter("locations");
 			String quizzer_name = request.getParameter("quizzer_name");
-			String url_img = "http://172.16.101.51:8080/Server/img/";
+			String url_img = "http://123.207.31.213/ImmediateChoice_service/img/";
 			String image_left_path = url_img + image_left_name;
 			String image_right_path = url_img + image_right_name;
 			System.out.println(image_left_name);	
