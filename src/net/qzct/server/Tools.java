@@ -38,18 +38,6 @@ public class Tools {
 				jsonArray.add(json);
 				break;
 				
-			case "conversation":
-				String content= rs.getString(2);
-				String portraiturl= rs.getString(3);
-				String addresser= rs.getString(4);
-				String addressee= rs.getString(5);
-				json.put("content", content);
-				json.put("portraiturl", portraiturl);
-				json.put("addresser", addresser);
-				json.put("addressee", addressee);
-				jsonArray.add(json);
-				break;
-				
 			case "question":
 				String question_content= rs.getString(2);
 				String image_left= rs.getString(3);
