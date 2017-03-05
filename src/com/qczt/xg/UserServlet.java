@@ -3,6 +3,7 @@ package com.qczt.xg;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,8 +45,28 @@ public class UserServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
+		String quizzer_name = request.getParameter("quizzer_name");
 //		json测试
-        JSONArray json =Tools.getJsonFromDatabase("conversation");
+		
+
+		
+		
+        JSONArray json =getMyPushFromDatabase("question", quizzer_name);
+        System.out.println(json.toString());
 		out.print(json.toString());
 	}
+
+	JSONArray getMyPushFromDatabase(String listname, String quizzer_name ) {
+		String sql = "select  * from " + listname + " where quizzer_name = '" + quizzer_name + "'";
+		try {
+			ResultSet rs = Tools.queryDatabase(sql);
+			JSONArray json = Tools.getJsonByArguments(listname,rs);
+			System.out.println(json.toString());
+			return json;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

@@ -21,7 +21,8 @@ import net.qzct.server.DatabaseConnection;
  */
 @WebServlet("/UploadServlet")
 @MultipartConfig(
-		location="/yjdata/www/www/ImmediateChoice_service/img"
+//		location="/yjdata/www/www/ImmediateChoice_service/img"
+		location="E:\\apache-tomcat-7.0.56\\webapps\\Server\\img"
 		)
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -54,10 +55,10 @@ public class UploadServlet extends HttpServlet {
 			PrintWriter out = response.getWriter();
 //			out.print("success");
 
-			 Part image_left = request.getPart("image_left");
-			 Part image_right = request.getPart("image_right");
-				String image_left_name = request.getParameter("image_left_name");
-				String image_right_name = request.getParameter("image_right_name");
+			Part image_left = request.getPart("image_left");
+			Part image_right = request.getPart("image_right");
+			String image_left_name = request.getParameter("image_left_name");
+			String image_right_name = request.getParameter("image_right_name");
 			 image_left.write(image_left_name);
 			 image_right.write(image_right_name);
 			 
@@ -65,6 +66,7 @@ public class UploadServlet extends HttpServlet {
 //			String username = request.getParameter("username");
 			String locations = request.getParameter("locations");
 			String quizzer_name = request.getParameter("quizzer_name");
+			String quizzer_portrait = request.getParameter("quizzer_portrait");
 			String url_img = "http://123.207.31.213/ImmediateChoice_service/img/";
 			String image_left_path = url_img + image_left_name;
 			String image_right_path = url_img + image_right_name;
@@ -75,13 +77,14 @@ public class UploadServlet extends HttpServlet {
 					db = new DatabaseConnection();
 					Connection conn = db.getConnection();
 					// 
-					String sql = "INSERT INTO question(image_left,image_right,question_content,quizzer_name,locations) VALUES (?,?,?,?,?) ";
+					String sql = "INSERT INTO question(image_left,image_right,question_content,quizzer_name,quizzer_portrait,locations) VALUES (?,?,?,?,?,?) ";
 					PreparedStatement pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, image_left_path);
 					pstmt.setString(2, image_right_path);
 					pstmt.setString(3, question_content);
 					pstmt.setString(4, quizzer_name);
-					pstmt.setString(5, locations);
+					pstmt.setString(5, quizzer_portrait);
+					pstmt.setString(6, locations);
 					pstmt.executeUpdate();
 					out.print("1");
 				} catch (Exception e) {
