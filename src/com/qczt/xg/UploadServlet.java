@@ -21,8 +21,8 @@ import net.qzct.server.DatabaseConnection;
  */
 @WebServlet("/UploadServlet")
 @MultipartConfig(
-//		location="/yjdata/www/www/ImmediateChoice_service/img"
-		location="E:\\apache-tomcat-7.0.56\\webapps\\Server\\img"
+		location="/yjdata/www/www/ImmediateChoice_service/img"
+//		location="E:\\apache-tomcat-7.0.56\\webapps\\Server\\img"
 		)
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -50,9 +50,11 @@ public class UploadServlet extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-			Part part = request.getPart("file");
+		PrintWriter out = response.getWriter();
+
+		System.out.println("doPost");
+//			Part part = request.getPart("file");
 //			part.write("sky.jpg");
-			PrintWriter out = response.getWriter();
 //			out.print("success");
 
 			Part image_left = request.getPart("image_left");

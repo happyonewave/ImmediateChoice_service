@@ -44,8 +44,9 @@ public class ImageTextServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
         PrintWriter out = response.getWriter();
-        
+        System.out.println("doPost");
         JSONArray json =Tools.getJsonFromDatabase("question");
+        System.out.println(json.toString());
 		out.print(json.toString());
 	
 	}
