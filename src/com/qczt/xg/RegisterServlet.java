@@ -22,8 +22,8 @@ import net.qzct.server.DatabaseConnection;
  */
 @WebServlet("/RegisterServlet")
 @MultipartConfig(
-		location = "/yjdata/www/www/ImmediateChoice_service/img"
-//		location="E:\\apache-tomcat-7.0.56\\webapps\\Server\\img"
+//		location = "/yjdata/www/www/ImmediateChoice_service/img"
+		location="E:\\apache-tomcat-7.0.56\\webapps\\Server\\img"
 		)
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
