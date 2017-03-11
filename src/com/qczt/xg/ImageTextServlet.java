@@ -62,7 +62,7 @@ public class ImageTextServlet extends HttpServlet {
 		switch (msg) {
 		case GET_MAX_ID:
 			maxid = Tools.getQuestionMaxId();
-			System.out.println("id" + maxid);
+			System.out.println("question_id" + maxid);
 			out.print(maxid + "");
 			break;
 		case GET_QUESTION:

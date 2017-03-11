@@ -25,7 +25,7 @@ public class Tools {
 
 	public static int getQuestionMaxId() {
 		// select * from question where id limit 5,2;
-		String sql = "select  id from  question";
+		String sql = "select  question_id from  question";
 		ResultSet rs;
 		int id = 0;
 		try {
@@ -46,8 +46,8 @@ public class Tools {
 		// b;
 		int num = 4;
 
-		String sql = "select * from question where  id  limit " + startId + ","
-				+ num;
+		String sql = "select * from question where  question_id  limit "
+				+ startId + "," + num;
 		try {
 			ResultSet rs = queryDatabase(sql);
 			JSONArray json = getJsonByArguments("question", rs);
@@ -59,6 +59,20 @@ public class Tools {
 		} catch (Exception e) {
 			return "-1";
 		}
+	}
+
+	public static String getCommentByQuestionIdString(String question_id) {
+
+		String sql = "select  * from comment where question_id='" + question_id
+				+ "'";
+		try {
+			ResultSet rs = queryDatabase(sql);
+			JSONArray json = getJsonByArguments("comment", rs);
+			return json.toString();
+		} catch (Exception e) {
+			return "-1";
+		}
+
 	}
 
 	public static String getQuestionPaging(int startId) {
@@ -75,8 +89,8 @@ public class Tools {
 			return "-1";
 		}
 
-		String sql = "select * from question where  id  limit " + startId + ","
-				+ num;
+		String sql = "select * from question where  question_id  limit "
+				+ startId + "," + num;
 		try {
 			ResultSet rs = queryDatabase(sql);
 			JSONArray json = getJsonByArguments("question", rs);
@@ -103,7 +117,7 @@ public class Tools {
 				break;
 
 			case "question":
-				int id = rs.getInt(1);
+				int question_id = rs.getInt(1);
 				String question_content = rs.getString(2);
 				String image_left = rs.getString(3);
 				String image_right = rs.getString(4);
@@ -112,7 +126,7 @@ public class Tools {
 				int share_count = rs.getInt(7);
 				int comment_count = rs.getInt(8);
 				String comment = rs.getString(9);
-				json.put("id", id);
+				json.put("question_id", question_id);
 				json.put("question_content", question_content);
 				json.put("image_left", image_left);
 				json.put("image_right", image_right);
@@ -121,6 +135,18 @@ public class Tools {
 				json.put("share_count", share_count);
 				json.put("comment_count", comment_count);
 				json.put("comment", comment);
+				jsonArray.add(json);
+				break;
+
+			case "comment":
+				String comment_content = rs.getString(2);
+				String commenter_date = rs.getString(3);
+				String commenter_name = rs.getString(4);
+				String commenter_portrait_url = rs.getString(5);
+				json.put("comment_content", comment_content);
+				json.put("commenter_date", commenter_date);
+				json.put("commenter_name", commenter_name);
+				json.put("commenter_portrait_url", commenter_portrait_url);
 				jsonArray.add(json);
 				break;
 
