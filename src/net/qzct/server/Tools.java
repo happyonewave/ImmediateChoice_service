@@ -11,16 +11,16 @@ import net.sf.json.JSONObject;
 
 public class Tools {
 
-	public static JSONArray getJsonFromDatabase(String listname) {
+	public static String getJsonFromDatabase(String listname) {
 		String sql = "select  * from " + listname;
 		try {
 			ResultSet rs = queryDatabase(sql);
 			JSONArray json = getJsonByArguments(listname, rs);
-			return json;
+			return json.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "-1";
 		}
-		return null;
 	}
 
 	public static int getQuestionMaxId() {
@@ -147,6 +147,14 @@ public class Tools {
 				json.put("commenter_date", commenter_date);
 				json.put("commenter_name", commenter_name);
 				json.put("commenter_portrait_url", commenter_portrait_url);
+				jsonArray.add(json);
+				break;
+
+			case "topic":
+				String topic_title = rs.getString(2);
+				String topic_img_url = rs.getString(3);
+				json.put("topic_title", topic_title);
+				json.put("topic_img_url", topic_img_url);
 				jsonArray.add(json);
 				break;
 

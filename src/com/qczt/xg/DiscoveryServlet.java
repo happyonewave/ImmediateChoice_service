@@ -43,8 +43,8 @@ public class DiscoveryServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 //		json测试
-        JSONArray json =Tools.getJsonFromDatabase("info");
-		out.print(json.toString());
+        String json =Tools.getJsonFromDatabase("info");
+		out.print(json);
 
 	}
 
