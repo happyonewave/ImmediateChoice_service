@@ -2,6 +2,7 @@ package net.qzct.server;
 
 import java.io.OutputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -100,21 +101,185 @@ public class Tools {
 		}
 	}
 
+	/**
+	 * 查询记录数量
+	 * 
+	 * @param question_id
+	 * @param left_or_right
+	 * @return
+	 */
+	public static int queryChoiceCount(int question_id, String left_or_right) {
+
+		// 查询记录数量 SELECT ((LENGTH(`choice_right_ids`) -
+		// LENGTH(REPLACE(`choice_right_ids`,',', ''))) / LENGTH(','))/2 AS
+		// 'count' FROM question where question_id =8;
+		int count;
+		DatabaseConnection db;
+
+		String sql = "  SELECT ((LENGTH(`choice_"
+				+ left_or_right
+				+ "_ids`) - LENGTH(REPLACE(`choice_"
+				+ left_or_right
+				+ "_ids`,',', ''))) / LENGTH(','))/2 AS 'count'   FROM question where question_id ="
+				+ question_id;
+		try {
+			db = new DatabaseConnection();
+			Connection conn = db.getConnection();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				count = rs.getInt(1);
+				System.out.println(left_or_right + "数量：" + count);
+				rs.close();
+				stmt.close();
+				return count;
+			} else {
+				rs.close();
+				stmt.close();
+				return -1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+
+	}
+
+	/**
+	 * 判断是否已选择
+	 * 
+	 * @param question_id
+	 * @param user_id
+	 * @param left_or_right
+	 * @return
+	 */
+	public static boolean choiceIsExisted(int question_id, int user_id,
+			String left_or_right) {
+		// 存放记录 update question set
+		// choice_right_ids=CONCAT(choice_right_ids,',3,') where question_id=8
+
+		// 删除记录 update question set choice_right_ids =
+		// replace(choice_right_ids,',7,','') where question_id=8
+
+		// 判断是否存在记录 select * from question where choice_right_ids like '%,7,%'
+		// and question_id = 2
+		DatabaseConnection db;
+
+		String sql = "select * from question where choice_" + left_or_right
+				+ "_ids like '%," + user_id + ",%' and question_id = "
+				+ question_id;
+
+		try {
+			db = new DatabaseConnection();
+			Connection conn = db.getConnection();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				rs.close();
+				stmt.close();
+				return true;
+			} else {
+				rs.close();
+				stmt.close();
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	/**
+	 * 删除选择
+	 * 
+	 * @param question_id
+	 * @param user_id
+	 * @param left_or_right
+	 * @return
+	 */
+	public static String deleteChoice(int question_id, int user_id,
+			String left_or_right) {
+		// 存放记录 update question set
+		// choice_right_ids=CONCAT(choice_right_ids,',3,') where question_id=8
+
+		// 删除记录 update question set choice_right_ids =
+		// replace(choice_right_ids,',7,','') where question_id=8
+
+		// 判断是否存在记录 select * from question where choice_right_ids like '%,7,%'
+		// and question_id = "2"
+		DatabaseConnection db;
+
+		String sql = "update question set choice_" + left_or_right
+				+ "_ids = replace(choice_" + left_or_right + "_ids,',"
+				+ user_id + ",','') where question_id=" + question_id;
+
+		try {
+			db = new DatabaseConnection();
+			Connection conn = db.getConnection();
+			Statement stmt = conn.createStatement();
+			int request = stmt.executeUpdate(sql);
+			if (request > 0) {
+				stmt.close();
+				return "1";
+			} else {
+				stmt.close();
+				return "0";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "0";
+		}
+
+	}
+
+	/**
+	 * 记录选择
+	 * 
+	 * @param question_id
+	 * @param user_id
+	 * @param left_or_right
+	 * @return
+	 */
+	public static boolean recordChoice(int question_id, int user_id,
+			String left_or_right) {
+		// 存放记录 update question set
+		// choice_right_ids=CONCAT_WS("",choice_right_ids,',3,') where
+		// question_id=8
+
+		// 删除记录 update question set choice_right_ids =
+		// replace(choice_right_ids,',7,','') where question_id=8
+		DatabaseConnection db;
+
+		String sql = "update question set choice_" + left_or_right
+				+ "_ids=CONCAT_WS('',choice_" + left_or_right + "_ids,',"
+				+ user_id + ",') where question_id=" + question_id;
+		System.out.println("sql" + sql);
+		try {
+			db = new DatabaseConnection();
+			Connection conn = db.getConnection();
+			Statement stmt = conn.createStatement();
+			int request = stmt.executeUpdate(sql);
+			if (request > 0) {
+				stmt.close();
+				return true;
+			} else {
+				stmt.close();
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
 	public static JSONArray getJsonByArguments(String listname, ResultSet rs)
 			throws SQLException {
 		JSONArray jsonArray = new JSONArray();
 		while (rs.next()) {
 			JSONObject json = new JSONObject();
 			switch (listname) {
-			case "info":
-				String student = rs.getString(2);
-				String date = rs.getString(3);
-				String imageurl = rs.getString(4);
-				json.put("student", student);
-				json.put("date", date);
-				json.put("imageurl", imageurl);
-				jsonArray.add(json);
-				break;
 
 			case "question":
 				int question_id = rs.getInt(1);
@@ -159,11 +324,13 @@ public class Tools {
 				break;
 
 			case "userin":
+				int user_id = rs.getInt(1);
 				String name = rs.getString(2);
 				String password = rs.getString(3);
 				String phone_number = rs.getString(4);
 				String sex = rs.getString(5);
 				String portrait_path = rs.getString(6);
+				json.put("user_id", user_id);
 				json.put("name", name);
 				json.put("password", password);
 				json.put("phone_number", phone_number);

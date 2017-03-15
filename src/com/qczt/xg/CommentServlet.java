@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.tools.Tool;
 
 import net.qzct.server.DatabaseConnection;
 import net.qzct.server.Tools;
@@ -62,15 +63,12 @@ public class CommentServlet extends HttpServlet {
 		System.out.println("CommentServlet");
 
 		String PUSH_COMMENT = "0";
+		String CHOICE_ONE = "1";
+
 		String msg = request.getParameter("msg");
 		System.out.println("msg:" + msg);
-		if (!(msg.equals(PUSH_COMMENT))) {
-			String question_id = request.getParameter("question_id");
-			System.out.println("question_id" + question_id);
-			String json = Tools.getCommentByQuestionIdString(question_id);
-			System.out.println("comment" + json);
-			out.print(json);
-		} else {
+		if (msg.equals(PUSH_COMMENT)) {
+
 			String question_id = request.getParameter("question_id");
 			String comment_content = request.getParameter("comment_content");
 			String commenter_name = request.getParameter("commenter_name");
@@ -95,9 +93,46 @@ public class CommentServlet extends HttpServlet {
 				// out.print("0");
 				e.printStackTrace();
 			}
+		} else if (msg.equals(CHOICE_ONE)) {
+			int question_id = Integer.parseInt(request
+					.getParameter("question_id"));
+			System.out.println("question_id: " + question_id);
+			int user_id = Integer.parseInt(request.getParameter("user_id"));
+			System.out.println("user_id: " + user_id);
+			String left_or_right = request.getParameter("left_or_right");
+			System.out.println("left_or_right: " + left_or_right);
+			if (!Tools.choiceIsExisted(question_id, user_id, left_or_right)) {
+				if (Tools.recordChoice(question_id, user_id, left_or_right)) {
+					int percent = countPercent(question_id, left_or_right);
+					out.print(percent + "");
+				} else {
+					System.out.println("选择失败");
+				}
+
+			} else {
+				System.out.println("选择过了");
+			}
+
+		} else {
+
+			String question_id = request.getParameter("question_id");
+			System.out.println("question_id" + question_id);
+			String json = Tools.getCommentByQuestionIdString(question_id);
+			System.out.println("comment" + json);
+			out.print(json);
 
 		}
 
 	}
 
+	private int countPercent(int question_id, String left_or_right) {
+		int count_left = Tools.queryChoiceCount(question_id, "left");
+		int count_right = Tools.queryChoiceCount(question_id, "right");
+		int sum = count_left + count_right;
+		int count = left_or_right.equals("left") ? count_left : count_right;
+		System.out.println("count:" + count + "/sum:" + sum + "=" + count
+				/ (double) sum);
+		int percent = (int) ((count / (double) sum) / 0.01);
+		return percent;
+	}
 }
