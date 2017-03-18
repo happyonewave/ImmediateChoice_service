@@ -21,79 +21,82 @@ import net.qzct.server.DatabaseConnection;
  */
 @WebServlet("/UploadServlet")
 @MultipartConfig(
-		location="/yjdata/www/www/ImmediateChoice_service/img"
-//		location="E:\\apache-tomcat-7.0.56\\webapps\\Server\\img"
-		)
+// location="/yjdata/www/www/ImmediateChoice_service/img"
+location = "D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\img")
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UploadServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public UploadServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doPost(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 
 		System.out.println("doPost");
-//			Part part = request.getPart("file");
-//			part.write("sky.jpg");
-//			out.print("success");
+		// Part part = request.getPart("file");
+		// part.write("sky.jpg");
+		// out.print("success");
 
-			Part image_left = request.getPart("image_left");
-			Part image_right = request.getPart("image_right");
-			String image_left_name = request.getParameter("image_left_name");
-			String image_right_name = request.getParameter("image_right_name");
-			 image_left.write(image_left_name);
-			 image_right.write(image_right_name);
-			 
-			String question_content = request.getParameter("question_content");
-//			String username = request.getParameter("username");
-			String locations = request.getParameter("locations");
-			String quizzer_name = request.getParameter("quizzer_name");
-			String quizzer_portrait = request.getParameter("quizzer_portrait");
-			String url_img = "http://123.207.31.213/ImmediateChoice_service/img/";
-			String image_left_path = url_img + image_left_name;
-			String image_right_path = url_img + image_right_name;
-			System.out.println(image_left_name);	
-			System.out.println(locations);
-			DatabaseConnection db;
-				try {
-					db = new DatabaseConnection();
-					Connection conn = db.getConnection();
-					// 
-					String sql = "INSERT INTO question(image_left,image_right,question_content,quizzer_name,quizzer_portrait,locations) VALUES (?,?,?,?,?,?) ";
-					PreparedStatement pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1, image_left_path);
-					pstmt.setString(2, image_right_path);
-					pstmt.setString(3, question_content);
-					pstmt.setString(4, quizzer_name);
-					pstmt.setString(5, quizzer_portrait);
-					pstmt.setString(6, locations);
-					pstmt.executeUpdate();
-					out.print("1");
-				} catch (Exception e) {
-					out.print("0");
-					e.printStackTrace();
-				}
-		
+		Part image_left = request.getPart("image_left");
+		Part image_right = request.getPart("image_right");
+		String image_left_name = request.getParameter("image_left_name");
+		String image_right_name = request.getParameter("image_right_name");
+		image_left.write(image_left_name);
+		image_right.write(image_right_name);
+
+		String question_content = request.getParameter("question_content");
+		// String username = request.getParameter("username");
+		String locations = request.getParameter("locations");
+		String quizzer_name = request.getParameter("quizzer_name");
+		String quizzer_portrait = request.getParameter("quizzer_portrait");
+		String url_img = "http://123.207.31.213/ImmediateChoice_service/img/";
+		String image_left_path = url_img + image_left_name;
+		String image_right_path = url_img + image_right_name;
+		System.out.println(image_left_name);
+		System.out.println(locations);
+		DatabaseConnection db;
+		try {
+			db = new DatabaseConnection();
+			Connection conn = db.getConnection();
+			//
+			String sql = "INSERT INTO question(image_left,image_right,question_content,quizzer_name,quizzer_portrait,locations) VALUES (?,?,?,?,?,?) ";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, image_left_path);
+			pstmt.setString(2, image_right_path);
+			pstmt.setString(3, question_content);
+			pstmt.setString(4, quizzer_name);
+			pstmt.setString(5, quizzer_portrait);
+			pstmt.setString(6, locations);
+			pstmt.executeUpdate();
+			out.print("1");
+		} catch (Exception e) {
+			out.print("0");
+			e.printStackTrace();
+		}
+
 	}
 
 }

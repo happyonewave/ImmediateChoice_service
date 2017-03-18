@@ -24,9 +24,9 @@ public class Tools {
 		}
 	}
 
-	public static int getQuestionMaxId() {
+	public static int getMaxId(String tableName) {
 		// select * from question where id limit 5,2;
-		String sql = "select  question_id from  question";
+		String sql = "select  "+getIdName(tableName)+" from  " + tableName;
 		ResultSet rs;
 		int id = 0;
 		try {
@@ -41,17 +41,17 @@ public class Tools {
 		return id;
 	}
 
-	public static String refreshQuestionPaging(int startId) {
+	public static String refreshPaging(String tableName, int startId) {
 		// select * from question where id limit 5,2;
 		// String sql = "select * from question where  id  limit " + a + "," +
 		// b;
 		int num = 4;
 
-		String sql = "select * from question where  question_id  limit "
-				+ startId + "," + num;
+		String sql = "select * from " + tableName + " where  " + getIdName(tableName)
+				+ "  limit " + startId + "," + num;
 		try {
 			ResultSet rs = queryDatabase(sql);
-			JSONArray json = getJsonByArguments("question", rs);
+			JSONArray json = getJsonByArguments(tableName, rs);
 			if (json.isEmpty()) {
 				return "-1";
 			} else {
@@ -60,6 +60,24 @@ public class Tools {
 		} catch (Exception e) {
 			return "-1";
 		}
+	}
+
+	private static String getIdName(String tableName) {
+		String idName = "";
+
+		switch (tableName) {
+		case "question":
+			idName = "question_id";
+			break;
+
+		case "question_video":
+			idName = "question_video_id";
+			break;
+
+		default:
+			break;
+		}
+		return idName;
 	}
 
 	public static String getCommentByQuestionIdString(String question_id) {
@@ -76,7 +94,7 @@ public class Tools {
 
 	}
 
-	public static String getQuestionPaging(int startId) {
+	public static String getPaging(String tableName, int startId) {
 		// select * from question where id limit 5,2;
 		// String sql = "select * from question where  id  limit " + a + "," +
 		// b;
@@ -89,12 +107,11 @@ public class Tools {
 		} else {
 			return "-1";
 		}
-
-		String sql = "select * from question where  question_id  limit "
-				+ startId + "," + num;
+		String sql = "select * from " + tableName + " where  " + getIdName(tableName)
+				+ "  limit " + startId + "," + num;
 		try {
 			ResultSet rs = queryDatabase(sql);
-			JSONArray json = getJsonByArguments("question", rs);
+			JSONArray json = getJsonByArguments(tableName, rs);
 			return json.toString();
 		} catch (Exception e) {
 			return "-1";
@@ -279,22 +296,48 @@ public class Tools {
 		JSONArray jsonArray = new JSONArray();
 		while (rs.next()) {
 			JSONObject json = new JSONObject();
+			String quizzer_name;
+			String quizzer_portrait;
+			int share_count;
+			int comment_count;
+			String comment;
 			switch (listname) {
-
 			case "question":
 				int question_id = rs.getInt(1);
 				String question_content = rs.getString(2);
 				String image_left = rs.getString(3);
 				String image_right = rs.getString(4);
-				String quizzer_name = rs.getString(5);
-				String quizzer_portrait = rs.getString(6);
-				int share_count = rs.getInt(7);
-				int comment_count = rs.getInt(8);
-				String comment = rs.getString(9);
+				quizzer_name = rs.getString(5);
+				quizzer_portrait = rs.getString(6);
+				share_count = rs.getInt(7);
+				comment_count = rs.getInt(8);
+				comment = rs.getString(9);
 				json.put("question_id", question_id);
 				json.put("question_content", question_content);
 				json.put("image_left", image_left);
 				json.put("image_right", image_right);
+				json.put("quizzer_name", quizzer_name);
+				json.put("quizzer_portrait", quizzer_portrait);
+				json.put("share_count", share_count);
+				json.put("comment_count", comment_count);
+				json.put("comment", comment);
+				jsonArray.add(json);
+				break;
+
+			case "question_video":
+				int question_video_id = rs.getInt(1);
+				String question_video_content = rs.getString(2);
+				String video_left = rs.getString(3);
+				String video_right = rs.getString(4);
+				quizzer_name = rs.getString(5);
+				quizzer_portrait = rs.getString(6);
+				share_count = rs.getInt(7);
+				comment_count = rs.getInt(8);
+				comment = rs.getString(9);
+				json.put("question_video_id", question_video_id);
+				json.put("question_video_content", question_video_content);
+				json.put("video_left", video_left);
+				json.put("video_right", video_right);
 				json.put("quizzer_name", quizzer_name);
 				json.put("quizzer_portrait", quizzer_portrait);
 				json.put("share_count", share_count);
