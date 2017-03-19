@@ -13,8 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.tools.Tool;
 
 import net.qzct.server.DatabaseConnection;
+import net.qzct.server.Tools;
+import net.sf.json.JSONObject;
 
 /**
  * Servlet implementation class upload
@@ -25,6 +28,9 @@ import net.qzct.server.DatabaseConnection;
 location = "D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\img")
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final int UPLOAD_IMAGE = 6;
+	private static final int UPLOAD_VIDEO = 7;
+	private DatabaseConnection db;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -60,43 +66,88 @@ public class UploadServlet extends HttpServlet {
 		// part.write("sky.jpg");
 		// out.print("success");
 
-		Part image_left = request.getPart("image_left");
-		Part image_right = request.getPart("image_right");
-		String image_left_name = request.getParameter("image_left_name");
-		String image_right_name = request.getParameter("image_right_name");
-		image_left.write(image_left_name);
-		image_right.write(image_right_name);
+		String msg = request.getParameter("msg");
 
-		String question_content = request.getParameter("question_content");
-		// String username = request.getParameter("username");
-		String locations = request.getParameter("locations");
-		String quizzer_name = request.getParameter("quizzer_name");
-		String quizzer_portrait = request.getParameter("quizzer_portrait");
-		String url_img = "http://123.207.31.213/ImmediateChoice_service/img/";
-		String image_left_path = url_img + image_left_name;
-		String image_right_path = url_img + image_right_name;
-		System.out.println(image_left_name);
-		System.out.println(locations);
-		DatabaseConnection db;
-		try {
-			db = new DatabaseConnection();
-			Connection conn = db.getConnection();
-			//
-			String sql = "INSERT INTO question(image_left,image_right,question_content,quizzer_name,quizzer_portrait,locations) VALUES (?,?,?,?,?,?) ";
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, image_left_path);
-			pstmt.setString(2, image_right_path);
-			pstmt.setString(3, question_content);
-			pstmt.setString(4, quizzer_name);
-			pstmt.setString(5, quizzer_portrait);
-			pstmt.setString(6, locations);
-			pstmt.executeUpdate();
-			out.print("1");
-		} catch (Exception e) {
-			out.print("0");
-			e.printStackTrace();
+		String locations;
+		String quizzer_name;
+		String quizzer_portrait;
+		switch (Integer.parseInt(msg)) {
+		case UPLOAD_IMAGE:
+			Part image_left = request.getPart("image_left");
+			Part image_right = request.getPart("image_right");
+			String image_left_name = request.getParameter("image_left_name");
+			String image_right_name = request.getParameter("image_right_name");
+			image_left.write(image_left_name);
+			image_right.write(image_right_name);
+			String question_content = request.getParameter("question_content");
+			// String username = request.getParameter("username");
+			locations = request.getParameter("locations");
+			quizzer_name = request.getParameter("quizzer_name");
+			quizzer_portrait = request.getParameter("quizzer_portrait");
+			String url_img = "http://123.207.31.213/ImmediateChoice_service/img/";
+			String image_left_path = url_img + image_left_name;
+			String image_right_path = url_img + image_right_name;
+			System.out.println(image_left_name);
+			System.out.println(locations);
+			try {
+				db = new DatabaseConnection();
+				Connection conn = db.getConnection();
+				//
+				String sql = "INSERT INTO question(image_left,image_right,question_content,quizzer_name,quizzer_portrait,locations) VALUES (?,?,?,?,?,?) ";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, image_left_path);
+				pstmt.setString(2, image_right_path);
+				pstmt.setString(3, question_content);
+				pstmt.setString(4, quizzer_name);
+				pstmt.setString(5, quizzer_portrait);
+				pstmt.setString(6, locations);
+				pstmt.executeUpdate();
+				out.print("1");
+			} catch (Exception e) {
+				out.print("0");
+				e.printStackTrace();
+			}
+
+			break;
+		case UPLOAD_VIDEO:
+			Part video_left = request.getPart("video_left");
+			Part video_right = request.getPart("video_right");
+			String question_video = request.getParameter("question_video");
+			JSONObject jsonObject = new JSONObject().fromObject(question_video);
+			String video_left_url = jsonObject.getString("video_left_url");
+			String video_right_url = jsonObject.getString("video_right_url");
+			video_left.write(Tools.getFileName(video_left_url));
+			video_right.write(Tools.getFileName(video_right_url));
+			String question_video_content = jsonObject
+					.getString("question_video_content");
+			locations = jsonObject.getString("locations");
+			quizzer_name = jsonObject.getString("quizzer_name");
+			quizzer_portrait = jsonObject.getString("quizzer_portrait");
+			System.out.println(Tools.getFileName(video_left_url));
+			System.out.println(locations);
+			try {
+				db = new DatabaseConnection();
+				Connection conn = db.getConnection();
+				//
+				String sql = "INSERT INTO question_video(video_left_url,video_right_url,question_video_content,quizzer_name,quizzer_portrait,locations) VALUES (?,?,?,?,?,?) ";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, video_left_url);
+				pstmt.setString(2, video_right_url);
+				pstmt.setString(3, question_video_content);
+				pstmt.setString(4, quizzer_name);
+				pstmt.setString(5, quizzer_portrait);
+				pstmt.setString(6, locations);
+				pstmt.executeUpdate();
+				out.print("1");
+			} catch (Exception e) {
+				out.print("0");
+				e.printStackTrace();
+			}
+			break;
+
+		default:
+			break;
 		}
-
 	}
 
 }

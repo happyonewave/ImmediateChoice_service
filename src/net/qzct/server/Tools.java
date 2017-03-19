@@ -11,8 +11,22 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class Tools {
-
-	public static String getJsonFromDatabase(String listname) {
+	
+    /**
+     * 获取文件名（有拓展名）
+     *
+     * @param Path
+     * @return
+     */
+    public static String getFileName(String Path) {
+        int index = Path.lastIndexOf("/");
+        if (index > 0) {
+            Path = Path.substring(index + 1);
+        }
+        return Path;
+    }
+	public
+	static String getJsonFromDatabase(String listname) {
 		String sql = "select  * from " + listname;
 		try {
 			ResultSet rs = queryDatabase(sql);
