@@ -66,7 +66,6 @@ public class CommentServlet extends HttpServlet {
 		String CHOICE_ONE = "1";
 
 		String msg = request.getParameter("msg");
-		System.out.println("msg:" + msg);
 		if (msg.equals(PUSH_COMMENT)) {
 
 			String question_id = request.getParameter("question_id");
@@ -96,11 +95,8 @@ public class CommentServlet extends HttpServlet {
 		} else if (msg.equals(CHOICE_ONE)) {
 			int question_id = Integer.parseInt(request
 					.getParameter("question_id"));
-			System.out.println("question_id: " + question_id);
 			int user_id = Integer.parseInt(request.getParameter("user_id"));
-			System.out.println("user_id: " + user_id);
 			String left_or_right = request.getParameter("left_or_right");
-			System.out.println("left_or_right: " + left_or_right);
 			if (!Tools.choiceIsExisted(question_id, user_id, left_or_right)) {
 				if (Tools.recordChoice(question_id, user_id, left_or_right)) {
 					int percent = countPercent(question_id, left_or_right);
@@ -116,9 +112,7 @@ public class CommentServlet extends HttpServlet {
 		} else {
 
 			String question_id = request.getParameter("question_id");
-			System.out.println("question_id" + question_id);
 			String json = Tools.getCommentByQuestionIdString(question_id);
-			System.out.println("comment" + json);
 			out.print(json);
 
 		}

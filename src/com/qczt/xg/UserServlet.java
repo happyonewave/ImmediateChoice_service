@@ -52,7 +52,6 @@ public class UserServlet extends HttpServlet {
 		
 		
         JSONArray json =getMyPushFromDatabase("question", quizzer_name);
-        System.out.println(json.toString());
 		out.print(json.toString());
 	}
 
@@ -61,7 +60,6 @@ public class UserServlet extends HttpServlet {
 		try {
 			ResultSet rs = Tools.queryDatabase(sql);
 			JSONArray json = Tools.getJsonByArguments(listname,rs);
-			System.out.println(json.toString());
 			return json;
 		} catch (Exception e) {
 			e.printStackTrace();

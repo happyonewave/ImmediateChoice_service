@@ -69,7 +69,6 @@ public class RegisterServlet extends HttpServlet {
 		String url_img = "http://123.207.31.213/ImmediateChoice_service/img/";
 		String portrait_path = url_img + portrait_name;
 		
-		System.out.println(name + "/t" + sex);
 		DatabaseConnection db;
 
 		String sql1 = "select  * from userin where name='" + name + "'";

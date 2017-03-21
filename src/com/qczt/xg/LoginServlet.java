@@ -58,7 +58,6 @@ public class LoginServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 
-//		System.out.println(name + "\t" + password);
 
 		String sql1 = "select  * from userin where name='" + name + "'"
 				+ "and password='" + password + "'";
@@ -76,7 +75,6 @@ public class LoginServlet extends HttpServlet {
 				String sex = rs.getString(5);
 				String portrait_path = rs.getString(6);
 				json.put("user_id", user_id);
-//				System.out.println("获取到的user_id： " + user_id);
 				json.put("name", name);
 				json.put("password", password);
 				json.put("phone_number", phone_number);
@@ -84,10 +82,8 @@ public class LoginServlet extends HttpServlet {
 				json.put("portrait_path", portrait_path);
 
 				out.print(json.toString());
-//				System.out.println(json.toString());
 
 				// out.print("1");
-//				System.out.println("登录成功");
 			} else {
 				// 登录失败
 				out.print("0");

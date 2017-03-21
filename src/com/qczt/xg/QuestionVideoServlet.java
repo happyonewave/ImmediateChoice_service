@@ -51,10 +51,8 @@ public class QuestionVideoServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		System.out.println("doPost");
 
 		String msg = request.getParameter("msg");
-		System.out.println("msg" + msg);
 		int maxid = 0;
 		String a;
 		int startId = 0;
@@ -62,27 +60,21 @@ public class QuestionVideoServlet extends HttpServlet {
 		switch (msg) {
 		case GET_MAX_ID:
 			maxid = Tools.getMaxId("question_video");
-			System.out.println("question_video_id" + maxid);
 			out.print(maxid + "");
 			break;
 		case GET_QUESTION:
 			a = request.getParameter("startId");
-			System.out.println("startId" + a);
 			startId = Integer.parseInt(a);
-			json = Tools.getPaging("question_video", startId);
-			System.out.println("fromStartid" + json.toString());
+			json = Tools.getPagingOld("question_video", startId);
 			out.print(json);
 			break;
 		case REFRESH_QUESTION:
 			a = request.getParameter("startId");
-			System.out.println("startId" + a);
 			startId = Integer.parseInt(a);
 			json = Tools.refreshPaging("question_video", startId);
 			// if (json != "-1") {
-			System.out.println("fromStartid" + json.toString());
 			out.print(json);
 			// }else{
-			// System.out.println("已刷新为最新");
 			// }
 			break;
 

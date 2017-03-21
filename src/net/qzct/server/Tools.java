@@ -6,27 +6,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class Tools {
-	
-    /**
-     * 获取文件名（有拓展名）
-     *
-     * @param Path
-     * @return
-     */
-    public static String getFileName(String Path) {
-        int index = Path.lastIndexOf("/");
-        if (index > 0) {
-            Path = Path.substring(index + 1);
-        }
-        return Path;
-    }
-	public
-	static String getJsonFromDatabase(String listname) {
+
+	/**
+	 * 获取文件名（有拓展名）
+	 * 
+	 * @param Path
+	 * @return
+	 */
+	public static String getFileName(String Path) {
+		int index = Path.lastIndexOf("/");
+		if (index > 0) {
+			Path = Path.substring(index + 1);
+		}
+		return Path;
+	}
+
+	public static String getJsonFromDatabase(String listname) {
 		String sql = "select  * from " + listname;
 		try {
 			ResultSet rs = queryDatabase(sql);
@@ -40,7 +41,7 @@ public class Tools {
 
 	public static int getMaxId(String tableName) {
 		// select * from question where id limit 5,2;
-		String sql = "select  "+getIdName(tableName)+" from  " + tableName;
+		String sql = "select  " + getIdName(tableName) + " from  " + tableName;
 		ResultSet rs;
 		int id = 0;
 		try {
@@ -55,14 +56,30 @@ public class Tools {
 		return id;
 	}
 
+	public static String getPostTime(String tableName) {
+		// select * from question where id limit 5,2;
+		String sql = "select  " +"post_time" + " from  " + tableName +"order by post_time";
+		ResultSet rs;
+		String postTime = "";
+		try {
+			rs = queryDatabase(sql);
+			while (rs.next()) {
+				postTime = rs.getString(1);
+			}
+			return postTime;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return postTime;
+	}
 	public static String refreshPaging(String tableName, int startId) {
 		// select * from question where id limit 5,2;
 		// String sql = "select * from question where  id  limit " + a + "," +
 		// b;
 		int num = 4;
 
-		String sql = "select * from " + tableName + " where  " + getIdName(tableName)
-				+ "  limit " + startId + "," + num;
+		String sql = "select * from " + tableName + " where  "
+				+ getIdName(tableName) + "  limit " + startId + "," + num;
 		try {
 			ResultSet rs = queryDatabase(sql);
 			JSONArray json = getJsonByArguments(tableName, rs);
@@ -108,10 +125,16 @@ public class Tools {
 
 	}
 
-	public static String getPaging(String tableName, int startId) {
+	public static String getPagingOld(String tableName, int startId) {
+
 		// select * from question where id limit 5,2;
 		// String sql = "select * from question where  id  limit " + a + "," +
 		// b;
+
+		// select * from question where push_time < "2017-03-20 21:25:53.0"
+		// order
+		// by push_time desc limit 0,6 ;
+
 		int num = 6;
 		if (startId > 0 && startId < num) {
 			num = startId;
@@ -121,8 +144,8 @@ public class Tools {
 		} else {
 			return "-1";
 		}
-		String sql = "select * from " + tableName + " where  " + getIdName(tableName)
-				+ "  limit " + startId + "," + num;
+		String sql = "select * from " + tableName + " where  "
+				+ getIdName(tableName) + "  limit " + startId + "," + num;
 		try {
 			ResultSet rs = queryDatabase(sql);
 			JSONArray json = getJsonByArguments(tableName, rs);
@@ -130,6 +153,35 @@ public class Tools {
 		} catch (Exception e) {
 			return "-1";
 		}
+	}
+
+	public static String getPaging(String tableName, String startTime,
+			String endTime, int num) {
+
+		// select * from question where push_time < "2017-03-20 21:25:53.0"
+		// order by push_time desc limit 0,6 ;
+
+		String sql = "select * from " + tableName + " where post_time > '"
+				+ endTime + "' and post_time < '" + startTime
+				+ "' order by post_time desc limit 0," + num;
+		if (num == 0) {
+			sql = "select * from " + tableName + " where post_time > '"
+					+ endTime + "' and post_time < '" + startTime
+					+ "' order by post_time desc";
+		}
+		try {
+			ResultSet rs = queryDatabase(sql);
+			JSONArray json = getJsonByArguments(tableName, rs);
+			if (!json.isEmpty()) {
+				return json.toString();
+			}else {
+				return "-1";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "-1";
+		}
+
 	}
 
 	/**
@@ -315,6 +367,9 @@ public class Tools {
 			int share_count;
 			int comment_count;
 			String comment;
+			String post_time;
+			SimpleDateFormat format = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
 			switch (listname) {
 			case "question":
 				int question_id = rs.getInt(1);
@@ -326,6 +381,8 @@ public class Tools {
 				share_count = rs.getInt(7);
 				comment_count = rs.getInt(8);
 				comment = rs.getString(9);
+				// post_time = format.format(rs.getDate(13));
+				post_time = rs.getString(13);
 				json.put("question_id", question_id);
 				json.put("question_content", question_content);
 				json.put("image_left", image_left);
@@ -335,6 +392,7 @@ public class Tools {
 				json.put("share_count", share_count);
 				json.put("comment_count", comment_count);
 				json.put("comment", comment);
+				json.put("post_time", post_time);
 				jsonArray.add(json);
 				break;
 
@@ -400,7 +458,7 @@ public class Tools {
 				break;
 			}
 		}
-		System.out.println(jsonArray.toString());
+		// System.out.println(jsonArray.toString());
 		return jsonArray;
 	}
 

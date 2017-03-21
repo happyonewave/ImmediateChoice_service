@@ -51,45 +51,32 @@ public class ImageTextServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-//		System.out.println("doPost");
+		 System.out.println("\nImageTextServlet");
 
 		String msg = request.getParameter("msg");
-//		System.out.println("msg" + msg);
 		int maxid = 0;
-		String a;
-		int startId = 0;
+		String startTime = "";
+		String endTime = "";
 		String json = null;
 		switch (msg) {
 		case GET_MAX_ID:
 			maxid = Tools.getMaxId("question");
-//			System.out.println("question_id" + maxid);
 			out.print(maxid + "");
 			break;
 		case GET_QUESTION:
-			a = request.getParameter("startId");
-//			System.out.println("startId" + a);
-			startId = Integer.parseInt(a);
-			json = Tools.getPaging("question", startId);
-			// if (json != "-1") {
-//			System.out.println("fromStartid" + json.toString());
-			out.print(json);
-			// }else{
-			// out.print("-1");
-			// }
-			break;
 		case REFRESH_QUESTION:
-			a = request.getParameter("startId");
-//			System.out.println("startId" + a);
-			startId = Integer.parseInt(a);
-			json = Tools.refreshPaging("question", startId);
-			// if (json != "-1") {
-//			System.out.println("fromStartid" + json.toString());
-			out.print(json);
-			// }else{
-			// System.out.println("已刷新为最新");
-			// }
+			startTime = request.getParameter("startTime");
+			endTime = request.getParameter("endTime");
+			System.out.println("startTime" + startTime);
+			System.out.println("endTime" + endTime);
+			if (msg.equals(REFRESH_QUESTION)) {
+				json = Tools.getPaging("question", startTime,endTime, 0);
+			}
+			json = Tools.getPaging("question", startTime,endTime, 6);
+			System.out.println("image_text:" +json);
+				out.print(json);
+				System.out.println("已执行输出");
 			break;
-
 		default:
 			break;
 		}

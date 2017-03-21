@@ -59,10 +59,8 @@ public class TopicServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		System.out.println("TopicServlet");
 
 		String json = Tools.getJsonFromDatabase("topic");
-		System.out.println("topic" + json);
 		out.print(json);
 
 	}

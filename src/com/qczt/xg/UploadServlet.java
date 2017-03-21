@@ -61,7 +61,6 @@ public class UploadServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 
-		System.out.println("doPost");
 		// Part part = request.getPart("file");
 		// part.write("sky.jpg");
 		// out.print("success");
@@ -87,8 +86,6 @@ public class UploadServlet extends HttpServlet {
 			String url_img = "http://123.207.31.213/ImmediateChoice_service/img/";
 			String image_left_path = url_img + image_left_name;
 			String image_right_path = url_img + image_right_name;
-			System.out.println(image_left_name);
-			System.out.println(locations);
 			try {
 				db = new DatabaseConnection();
 				Connection conn = db.getConnection();
@@ -116,15 +113,13 @@ public class UploadServlet extends HttpServlet {
 			JSONObject jsonObject = new JSONObject().fromObject(question_video);
 			String video_left_url = jsonObject.getString("video_left_url");
 			String video_right_url = jsonObject.getString("video_right_url");
-			video_left.write(Tools.getFileName(video_left_url));
-			video_right.write(Tools.getFileName(video_right_url));
+			video_left.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\video\\" +Tools.getFileName(video_left_url));
+			video_right.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\video\\"  + Tools.getFileName(video_right_url));
 			String question_video_content = jsonObject
 					.getString("question_video_content");
 			locations = jsonObject.getString("locations");
 			quizzer_name = jsonObject.getString("quizzer_name");
 			quizzer_portrait = jsonObject.getString("quizzer_portrait");
-			System.out.println(Tools.getFileName(video_left_url));
-			System.out.println(locations);
 			try {
 				db = new DatabaseConnection();
 				Connection conn = db.getConnection();
