@@ -54,6 +54,7 @@ public class ImageTextServlet extends HttpServlet {
 		 System.out.println("\nImageTextServlet");
 
 		String msg = request.getParameter("msg");
+		String type = request.getParameter("type");
 		int maxid = 0;
 		String startTime = "";
 		String endTime = "";
@@ -70,9 +71,9 @@ public class ImageTextServlet extends HttpServlet {
 			System.out.println("startTime" + startTime);
 			System.out.println("endTime" + endTime);
 			if (msg.equals(REFRESH_QUESTION)) {
-				json = Tools.getPaging("question", startTime,endTime, 0);
+				json = Tools.getPaging(type, startTime,endTime, 0);
 			}
-			json = Tools.getPaging("question", startTime,endTime, 6);
+			json = Tools.getPaging(type, startTime,endTime, 6);
 			System.out.println("image_text:" +json);
 				out.print(json);
 				System.out.println("已执行输出");

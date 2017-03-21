@@ -58,7 +58,8 @@ public class Tools {
 
 	public static String getPostTime(String tableName) {
 		// select * from question where id limit 5,2;
-		String sql = "select  " +"post_time" + " from  " + tableName +"order by post_time";
+		String sql = "select  " + "post_time" + " from  " + tableName
+				+ "order by post_time";
 		ResultSet rs;
 		String postTime = "";
 		try {
@@ -72,6 +73,7 @@ public class Tools {
 		}
 		return postTime;
 	}
+
 	public static String refreshPaging(String tableName, int startId) {
 		// select * from question where id limit 5,2;
 		// String sql = "select * from question where  id  limit " + a + "," +
@@ -155,26 +157,24 @@ public class Tools {
 		}
 	}
 
-	public static String getPaging(String tableName, String startTime,
+	public static String getPaging(String type, String startTime,
 			String endTime, int num) {
 
 		// select * from question where push_time < "2017-03-20 21:25:53.0"
 		// order by push_time desc limit 0,6 ;
-
-		String sql = "select * from " + tableName + " where post_time > '"
-				+ endTime + "' and post_time < '" + startTime
-				+ "' order by post_time desc limit 0," + num;
-		if (num == 0) {
-			sql = "select * from " + tableName + " where post_time > '"
-					+ endTime + "' and post_time < '" + startTime
-					+ "' order by post_time desc";
+		String pagingPart = "";
+		if (!(num == 0)) {
+			pagingPart = " limit 0," + num;
 		}
+		String sql = "select * from question where left_url like  '%/" + type + "/%' and post_time > '" + endTime
+				+ "' and post_time < '" + startTime
+				+ "' order by post_time desc" + pagingPart;
 		try {
 			ResultSet rs = queryDatabase(sql);
-			JSONArray json = getJsonByArguments(tableName, rs);
+			JSONArray json = getJsonByArguments("question", rs);
 			if (!json.isEmpty()) {
 				return json.toString();
-			}else {
+			} else {
 				return "-1";
 			}
 		} catch (Exception e) {
@@ -363,7 +363,7 @@ public class Tools {
 		while (rs.next()) {
 			JSONObject json = new JSONObject();
 			String quizzer_name;
-			String quizzer_portrait;
+			String portrait_url;
 			int share_count;
 			int comment_count;
 			String comment;
@@ -374,10 +374,10 @@ public class Tools {
 			case "question":
 				int question_id = rs.getInt(1);
 				String question_content = rs.getString(2);
-				String image_left = rs.getString(3);
-				String image_right = rs.getString(4);
+				String left_url = rs.getString(3);
+				String right_url = rs.getString(4);
 				quizzer_name = rs.getString(5);
-				quizzer_portrait = rs.getString(6);
+				portrait_url = rs.getString(6);
 				share_count = rs.getInt(7);
 				comment_count = rs.getInt(8);
 				comment = rs.getString(9);
@@ -385,10 +385,10 @@ public class Tools {
 				post_time = rs.getString(13);
 				json.put("question_id", question_id);
 				json.put("question_content", question_content);
-				json.put("image_left", image_left);
-				json.put("image_right", image_right);
+				json.put("left_url", left_url);
+				json.put("right_url", right_url);
 				json.put("quizzer_name", quizzer_name);
-				json.put("quizzer_portrait", quizzer_portrait);
+				json.put("portrait_url", portrait_url);
 				json.put("share_count", share_count);
 				json.put("comment_count", comment_count);
 				json.put("comment", comment);
@@ -402,7 +402,7 @@ public class Tools {
 				String video_left = rs.getString(3);
 				String video_right = rs.getString(4);
 				quizzer_name = rs.getString(5);
-				quizzer_portrait = rs.getString(6);
+				portrait_url = rs.getString(6);
 				share_count = rs.getInt(7);
 				comment_count = rs.getInt(8);
 				comment = rs.getString(9);
@@ -411,7 +411,7 @@ public class Tools {
 				json.put("video_left", video_left);
 				json.put("video_right", video_right);
 				json.put("quizzer_name", quizzer_name);
-				json.put("quizzer_portrait", quizzer_portrait);
+				json.put("portrait_url", portrait_url);
 				json.put("share_count", share_count);
 				json.put("comment_count", comment_count);
 				json.put("comment", comment);
