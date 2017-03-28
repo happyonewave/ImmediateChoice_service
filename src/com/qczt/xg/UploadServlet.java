@@ -77,12 +77,18 @@ public class UploadServlet extends HttpServlet {
 		JSONObject jsonObject = JSONObject.fromObject(question);
 		left_url = jsonObject.getString("left_url");
 		right_url = jsonObject.getString("right_url");
+//		file_left
+//				.write("/yjdata/www/www/ImmediateChoice_service/"
+//						+ msg + "/" + Tools.getFileName(left_url));
+//		file_right
+//				.write("/yjdata/www/www/ImmediateChoice_service/"
+//						+ msg + "/" + Tools.getFileName(right_url));
 		file_left
-				.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\"
-						+ msg + "\\" + Tools.getFileName(left_url));
-		file_right
-				.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\"
-						+ msg + "\\" + Tools.getFileName(right_url));
+		.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\"
+				+ msg + "\\" + Tools.getFileName(left_url));
+file_right
+		.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\"
+				+ msg + "\\" + Tools.getFileName(right_url));
 
 		question_content = jsonObject.getString("question_content");
 		location = jsonObject.getString("location");

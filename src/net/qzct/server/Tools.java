@@ -1,17 +1,295 @@
 package net.qzct.server;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.logging.Handler;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import sun.applet.resources.MsgAppletViewer;
+import sun.security.provider.MD5;
+import sun.security.rsa.RSASignature.MD5withRSA;
+
+import com.sun.org.apache.bcel.internal.classfile.Code;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class Tools {
+
+	/**
+	 * 请求token
+	 * 
+	 * @param startTime
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static String getToken(final int userId, final String name,
+			final String portraitUri) {
+
+		new Thread();
+		FutureTask task = new FutureTask(new Callable<String>() {
+
+			@Override
+			public String call() throws Exception {
+				String obj = null;
+				HttpClient hc = new DefaultHttpClient();
+				HttpPost httpPost = new HttpPost(
+						"http://api.cn.ronghub.com/user/getToken.json");
+				try {
+					List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+					BasicNameValuePair pair1 = new BasicNameValuePair("userId",
+							userId + "");
+					BasicNameValuePair pair2 = new BasicNameValuePair("name",
+							name);
+					BasicNameValuePair pair3 = new BasicNameValuePair(
+							"portraitUri", portraitUri);
+					
+					parameters.add(pair1);
+					parameters.add(pair2);
+					parameters.add(pair3);
+					UrlEncodedFormEntity entity = new UrlEncodedFormEntity(
+							parameters, "utf-8");
+					
+					String RY_APP_KEY = "x18ywvqfxlw3c";
+					String RY_APP_SECRET = "ZFFu9fReLOmOYi";
+				    Random r = new Random();  
+				    String Nonce = (r.nextInt(10000) + 10000) + "";  
+				    String Timestamp = (System.currentTimeMillis() / 1000) + "";  
+				    httpPost.addHeader("App-Key", RY_APP_KEY);  
+				    httpPost.addHeader("Nonce", Nonce);  
+				    httpPost.addHeader("Timestamp", Timestamp);  
+				    httpPost.addHeader("Signature", 
+//				    		MD5.
+				            encryptToSHA(RY_APP_SECRET + Nonce + Timestamp)); 
+					httpPost.setEntity(entity);
+					HttpResponse hr = hc.execute(httpPost);
+					int statusCode = hr.getStatusLine().getStatusCode();
+					if (statusCode == 200) {
+						InputStream is = hr.getEntity().getContent();
+						String request = getTextFromStream(is);
+						JSONObject object = JSONObject.fromObject(request);
+						int code = object.getInt("code");
+						if (code == 200) {
+							obj = object.getString("token");
+						} else {
+							obj = code + "";
+						}
+					} else {
+						obj = statusCode + "";
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					obj = e.toString();
+				}
+
+				return obj;
+			}
+		});
+		task.run();
+		try {
+			return (String) task.get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+		// new Thread(new Runnable() {
+		// @Override
+		// public void run() {
+		// // String obj = null;
+		// HttpClient hc = new DefaultHttpClient();
+		// HttpPost httpPost = new HttpPost(
+		// "http://api.cn.ronghub.com/user/getToken.json");
+		// try {
+		// List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		// BasicNameValuePair pair1 = new BasicNameValuePair("userId",
+		// userId + "");
+		// BasicNameValuePair pair2 = new BasicNameValuePair("name",
+		// name);
+		// BasicNameValuePair pair3 = new BasicNameValuePair(
+		// "portraitUri", portraitUri);
+		// parameters.add(pair1);
+		// parameters.add(pair2);
+		// parameters.add(pair3);
+		// UrlEncodedFormEntity entity = new UrlEncodedFormEntity(
+		// parameters, "utf-8");
+		// httpPost.setEntity(entity);
+		// HttpResponse hr = hc.execute(httpPost);
+		// if (hr.getStatusLine().getStatusCode() == 200) {
+		// InputStream is = hr.getEntity().getContent();
+		// String request = getTextFromStream(is);
+		// JSONObject object = JSONObject.fromObject(request);
+		// int code = object.getInt("code");
+		// if (code == 200) {
+		// obj = object.getString("token");
+		// } else {
+		// obj = code + "";
+		// }
+		// } else {
+		// obj = "0";
+		// }
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// obj = e.toString();
+		// }
+		//
+		// }
+		// }).start();
+	}
+
+	   /**
+     * 进行SHA加密
+     *
+     * @param info
+     *            要加密的信息
+     * @return String 加密后的字符串
+     */
+    public static String encryptToSHA(String info) {
+        byte[] digesta = null;
+        try {
+            // 得到一个SHA-1的消息摘要
+            MessageDigest alga = MessageDigest.getInstance("SHA-1");
+            // 添加要进行计算摘要的信息
+            alga.update(info.getBytes());
+            // 得到该摘要
+            digesta = alga.digest();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        // 将摘要转为字符串
+        String rs = byte2hex(digesta);
+        return rs;
+    }
+    
+    /**
+     * 将二进制转化为16进制字符串
+     *
+     * @param b
+     *            二进制字节数组
+     * @return String
+     */
+    public static String byte2hex(byte[] b) {
+        String hs = "";
+        String stmp = "";
+        for (int n = 0; n < b.length; n++) {
+            stmp = (java.lang.Integer.toHexString(b[n] & 0XFF));
+            if (stmp.length() == 1) {
+                hs = hs + "0" + stmp;
+            } else {
+                hs = hs + stmp;
+            }
+        }
+        return hs.toUpperCase();
+    }
+	
+	public static String getTextFromStream(InputStream is) {
+		int len = 0;
+		byte[] b = new byte[1024];
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+			while ((len = is.read(b)) != -1) {
+				bos.write(b, 0, len);
+			}
+			String text = new String(bos.toByteArray());
+			return text;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	public static String getFriendInfo(int userId) {
+
+		// select * from userin where user_id = 2
+		JSONArray array = getFriendIds(userId);
+		JSONArray outArray = new JSONArray();
+		if (array != null) {
+			for (int i = 0; i < array.size(); i++) {
+				JSONObject temp = array.getJSONObject(i);
+				int f_id = temp.getInt("f_id");
+				temp = getUserInfo(f_id);
+				outArray.add(temp);
+			}
+			return outArray.toString();
+		} else {
+			return "-1";
+		}
+	}
+
+	public static JSONObject getUserInfo(int userId) {
+		String sql = "select * from userin where user_id = " + userId;
+		try {
+			ResultSet rs = queryDatabase(sql);
+			JSONObject object = new JSONObject();
+			if (rs.next()) {
+				int user_id = rs.getInt(1);
+				String name = rs.getString(2);
+				// String password = rs.getString(3);
+				String phone_number = rs.getString(4);
+				String sex = rs.getString(5);
+				String portrait_path = rs.getString(6);
+				object.put("user_id", user_id);
+				object.put("name", name);
+				// json.put("password", password);
+				object.put("phone_number", phone_number);
+				object.put("sex", sex);
+				object.put("portrait_path", portrait_path);
+			}
+			return object;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	/**
+	 * 拿到好友的Id集合
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static JSONArray getFriendIds(int userId) {
+		// select * from friend where user_id = 2
+		String sql = "select * from friend where user_id = " + userId;
+		try {
+			ResultSet rs = queryDatabase(sql);
+			JSONArray json = getJsonByArguments("friend", rs);
+			return json;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	/**
 	 * 获取文件名（有拓展名）
@@ -166,9 +444,9 @@ public class Tools {
 		if (!(num == 0)) {
 			pagingPart = " limit 0," + num;
 		}
-		String sql = "select * from question where left_url like  '%/" + type + "/%' and post_time > '" + endTime
-				+ "' and post_time < '" + startTime
-				+ "' order by post_time desc" + pagingPart;
+		String sql = "select * from question where left_url like  '%/" + type
+				+ "/%' and post_time > '" + endTime + "' and post_time < '"
+				+ startTime + "' order by post_time desc" + pagingPart;
 		try {
 			ResultSet rs = queryDatabase(sql);
 			JSONArray json = getJsonByArguments("question", rs);
@@ -447,10 +725,16 @@ public class Tools {
 				String portrait_path = rs.getString(6);
 				json.put("user_id", user_id);
 				json.put("name", name);
-				json.put("password", password);
+				// json.put("password", password);
 				json.put("phone_number", phone_number);
 				json.put("sex", sex);
 				json.put("portrait_path", portrait_path);
+				jsonArray.add(json);
+				break;
+
+			case "friend":
+				int f_id = rs.getInt(2);
+				json.put("f_id", f_id);
 				jsonArray.add(json);
 				break;
 
@@ -469,4 +753,18 @@ public class Tools {
 		ResultSet rs = stmt.executeQuery(sql);
 		return rs;
 	}
+
+	public static int updateToken(int user_id, String token) throws Exception {
+
+		// UPDATE userin SET token="6" where user_id = 3
+		String sql = "UPDATE userin SET token='" + token + "' where user_id = "
+				+ user_id;
+		DatabaseConnection db = new DatabaseConnection();
+		Connection conn = db.getConnection();
+		Statement stmt = conn.createStatement();
+		int resquet = stmt.executeUpdate(sql);
+		stmt.close();
+		return resquet;
+	}
+
 }

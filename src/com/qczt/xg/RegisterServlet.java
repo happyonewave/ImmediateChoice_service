@@ -16,15 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import net.qzct.server.DatabaseConnection;
+import net.qzct.server.Tools;
 
 /**
  * Servlet implementation class Register
  */
 @WebServlet("/RegisterServlet")
-@MultipartConfig(
-		location = "/yjdata/www/www/ImmediateChoice_service/img"
-//		location="E:\\apache-tomcat-7.0.56\\webapps\\Server\\img"
-		)
+@MultipartConfig(location = "/yjdata/www/www/ImmediateChoice_service/img"
+// location="E:\\apache-tomcat-7.0.56\\webapps\\Server\\img"
+)
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -56,19 +56,19 @@ public class RegisterServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		
+
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 		String phone_number = request.getParameter("phone_number");
 		String sex = request.getParameter("sex");
-		
+
 		Part portrait = request.getPart("portrait");
 		String portrait_name = phone_number + ".jpg";
 		portrait.write(portrait_name);
-		
+
 		String url_img = "http://123.207.31.213/ImmediateChoice_service/img/";
 		String portrait_path = url_img + portrait_name;
-		
+
 		DatabaseConnection db;
 
 		String sql1 = "select  * from userin where name='" + name + "'";
