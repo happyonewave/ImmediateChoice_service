@@ -17,6 +17,7 @@ import javax.tools.Tool;
 
 import net.qzct.server.DatabaseConnection;
 import net.qzct.server.Tools;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
@@ -39,6 +40,7 @@ public class UploadServlet extends HttpServlet {
 	private String location;
 	private String quizzer_name;
 	private String portrait_url;
+	private String group_ids;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -73,8 +75,10 @@ public class UploadServlet extends HttpServlet {
 		Part file_left = request.getPart("file_left");
 		Part file_right = request.getPart("file_right");
 		String question = request.getParameter("question");
-		new JSONObject();
+		 group_ids = request.getParameter("group_ids");
 		JSONObject jsonObject = JSONObject.fromObject(question);
+		JSONArray jsonArray = JSONArray.fromObject(group_ids);
+		group_ids = groupIdstoString(jsonArray);
 		left_url = jsonObject.getString("left_url");
 		right_url = jsonObject.getString("right_url");
 //		file_left
@@ -176,6 +180,14 @@ file_right
 		// }
 	}
 
+	private String groupIdstoString(JSONArray jsonArray) {
+			String str = "";
+		for (int i = 0; i < jsonArray.size(); i++) {
+			str += "," + jsonArray.getJSONObject(i).getString("group_id") + ",";
+		}
+		return str;
+	}
+
 	/**
 	 * 添加到数据库
 	 */
@@ -185,7 +197,7 @@ file_right
 			db = new DatabaseConnection();
 			Connection conn = db.getConnection();
 			//
-			String sql = "INSERT INTO question(left_url,right_url,question_content,quizzer_name,portrait_url,location) VALUES (?,?,?,?,?,?) ";
+			String sql = "INSERT INTO question(left_url,right_url,question_content,quizzer_name,portrait_url,location,group_ids) VALUES (?,?,?,?,?,?,?) ";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, left_url);
 			pstmt.setString(2, right_url);
@@ -193,6 +205,7 @@ file_right
 			pstmt.setString(4, quizzer_name);
 			pstmt.setString(5, portrait_url);
 			pstmt.setString(6, location);
+			pstmt.setString(7, group_ids);
 			pstmt.executeUpdate();
 			out.print("1");
 		} catch (Exception e) {

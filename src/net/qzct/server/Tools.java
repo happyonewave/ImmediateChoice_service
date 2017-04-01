@@ -438,13 +438,13 @@ public class Tools {
 	public static String getPaging(String type, String startTime,
 			String endTime, int num) {
 
-		// select * from question where push_time < "2017-03-20 21:25:53.0"
+		// select * from question where group_id = 0  and  push_time < "2017-03-20 21:25:53.0"
 		// order by push_time desc limit 0,6 ;
 		String pagingPart = "";
 		if (!(num == 0)) {
 			pagingPart = " limit 0," + num;
 		}
-		String sql = "select * from question where left_url like  '%/" + type
+		String sql = "select * from question where group_ids = 0  and  left_url like  '%/" + type
 				+ "/%' and post_time > '" + endTime + "' and post_time < '"
 				+ startTime + "' order by post_time desc" + pagingPart;
 		try {
