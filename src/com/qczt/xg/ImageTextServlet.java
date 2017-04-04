@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.qzct.server.GroupUtils;
 import net.qzct.server.Tools;
 import net.sf.json.JSONArray;
 
@@ -51,10 +52,17 @@ public class ImageTextServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		 System.out.println("\nImageTextServlet");
+		System.out.println("\nImageTextServlet");
 
 		String msg = request.getParameter("msg");
 		String type = request.getParameter("type");
+		String user_id = request.getParameter("user_id");
+		JSONArray group_idsArray = null;
+		if (user_id.equals("0")) {
+			 group_idsArray =  JSONArray.fromObject("[{\"group_id\":\"0\"}]");
+		} else {
+			group_idsArray = GroupUtils.getGroupIdsFromFriendId(Integer.parseInt(user_id));
+		}
 		int maxid = 0;
 		String startTime = "";
 		String endTime = "";
@@ -71,12 +79,12 @@ public class ImageTextServlet extends HttpServlet {
 			System.out.println("startTime" + startTime);
 			System.out.println("endTime" + endTime);
 			if (msg.equals(REFRESH_QUESTION)) {
-				json = Tools.getPaging(type, startTime,endTime, 0);
+				json = Tools.getPaging(type, startTime, endTime, group_idsArray, 0);
 			}
-			json = Tools.getPaging(type, startTime,endTime, 6);
-			System.out.println("image_text:" +json);
-				out.print(json);
-				System.out.println("已执行输出");
+			json = Tools.getPaging(type, startTime, endTime, group_idsArray, 0);
+			System.out.println("image_text:" + json);
+			out.print(json);
+			System.out.println("已执行输出");
 			break;
 		default:
 			break;

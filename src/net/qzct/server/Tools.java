@@ -66,24 +66,24 @@ public class Tools {
 							name);
 					BasicNameValuePair pair3 = new BasicNameValuePair(
 							"portraitUri", portraitUri);
-					
+
 					parameters.add(pair1);
 					parameters.add(pair2);
 					parameters.add(pair3);
 					UrlEncodedFormEntity entity = new UrlEncodedFormEntity(
 							parameters, "utf-8");
-					
+
 					String RY_APP_KEY = "x18ywvqfxlw3c";
 					String RY_APP_SECRET = "ZFFu9fReLOmOYi";
-				    Random r = new Random();  
-				    String Nonce = (r.nextInt(10000) + 10000) + "";  
-				    String Timestamp = (System.currentTimeMillis() / 1000) + "";  
-				    httpPost.addHeader("App-Key", RY_APP_KEY);  
-				    httpPost.addHeader("Nonce", Nonce);  
-				    httpPost.addHeader("Timestamp", Timestamp);  
-				    httpPost.addHeader("Signature", 
-//				    		MD5.
-				            encryptToSHA(RY_APP_SECRET + Nonce + Timestamp)); 
+					Random r = new Random();
+					String Nonce = (r.nextInt(10000) + 10000) + "";
+					String Timestamp = (System.currentTimeMillis() / 1000) + "";
+					httpPost.addHeader("App-Key", RY_APP_KEY);
+					httpPost.addHeader("Nonce", Nonce);
+					httpPost.addHeader("Timestamp", Timestamp);
+					httpPost.addHeader("Signature",
+					// MD5.
+							encryptToSHA(RY_APP_SECRET + Nonce + Timestamp));
 					httpPost.setEntity(entity);
 					HttpResponse hr = hc.execute(httpPost);
 					int statusCode = hr.getStatusLine().getStatusCode();
@@ -164,51 +164,51 @@ public class Tools {
 		// }).start();
 	}
 
-	   /**
-     * 进行SHA加密
-     *
-     * @param info
-     *            要加密的信息
-     * @return String 加密后的字符串
-     */
-    public static String encryptToSHA(String info) {
-        byte[] digesta = null;
-        try {
-            // 得到一个SHA-1的消息摘要
-            MessageDigest alga = MessageDigest.getInstance("SHA-1");
-            // 添加要进行计算摘要的信息
-            alga.update(info.getBytes());
-            // 得到该摘要
-            digesta = alga.digest();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        // 将摘要转为字符串
-        String rs = byte2hex(digesta);
-        return rs;
-    }
-    
-    /**
-     * 将二进制转化为16进制字符串
-     *
-     * @param b
-     *            二进制字节数组
-     * @return String
-     */
-    public static String byte2hex(byte[] b) {
-        String hs = "";
-        String stmp = "";
-        for (int n = 0; n < b.length; n++) {
-            stmp = (java.lang.Integer.toHexString(b[n] & 0XFF));
-            if (stmp.length() == 1) {
-                hs = hs + "0" + stmp;
-            } else {
-                hs = hs + stmp;
-            }
-        }
-        return hs.toUpperCase();
-    }
-	
+	/**
+	 * 进行SHA加密
+	 * 
+	 * @param info
+	 *            要加密的信息
+	 * @return String 加密后的字符串
+	 */
+	public static String encryptToSHA(String info) {
+		byte[] digesta = null;
+		try {
+			// 得到一个SHA-1的消息摘要
+			MessageDigest alga = MessageDigest.getInstance("SHA-1");
+			// 添加要进行计算摘要的信息
+			alga.update(info.getBytes());
+			// 得到该摘要
+			digesta = alga.digest();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		// 将摘要转为字符串
+		String rs = byte2hex(digesta);
+		return rs;
+	}
+
+	/**
+	 * 将二进制转化为16进制字符串
+	 * 
+	 * @param b
+	 *            二进制字节数组
+	 * @return String
+	 */
+	public static String byte2hex(byte[] b) {
+		String hs = "";
+		String stmp = "";
+		for (int n = 0; n < b.length; n++) {
+			stmp = (java.lang.Integer.toHexString(b[n] & 0XFF));
+			if (stmp.length() == 1) {
+				hs = hs + "0" + stmp;
+			} else {
+				hs = hs + stmp;
+			}
+		}
+		return hs.toUpperCase();
+	}
+
 	public static String getTextFromStream(InputStream is) {
 		int len = 0;
 		byte[] b = new byte[1024];
@@ -436,21 +436,37 @@ public class Tools {
 	}
 
 	public static String getPaging(String type, String startTime,
-			String endTime, int num) {
+			String endTime, JSONArray group_ids, int num) {
 
-		// select * from question where group_id = 0  and  push_time < "2017-03-20 21:25:53.0"
+		// select * from question where group_ids like '%,"
+		// + group_id + ",%' and push_time <
+		// "2017-03-20 21:25:53.0"
 		// order by push_time desc limit 0,6 ;
 		String pagingPart = "";
 		if (!(num == 0)) {
 			pagingPart = " limit 0," + num;
 		}
-		String sql = "select * from question where group_ids = 0  and  left_url like  '%/" + type
+		String sql = "select * from question where left_url like  '%/" + type
 				+ "/%' and post_time > '" + endTime + "' and post_time < '"
 				+ startTime + "' order by post_time desc" + pagingPart;
 		try {
 			ResultSet rs = queryDatabase(sql);
 			JSONArray json = getJsonByArguments("question", rs);
 			if (!json.isEmpty()) {
+				System.out.println("从数据库拿到的" + json.toString());
+				for (int i = 0; i < group_ids.size(); i++) {
+					JSONObject temp = group_ids.getJSONObject(i);
+					String group_id = temp.getString("group_id");
+					System.out.println("上传的group_id: " + group_id);
+					for (int j = 0; j < json.size(); j++) {
+						 temp = json.getJSONObject(j);
+						String group_idsStr = temp.getString("group_ids");
+						System.out.println("group_idsStr: " + group_idsStr);
+						if (!group_idsStr.contains("," + group_id + ",")) {
+							json.remove(j);
+						}
+					}
+				}
 				return json.toString();
 			} else {
 				return "-1";
@@ -646,6 +662,7 @@ public class Tools {
 			int comment_count;
 			String comment;
 			String post_time;
+			String group_ids;
 			SimpleDateFormat format = new SimpleDateFormat(
 					"yyyy-MM-dd HH:mm:ss");
 			switch (listname) {
@@ -659,6 +676,7 @@ public class Tools {
 				share_count = rs.getInt(7);
 				comment_count = rs.getInt(8);
 				comment = rs.getString(9);
+				group_ids = rs.getString("group_ids");
 				// post_time = format.format(rs.getDate(13));
 				post_time = rs.getString(13);
 				json.put("question_id", question_id);
@@ -671,6 +689,7 @@ public class Tools {
 				json.put("comment_count", comment_count);
 				json.put("comment", comment);
 				json.put("post_time", post_time);
+				json.put("group_ids", group_ids);
 				jsonArray.add(json);
 				break;
 

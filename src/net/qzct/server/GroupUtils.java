@@ -43,6 +43,34 @@ public class GroupUtils {
 
 	}
 
+	public static JSONArray getGroupIdsFromFriendId(int f_id) {
+
+		// SELECT group_id,name FROM group_info WHERE owner_id = 1
+
+		String sql = "SELECT group_id FROM friend WHERE f_id = "
+				+ f_id;
+		try {
+
+			ResultSet rs = Tools.queryDatabase(sql);
+			JSONArray array = new JSONArray();
+			JSONObject temp = new JSONObject();
+			while (rs.next()) {
+				int group_id = rs.getInt(1);
+				temp.clear();
+				temp.put("group_id", group_id);
+				array.add(temp);
+			}
+			return array;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		
+		
+		
+	}
+	
 	/**
 	 * 通过组Id查询GroupMembers
 	 * 
