@@ -59,7 +59,7 @@ public class ImageTextServlet extends HttpServlet {
 		String user_id = request.getParameter("user_id");
 		JSONArray group_idsArray = null;
 		if (user_id.equals("0")) {
-			 group_idsArray =  JSONArray.fromObject("[{\"group_id\":\"0\"}]");
+			 group_idsArray =  JSONArray.fromObject("[{\"group_id\":0}]");
 		} else {
 			group_idsArray = GroupUtils.getGroupIdsFromFriendId(Integer.parseInt(user_id));
 		}
@@ -81,10 +81,10 @@ public class ImageTextServlet extends HttpServlet {
 			if (msg.equals(REFRESH_QUESTION)) {
 				json = Tools.getPaging(type, startTime, endTime, group_idsArray, 0);
 			}
-			json = Tools.getPaging(type, startTime, endTime, group_idsArray, 0);
-			System.out.println("image_text:" + json);
+			json = Tools.getPaging(type, startTime, endTime, group_idsArray, 6);
+//			System.out.println("image_text:" + json);
 			out.print(json);
-			System.out.println("已执行输出");
+//			System.out.println("已执行输出");
 			break;
 		default:
 			break;

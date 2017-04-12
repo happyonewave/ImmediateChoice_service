@@ -29,6 +29,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import sun.applet.resources.MsgAppletViewer;
+import sun.nio.cs.ext.ISCII91;
 import sun.security.provider.MD5;
 import sun.security.rsa.RSASignature.MD5withRSA;
 
@@ -292,6 +293,47 @@ public class Tools {
 	}
 
 	/**
+	 * 拿到话题成员的Id集合
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static JSONArray getTopicMemberIds(int userId) {
+		// select * from friend where user_id = 2
+		String sql = "select topic_id from topic_members where user_id = "
+				+ userId;
+		try {
+			ResultSet rs = queryDatabase(sql);
+			JSONArray json = getJsonByArguments("topic_members", rs);
+			return json;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static JSONObject getTopicFromId(int topicId) {
+		String sql = "select * from topic where topic_id = " + topicId;
+		try {
+			ResultSet rs = queryDatabase(sql);
+			JSONObject json = new JSONObject();
+			if (rs.next()) {
+				String topic_id = rs.getString(1);
+				String topic_title = rs.getString(2);
+				String topic_img_url = rs.getString(3);
+				json.put("topic_id", topic_id);
+				json.put("topic_title", topic_title);
+				json.put("topic_img_url", topic_img_url);
+			}
+			return json;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	/**
 	 * 获取文件名（有拓展名）
 	 * 
 	 * @param Path
@@ -443,7 +485,7 @@ public class Tools {
 		// "2017-03-20 21:25:53.0"
 		// order by push_time desc limit 0,6 ;
 		String pagingPart = "";
-		if (!(num == 0)) {
+		if (num != 0) {
 			pagingPart = " limit 0," + num;
 		}
 		String sql = "select * from question where left_url like  '%/" + type
@@ -451,23 +493,81 @@ public class Tools {
 				+ startTime + "' order by post_time desc" + pagingPart;
 		try {
 			ResultSet rs = queryDatabase(sql);
-			JSONArray json = getJsonByArguments("question", rs);
-			if (!json.isEmpty()) {
-				System.out.println("从数据库拿到的" + json.toString());
-				for (int i = 0; i < group_ids.size(); i++) {
-					JSONObject temp = group_ids.getJSONObject(i);
-					String group_id = temp.getString("group_id");
-					System.out.println("上传的group_id: " + group_id);
-					for (int j = 0; j < json.size(); j++) {
-						 temp = json.getJSONObject(j);
-						String group_idsStr = temp.getString("group_ids");
-						System.out.println("group_idsStr: " + group_idsStr);
-						if (!group_idsStr.contains("," + group_id + ",")) {
-							json.remove(j);
-						}
-					}
-				}
-				return json.toString();
+			// JSONArray originalJson =
+			// JSONArray.fromObject(getJsonFromDatabase("question"));
+			// System.out.println("originalJson" + originalJson.toString());
+			// 全部投票
+			JSONArray allJson = getJsonByArguments("question", rs);
+			// JSONArray allJson =
+			// JSONArray.fromObject(getJsonFromDatabase("question"));
+			// //需要删除的投票
+			// JSONArray json = new JSONArray();
+			// // for (int i = 0; i < allJson.size(); i++) {
+			// // json.add(allJson.getJSONObject(i));
+			// // }
+			if (!allJson.isEmpty()) {
+				// // System.out.println("从数据库拿到的" + allJson.toString());
+				// for (int j = 0; j < allJson.size(); j++) {
+				// System.out.println("allJsonsize:	" + allJson.size());
+				// //遍历的投票
+				// JSONObject allTemp = allJson.getJSONObject(j);
+				// // System.out.println("j:	" + allTemp.getInt("question_id"));
+				// System.out.println("j:	" + j);
+				// //可读的群组
+				// JSONArray readableGroup_ids =
+				// GroupUtils.getReadableGroupIdsFromQuestionId(allTemp.getInt("question_id"));
+				// System.out.println("readableGroup_ids:	" +
+				// readableGroup_ids.toString());
+				// if (readableGroup_ids.isEmpty()) {
+				// readableGroup_ids =
+				// JSONArray.fromObject("[{\"group_id\":0}]");
+				// }
+				// // readableGroup_ids
+				// for (int k = 0; k < readableGroup_ids.size(); k++) {
+				// // System.out.println("k: " + k);
+				// //遍历可读的群组
+				// JSONObject temp = readableGroup_ids.getJSONObject(k);
+				// for (int i = 0; i < group_ids.size(); i++) {
+				// // System.out.println("i: " + i);
+				// //遍历用户所在的群组
+				// JSONObject id_temp = group_ids.getJSONObject(i);
+				// System.out.println("用户所在的群组     :" +
+				// id_temp.getInt("group_id") + "可读的群组    :" +
+				// temp.getInt("group_id"));
+				// if (id_temp.getInt("group_id") == temp.getInt("group_id")) {
+				// // System.out.println("jsonsize: " + json.size() +"j:" +j);
+				// System.out.println("相等");
+				// System.out.println(allTemp.toString());
+				// json.add(allTemp);
+				// // if (json.contains(allTemp)) {
+				// // if (json.remove(allTemp)) {
+				// // System.out.println("移除成功");
+				// // }else {
+				// // System.out.println("移除失败");
+				// // if (json.remove(allTemp)) {
+				// // System.out.println("第二次移除成功");
+				// // }
+				// // System.out.println("第二次移除失败");
+				// // }
+				// // }
+				// }
+				// }
+				// }
+				// }
+				// // allJson = json;
+				// System.out.println("输出的：	");
+				// for (int l = 0; l < json.size(); l++) {
+				// JSONObject jsonObject = json.getJSONObject(l);
+				// System.out.print(jsonObject.getInt("question_id") + " ");
+				// }
+				// truncateTable("question");
+				// addToDatabase(json);
+				// rs = queryDatabase(sql);
+				// //输出投票
+				// json = getJsonByArguments("question", rs);
+				// truncateTable("question");
+				// addToDatabase(originalJson);
+				return allJson.toString();
 			} else {
 				return "-1";
 			}
@@ -476,6 +576,67 @@ public class Tools {
 			return "-1";
 		}
 
+	}
+
+	public static String truncateTable(String tableName) {
+		// 存放记录 update question set
+		// choice_right_ids=CONCAT(choice_right_ids,',3,') where question_id=8
+
+		// 删除记录 update question set choice_right_ids =
+		// replace(choice_right_ids,',7,','') where question_id=8
+
+		// 判断是否存在记录 select * from question where choice_right_ids like '%,7,%'
+		// and question_id = "2"
+		DatabaseConnection db;
+
+		String sql = "truncate table " + tableName + ";";
+
+		try {
+			db = new DatabaseConnection();
+			Connection conn = db.getConnection();
+			Statement stmt = conn.createStatement();
+			int request = stmt.executeUpdate(sql);
+			if (request > 0) {
+				stmt.close();
+				return "1";
+			} else {
+				stmt.close();
+				return "0";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "0";
+		}
+
+	}
+
+	/**
+	 * 添加到数据库
+	 */
+	public static void addToDatabase(JSONArray json) {
+
+		for (int i = 0; i < json.size(); i++) {
+			JSONObject temp = json.getJSONObject(i);
+			try {
+				DatabaseConnection db = new DatabaseConnection();
+				Connection conn = db.getConnection();
+				//
+				String sql = "INSERT INTO question(left_url,right_url,question_content,quizzer_name,portrait_url,location) VALUES (?,?,?,?,?,?) ";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, temp.getString("left_url"));
+				pstmt.setString(2, temp.getString("right_url"));
+				pstmt.setString(3, temp.getString("question_content"));
+				pstmt.setString(4, temp.getString("quizzer_name"));
+				pstmt.setString(5, temp.getString("portrait_url"));
+				pstmt.setString(6, temp.getString("location"));
+				// pstmt.setString(7, group_ids);
+				pstmt.executeUpdate();
+				// out.print("1");
+			} catch (Exception e) {
+				// out.print("0");
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -506,7 +667,7 @@ public class Tools {
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				count = rs.getInt(1);
-				System.out.println(left_or_right + "数量：" + count);
+				// System.out.println(left_or_right + "数量：" + count);
 				rs.close();
 				stmt.close();
 				return count;
@@ -663,6 +824,7 @@ public class Tools {
 			String comment;
 			String post_time;
 			String group_ids;
+			String location;
 			SimpleDateFormat format = new SimpleDateFormat(
 					"yyyy-MM-dd HH:mm:ss");
 			switch (listname) {
@@ -676,7 +838,8 @@ public class Tools {
 				share_count = rs.getInt(7);
 				comment_count = rs.getInt(8);
 				comment = rs.getString(9);
-				group_ids = rs.getString("group_ids");
+				location = rs.getString("location");
+				// group_ids = rs.getString("group_ids");
 				// post_time = format.format(rs.getDate(13));
 				post_time = rs.getString(13);
 				json.put("question_id", question_id);
@@ -689,29 +852,14 @@ public class Tools {
 				json.put("comment_count", comment_count);
 				json.put("comment", comment);
 				json.put("post_time", post_time);
-				json.put("group_ids", group_ids);
+				json.put("location", location);
+				// json.put("group_ids", group_ids);
 				jsonArray.add(json);
 				break;
 
-			case "question_video":
-				int question_video_id = rs.getInt(1);
-				String question_video_content = rs.getString(2);
-				String video_left = rs.getString(3);
-				String video_right = rs.getString(4);
-				quizzer_name = rs.getString(5);
-				portrait_url = rs.getString(6);
-				share_count = rs.getInt(7);
-				comment_count = rs.getInt(8);
-				comment = rs.getString(9);
-				json.put("question_video_id", question_video_id);
-				json.put("question_video_content", question_video_content);
-				json.put("video_left", video_left);
-				json.put("video_right", video_right);
-				json.put("quizzer_name", quizzer_name);
-				json.put("portrait_url", portrait_url);
-				json.put("share_count", share_count);
-				json.put("comment_count", comment_count);
-				json.put("comment", comment);
+			case "topic_members":
+				int topic_id = rs.getInt(1);
+				json.put("topic_id", topic_id);
 				jsonArray.add(json);
 				break;
 

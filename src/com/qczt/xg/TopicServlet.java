@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.qzct.server.DatabaseConnection;
 import net.qzct.server.Tools;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @WebServlet("/TopicServlet")
 public class TopicServlet extends HttpServlet {
@@ -60,8 +62,27 @@ public class TopicServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 
-		String json = Tools.getJsonFromDatabase("topic");
-		out.print(json);
+		String user_id = request.getParameter("user_id");
+		System.out.println("\n topic user_id:" + user_id + "\n");
+		JSONArray json = new JSONArray();
+		if (user_id == null) {
+			System.out.println("\nuser_id is null \n");
+			json = JSONArray.fromObject(Tools.getJsonFromDatabase("topic"));
+		} else {
+			System.out.println("\nuser_id not is null \n");
+			JSONArray topicJsonArray = Tools.getTopicMemberIds(Integer
+					.parseInt(user_id));
+			System.out.println("topicJsonArray:	" + topicJsonArray);
+			for (int i = 0; i < topicJsonArray.size(); i++) {
+				JSONObject temp = topicJsonArray.getJSONObject(i);
+				JSONObject topicJsonObject = Tools.getTopicFromId(temp
+						.getInt("topic_id"));
+				json.add(topicJsonObject);
+				System.out.println("topicJsonObject:	" + topicJsonObject);
+			}
+		}
+
+		out.print(json.toString());
 
 	}
 }

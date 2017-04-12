@@ -40,7 +40,7 @@ public class UploadServlet extends HttpServlet {
 	private String location;
 	private String quizzer_name;
 	private String portrait_url;
-	private String group_ids;
+//	private String group_ids;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -75,10 +75,10 @@ public class UploadServlet extends HttpServlet {
 		Part file_left = request.getPart("file_left");
 		Part file_right = request.getPart("file_right");
 		String question = request.getParameter("question");
-		 group_ids = request.getParameter("group_ids");
+//		 group_ids = request.getParameter("group_ids");
 		JSONObject jsonObject = JSONObject.fromObject(question);
-		JSONArray jsonArray = JSONArray.fromObject(group_ids);
-		group_ids = groupIdstoString(jsonArray);
+//		JSONArray jsonArray = JSONArray.fromObject(group_ids);
+//		group_ids = groupIdstoString(jsonArray);
 		left_url = jsonObject.getString("left_url");
 		right_url = jsonObject.getString("right_url");
 //		file_left
@@ -197,7 +197,7 @@ file_right
 			db = new DatabaseConnection();
 			Connection conn = db.getConnection();
 			//
-			String sql = "INSERT INTO question(left_url,right_url,question_content,quizzer_name,portrait_url,location,group_ids) VALUES (?,?,?,?,?,?,?) ";
+			String sql = "INSERT INTO question(left_url,right_url,question_content,quizzer_name,portrait_url,location) VALUES (?,?,?,?,?,?) ";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, left_url);
 			pstmt.setString(2, right_url);
@@ -205,7 +205,7 @@ file_right
 			pstmt.setString(4, quizzer_name);
 			pstmt.setString(5, portrait_url);
 			pstmt.setString(6, location);
-			pstmt.setString(7, group_ids);
+//			pstmt.setString(7, group_ids);
 			pstmt.executeUpdate();
 			out.print("1");
 		} catch (Exception e) {

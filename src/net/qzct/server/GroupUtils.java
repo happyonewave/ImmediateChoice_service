@@ -65,11 +65,33 @@ public class GroupUtils {
 			e.printStackTrace();
 			return null;
 		}
-
-		
-		
-		
 	}
+	
+	public static JSONArray getReadableGroupIdsFromQuestionId(int question_id) {
+
+
+		String sql = "SELECT group_id FROM readable_group WHERE question_id = "
+				+ question_id;
+		try {
+
+			ResultSet rs = Tools.queryDatabase(sql);
+			JSONArray array = new JSONArray();
+			JSONObject temp = new JSONObject();
+			while (rs.next()) {
+				int group_id = rs.getInt("group_id");
+				temp.clear();
+				temp.put("group_id", group_id);
+				array.add(temp);
+			}
+			return array;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	
 	
 	/**
 	 * 通过组Id查询GroupMembers
