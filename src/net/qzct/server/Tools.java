@@ -829,15 +829,16 @@ public class Tools {
 					"yyyy-MM-dd HH:mm:ss");
 			switch (listname) {
 			case "question":
-				int question_id = rs.getInt(1);
-				String question_content = rs.getString(2);
-				String left_url = rs.getString(3);
-				String right_url = rs.getString(4);
-				quizzer_name = rs.getString(5);
-				portrait_url = rs.getString(6);
-				share_count = rs.getInt(7);
-				comment_count = rs.getInt(8);
-				comment = rs.getString(9);
+				int question_id = rs.getInt("question_id");
+				int topic_id = rs.getInt("topic_id");
+				String question_content = rs.getString("question_content");
+				String left_url = rs.getString("left_url");
+				String right_url = rs.getString("right_url");
+				quizzer_name = rs.getString("quizzer_name");
+				portrait_url = rs.getString("portrait_url");
+				share_count = rs.getInt("share_count");
+				comment_count = rs.getInt("comment_count");
+				comment = rs.getString("comment");
 				location = rs.getString("location");
 				// group_ids = rs.getString("group_ids");
 				// post_time = format.format(rs.getDate(13));
@@ -858,8 +859,8 @@ public class Tools {
 				break;
 
 			case "topic_members":
-				int topic_id = rs.getInt(1);
-				json.put("topic_id", topic_id);
+				int topic_id1 = rs.getInt(1);
+				json.put("topic_id", topic_id1);
 				jsonArray.add(json);
 				break;
 
@@ -876,8 +877,10 @@ public class Tools {
 				break;
 
 			case "topic":
+				int topic_id2 = rs.getInt(1);
 				String topic_title = rs.getString(2);
 				String topic_img_url = rs.getString(3);
+				json.put("topic_id", topic_id2);
 				json.put("topic_title", topic_title);
 				json.put("topic_img_url", topic_img_url);
 				jsonArray.add(json);

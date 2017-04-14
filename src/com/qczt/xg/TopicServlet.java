@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.qzct.server.DatabaseConnection;
 import net.qzct.server.Tools;
+import net.qzct.server.TopicUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -63,13 +64,11 @@ public class TopicServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		String user_id = request.getParameter("user_id");
-		System.out.println("\n topic user_id:" + user_id + "\n");
+		String topic_id = request.getParameter("topic_id");
 		JSONArray json = new JSONArray();
-		if (user_id == null) {
-			System.out.println("\nuser_id is null \n");
+		if (user_id == null && topic_id == null) {
 			json = JSONArray.fromObject(Tools.getJsonFromDatabase("topic"));
-		} else {
-			System.out.println("\nuser_id not is null \n");
+		} else if (topic_id == null) {
 			JSONArray topicJsonArray = Tools.getTopicMemberIds(Integer
 					.parseInt(user_id));
 			System.out.println("topicJsonArray:	" + topicJsonArray);
@@ -80,8 +79,12 @@ public class TopicServlet extends HttpServlet {
 				json.add(topicJsonObject);
 				System.out.println("topicJsonObject:	" + topicJsonObject);
 			}
+		} else {
+			json = TopicUtils
+					.getQuestionFromTopicId(Integer.parseInt(topic_id));
+			System.out.println("topic_id:	" + topic_id);
 		}
-
+		System.out.println("输出：		" + json.toString());
 		out.print(json.toString());
 
 	}
