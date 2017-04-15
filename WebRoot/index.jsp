@@ -29,11 +29,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	
  	
  	
- <!--<form action="ImageTextServlet" method="post">
- 	msg：<input type="text" name="msg"/><br>
- 	密码： <input type="text" name="startId" /><br>
+<form action="ImageTextServlet" method="post">
+ 	page：<input type="text" name="page"/><br>
+ 	type： <input type="text" name="type" /><br>
+ 	user_id： <input type="text" name="user_id" /><br>
  	<input type="submit" value="提交"/>
- 	</form><br>!-->
+ 	</form><br>
  	
  	
  	

@@ -65,7 +65,7 @@ public class QuestionVideoServlet extends HttpServlet {
 		case GET_QUESTION:
 			a = request.getParameter("startId");
 			startId = Integer.parseInt(a);
-			json = Tools.getPagingOld("question_video", startId);
+//			json = Tools.getPagingOld("question_video", startId);
 			out.print(json);
 			break;
 		case REFRESH_QUESTION:

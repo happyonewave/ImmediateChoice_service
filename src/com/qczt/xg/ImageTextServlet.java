@@ -3,6 +3,9 @@ package com.qczt.xg;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,50 +49,72 @@ public class ImageTextServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		final String GET_MAX_ID = "0";
-		final String GET_QUESTION = "1";
-		final String REFRESH_QUESTION = "2";
+		// final String GET_MAX_ID = "0";
+		// final String GET_QUESTION = "1";
+		// final String REFRESH_QUESTION = "2";
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		System.out.println("\nImageTextServlet");
 
-		String msg = request.getParameter("msg");
+		String page = request.getParameter("page");
 		String type = request.getParameter("type");
 		String user_id = request.getParameter("user_id");
+		System.out.println("page:	" + page);
+		System.out.println("type:	" + type);
+		System.out.println("user_id:	" + user_id);
+
 		String group_ids = null;
-		if (user_id.equals("0")) {
-			 group_ids= "(0)";
+		String endTime;
+		if (user_id == null || user_id.isEmpty()) {
+			group_ids = "(0)";
+			// endTime = "1970-01-01 08:00:00";
 		} else {
-			group_ids = GroupUtils.getGroupIdsFromFriendId(Integer.parseInt(user_id));
+			group_ids = GroupUtils.getGroupIdsFromFriendId(Integer
+					.parseInt(user_id));
 		}
-		int maxid = 0;
-		String startTime = "";
-		String endTime = "";
-		String json = null;
-		switch (msg) {
-		case GET_MAX_ID:
-			maxid = Tools.getMaxId("question");
-			out.print(maxid + "");
-			break;
-		case GET_QUESTION:
-		case REFRESH_QUESTION:
-			startTime = request.getParameter("startTime");
-			endTime = request.getParameter("endTime");
-			System.out.println("startTime" + startTime);
-			System.out.println("endTime" + endTime);
-			if (msg.equals(REFRESH_QUESTION)) {
-				json = Tools.getPaging(type,group_ids, startTime, endTime, 0);
-				break;
-			}
-			json = Tools.getPaging(type,group_ids, startTime, endTime, 6);
-			System.out.println("image_text:" + json);
-			out.print(json);
-//			System.out.println("已执行输出");
-			break;
-		default:
-			break;
-		}
+
+		String json = Tools.getPaging(Integer.parseInt(page), type, group_ids,
+				6);
+		// out.print("group_ids:	" + group_ids);
+		out.print(json);
+		// String msg = request.getParameter("msg");
+		// String type = request.getParameter("type");
+		// String user_id = request.getParameter("user_id");
+		// String group_ids = null;
+		// if (user_id.equals("0")) {
+		// group_ids= "(0)";
+		// } else {
+		// group_ids =
+		// GroupUtils.getGroupIdsFromFriendId(Integer.parseInt(user_id));
+		// }
+		// int maxid = 0;
+		// String startTime = "";
+		// String endTime = "";
+		// String json = null;
+		// switch (msg) {
+		// case GET_MAX_ID:
+		// maxid = Tools.getMaxId("question");
+		// out.print(maxid + "");
+		// break;
+		// case GET_QUESTION:
+		// case REFRESH_QUESTION:
+		// startTime = request.getParameter("startTime");
+		// endTime = request.getParameter("endTime");
+		// System.out.println("startTime" + startTime);
+		// System.out.println("endTime" + endTime);
+		// if (msg.equals(REFRESH_QUESTION)) {
+		// json = Tools.getPaging(type,group_ids, startTime, endTime, 0);
+		// break;
+		// }
+		// json = Tools.getPaging(type,group_ids, startTime, endTime, 6);
+		// System.out.println("image_text:" + json);
+		// out.print(json);
+		// // System.out.println("已执行输出");
+		// break;
+		// default:
+		// break;
+		// }
 
 	}
 
