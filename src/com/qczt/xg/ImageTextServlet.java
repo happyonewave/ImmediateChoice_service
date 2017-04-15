@@ -57,11 +57,11 @@ public class ImageTextServlet extends HttpServlet {
 		String msg = request.getParameter("msg");
 		String type = request.getParameter("type");
 		String user_id = request.getParameter("user_id");
-		JSONArray group_idsArray = null;
+		String group_ids = null;
 		if (user_id.equals("0")) {
-			 group_idsArray =  JSONArray.fromObject("[{\"group_id\":0}]");
+			 group_ids= "(0)";
 		} else {
-			group_idsArray = GroupUtils.getGroupIdsFromFriendId(Integer.parseInt(user_id));
+			group_ids = GroupUtils.getGroupIdsFromFriendId(Integer.parseInt(user_id));
 		}
 		int maxid = 0;
 		String startTime = "";
@@ -79,10 +79,11 @@ public class ImageTextServlet extends HttpServlet {
 			System.out.println("startTime" + startTime);
 			System.out.println("endTime" + endTime);
 			if (msg.equals(REFRESH_QUESTION)) {
-				json = Tools.getPaging(type, startTime, endTime, group_idsArray, 0);
+				json = Tools.getPaging(type,group_ids, startTime, endTime, 0);
+				break;
 			}
-			json = Tools.getPaging(type, startTime, endTime, group_idsArray, 6);
-//			System.out.println("image_text:" + json);
+			json = Tools.getPaging(type,group_ids, startTime, endTime, 6);
+			System.out.println("image_text:" + json);
 			out.print(json);
 //			System.out.println("已执行输出");
 			break;

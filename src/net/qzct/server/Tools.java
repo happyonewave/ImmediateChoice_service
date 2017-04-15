@@ -32,6 +32,7 @@ import sun.applet.resources.MsgAppletViewer;
 import sun.nio.cs.ext.ISCII91;
 import sun.security.provider.MD5;
 import sun.security.rsa.RSASignature.MD5withRSA;
+import sun.tools.jar.resources.jar;
 
 import com.sun.org.apache.bcel.internal.classfile.Code;
 
@@ -477,106 +478,156 @@ public class Tools {
 		}
 	}
 
-	public static String getPaging(String type, String startTime,
-			String endTime, JSONArray group_ids, int num) {
+	
+	public static JSONArray searchQuestion(String keyword) {
 
-		// select * from question where group_ids like '%,"
-		// + group_id + ",%' and push_time <
-		// "2017-03-20 21:25:53.0"
-		// order by push_time desc limit 0,6 ;
-		String pagingPart = "";
-		if (num != 0) {
-			pagingPart = " limit 0," + num;
-		}
-		String sql = "select * from question where left_url like  '%/" + type
-				+ "/%' and post_time > '" + endTime + "' and post_time < '"
-				+ startTime + "' order by post_time desc" + pagingPart;
+		String sql = "SELECT * FROM question  WHERE question_content LIKE '%"+keyword+"%'";
 		try {
 			ResultSet rs = queryDatabase(sql);
-			// JSONArray originalJson =
-			// JSONArray.fromObject(getJsonFromDatabase("question"));
-			// System.out.println("originalJson" + originalJson.toString());
-			// 全部投票
-			JSONArray allJson = getJsonByArguments("question", rs);
-			// JSONArray allJson =
-			// JSONArray.fromObject(getJsonFromDatabase("question"));
-			// //需要删除的投票
-			// JSONArray json = new JSONArray();
-			// // for (int i = 0; i < allJson.size(); i++) {
-			// // json.add(allJson.getJSONObject(i));
-			// // }
-			if (!allJson.isEmpty()) {
-				// // System.out.println("从数据库拿到的" + allJson.toString());
-				// for (int j = 0; j < allJson.size(); j++) {
-				// System.out.println("allJsonsize:	" + allJson.size());
-				// //遍历的投票
-				// JSONObject allTemp = allJson.getJSONObject(j);
-				// // System.out.println("j:	" + allTemp.getInt("question_id"));
-				// System.out.println("j:	" + j);
-				// //可读的群组
-				// JSONArray readableGroup_ids =
-				// GroupUtils.getReadableGroupIdsFromQuestionId(allTemp.getInt("question_id"));
-				// System.out.println("readableGroup_ids:	" +
-				// readableGroup_ids.toString());
-				// if (readableGroup_ids.isEmpty()) {
-				// readableGroup_ids =
-				// JSONArray.fromObject("[{\"group_id\":0}]");
-				// }
-				// // readableGroup_ids
-				// for (int k = 0; k < readableGroup_ids.size(); k++) {
-				// // System.out.println("k: " + k);
-				// //遍历可读的群组
-				// JSONObject temp = readableGroup_ids.getJSONObject(k);
-				// for (int i = 0; i < group_ids.size(); i++) {
-				// // System.out.println("i: " + i);
-				// //遍历用户所在的群组
-				// JSONObject id_temp = group_ids.getJSONObject(i);
-				// System.out.println("用户所在的群组     :" +
-				// id_temp.getInt("group_id") + "可读的群组    :" +
-				// temp.getInt("group_id"));
-				// if (id_temp.getInt("group_id") == temp.getInt("group_id")) {
-				// // System.out.println("jsonsize: " + json.size() +"j:" +j);
-				// System.out.println("相等");
-				// System.out.println(allTemp.toString());
-				// json.add(allTemp);
-				// // if (json.contains(allTemp)) {
-				// // if (json.remove(allTemp)) {
-				// // System.out.println("移除成功");
-				// // }else {
-				// // System.out.println("移除失败");
-				// // if (json.remove(allTemp)) {
-				// // System.out.println("第二次移除成功");
-				// // }
-				// // System.out.println("第二次移除失败");
-				// // }
-				// // }
-				// }
-				// }
-				// }
-				// }
-				// // allJson = json;
-				// System.out.println("输出的：	");
-				// for (int l = 0; l < json.size(); l++) {
-				// JSONObject jsonObject = json.getJSONObject(l);
-				// System.out.print(jsonObject.getInt("question_id") + " ");
-				// }
-				// truncateTable("question");
-				// addToDatabase(json);
-				// rs = queryDatabase(sql);
-				// //输出投票
-				// json = getJsonByArguments("question", rs);
-				// truncateTable("question");
-				// addToDatabase(originalJson);
-				return allJson.toString();
-			} else {
-				return "-1";
-			}
+			JSONArray json = getJsonByArguments("question", rs);
+			return json;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "-1";
+			return null;
 		}
-
 	}
+	
+
+    public static String getPaging(String type,String group_ids, String startTime,
+            String endTime, int num) {
+        // select * from question where group_id = 0  and  push_time < "2017-03-20 21:25:53.0"
+        // order by push_time desc limit 0,6 ;
+        String pagingPart = "";
+        if (!(num == 0)) {
+            pagingPart = " limit 0," + num;
+        }
+        String sql = "select * from question where group_id in " + group_ids + " and left_url like  '%/" + type
+                + "/%' and post_time > '" + endTime + "' and post_time < '"
+                + startTime + "' order by post_time desc" + pagingPart;
+    	System.out.println("sql:	" + sql);
+        try {
+            ResultSet rs = queryDatabase(sql);
+            JSONArray json = getJsonByArguments("question", rs);
+            if (!json.isEmpty()) {
+                return json.toString();
+            } else {
+                return "-1";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	public static String getPaging(String type, String startTime,
+//			String endTime, JSONArray group_ids, int num) {
+//
+//		// select * from question where group_ids like '%,"
+//		// + group_id + ",%' and push_time <
+//		// "2017-03-20 21:25:53.0"
+//		// order by push_time desc limit 0,6 ;
+//		String pagingPart = "";
+//		if (num != 0) {
+//			pagingPart = " limit 0," + num;
+//		}
+//		String sql = "select * from question where left_url like  '%/" + type
+//				+ "/%' and post_time > '" + endTime + "' and post_time < '"
+//				+ startTime + "' order by post_time desc" + pagingPart;
+//		try {
+//			ResultSet rs = queryDatabase(sql);
+//			// JSONArray originalJson =
+//			// JSONArray.fromObject(getJsonFromDatabase("question"));
+//			// System.out.println("originalJson" + originalJson.toString());
+//			// 全部投票
+//			JSONArray allJson = getJsonByArguments("question", rs);
+//			// JSONArray allJson =
+//			// JSONArray.fromObject(getJsonFromDatabase("question"));
+//			// //需要删除的投票
+//			// JSONArray json = new JSONArray();
+//			// // for (int i = 0; i < allJson.size(); i++) {
+//			// // json.add(allJson.getJSONObject(i));
+//			// // }
+//			if (!allJson.isEmpty()) {
+//				// // System.out.println("从数据库拿到的" + allJson.toString());
+//				// for (int j = 0; j < allJson.size(); j++) {
+//				// System.out.println("allJsonsize:	" + allJson.size());
+//				// //遍历的投票
+//				// JSONObject allTemp = allJson.getJSONObject(j);
+//				// // System.out.println("j:	" + allTemp.getInt("question_id"));
+//				// System.out.println("j:	" + j);
+//				// //可读的群组
+//				// JSONArray readableGroup_ids =
+//				// GroupUtils.getReadableGroupIdsFromQuestionId(allTemp.getInt("question_id"));
+//				// System.out.println("readableGroup_ids:	" +
+//				// readableGroup_ids.toString());
+//				// if (readableGroup_ids.isEmpty()) {
+//				// readableGroup_ids =
+//				// JSONArray.fromObject("[{\"group_id\":0}]");
+//				// }
+//				// // readableGroup_ids
+//				// for (int k = 0; k < readableGroup_ids.size(); k++) {
+//				// // System.out.println("k: " + k);
+//				// //遍历可读的群组
+//				// JSONObject temp = readableGroup_ids.getJSONObject(k);
+//				// for (int i = 0; i < group_ids.size(); i++) {
+//				// // System.out.println("i: " + i);
+//				// //遍历用户所在的群组
+//				// JSONObject id_temp = group_ids.getJSONObject(i);
+//				// System.out.println("用户所在的群组     :" +
+//				// id_temp.getInt("group_id") + "可读的群组    :" +
+//				// temp.getInt("group_id"));
+//				// if (id_temp.getInt("group_id") == temp.getInt("group_id")) {
+//				// // System.out.println("jsonsize: " + json.size() +"j:" +j);
+//				// System.out.println("相等");
+//				// System.out.println(allTemp.toString());
+//				// json.add(allTemp);
+//				// // if (json.contains(allTemp)) {
+//				// // if (json.remove(allTemp)) {
+//				// // System.out.println("移除成功");
+//				// // }else {
+//				// // System.out.println("移除失败");
+//				// // if (json.remove(allTemp)) {
+//				// // System.out.println("第二次移除成功");
+//				// // }
+//				// // System.out.println("第二次移除失败");
+//				// // }
+//				// // }
+//				// }
+//				// }
+//				// }
+//				// }
+//				// // allJson = json;
+//				// System.out.println("输出的：	");
+//				// for (int l = 0; l < json.size(); l++) {
+//				// JSONObject jsonObject = json.getJSONObject(l);
+//				// System.out.print(jsonObject.getInt("question_id") + " ");
+//				// }
+//				// truncateTable("question");
+//				// addToDatabase(json);
+//				// rs = queryDatabase(sql);
+//				// //输出投票
+//				// json = getJsonByArguments("question", rs);
+//				// truncateTable("question");
+//				// addToDatabase(originalJson);
+//				return allJson.toString();
+//			} else {
+//				return "-1";
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return "-1";
+//		}
+//
+//	}
 
 	public static String truncateTable(String tableName) {
 		// 存放记录 update question set
@@ -830,6 +881,7 @@ public class Tools {
 			switch (listname) {
 			case "question":
 				int question_id = rs.getInt("question_id");
+				int group_id = rs.getInt("group_id");
 				int topic_id = rs.getInt("topic_id");
 				String question_content = rs.getString("question_content");
 				String left_url = rs.getString("left_url");
@@ -844,6 +896,8 @@ public class Tools {
 				// post_time = format.format(rs.getDate(13));
 				post_time = rs.getString(13);
 				json.put("question_id", question_id);
+				json.put("group_id", group_id);
+				json.put("topic_id", topic_id);
 				json.put("question_content", question_content);
 				json.put("left_url", left_url);
 				json.put("right_url", right_url);

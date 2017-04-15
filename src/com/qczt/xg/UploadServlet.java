@@ -26,8 +26,8 @@ import net.sf.json.JSONObject;
 @WebServlet("/UploadServlet")
 @MultipartConfig(
 // location="/yjdata/www/www/ImmediateChoice_service/img"
-//location = "D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\img"
-		)
+// location = "D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\img"
+)
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final int UPLOAD_IMAGE = 6;
@@ -40,7 +40,9 @@ public class UploadServlet extends HttpServlet {
 	private String location;
 	private String quizzer_name;
 	private String portrait_url;
-//	private String group_ids;
+	private String group_id;
+
+	// private String group_ids;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -75,29 +77,36 @@ public class UploadServlet extends HttpServlet {
 		Part file_left = request.getPart("file_left");
 		Part file_right = request.getPart("file_right");
 		String question = request.getParameter("question");
-//		 group_ids = request.getParameter("group_ids");
+		// group_ids = request.getParameter("group_ids");
 		JSONObject jsonObject = JSONObject.fromObject(question);
-//		JSONArray jsonArray = JSONArray.fromObject(group_ids);
-//		group_ids = groupIdstoString(jsonArray);
+		// JSONArray jsonArray = JSONArray.fromObject(group_ids);
+		// group_ids = groupIdstoString(jsonArray);
 		left_url = jsonObject.getString("left_url");
 		right_url = jsonObject.getString("right_url");
+		// file_left
+		// .write("/yjdata/www/www/ImmediateChoice_service/"
+		// + msg + "/" + Tools.getFileName(left_url));
+		// file_right
+		// .write("/yjdata/www/www/ImmediateChoice_service/"
+		// + msg + "/" + Tools.getFileName(right_url));
 //		file_left
-//				.write("/yjdata/www/www/ImmediateChoice_service/"
-//						+ msg + "/" + Tools.getFileName(left_url));
+//				.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\"
+//						+ msg + "\\" + Tools.getFileName(left_url));
 //		file_right
-//				.write("/yjdata/www/www/ImmediateChoice_service/"
-//						+ msg + "/" + Tools.getFileName(right_url));
+//				.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\"
+//						+ msg + "\\" + Tools.getFileName(right_url));
+		
+
 		file_left
-		.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\"
-				+ msg + "\\" + Tools.getFileName(left_url));
-file_right
-		.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\"
-				+ msg + "\\" + Tools.getFileName(right_url));
+				.write("/"+ msg + "/" + Tools.getFileName(left_url));
+		file_right
+				.write("/"+ msg + "/" + Tools.getFileName(right_url));
 
 		question_content = jsonObject.getString("question_content");
 		location = jsonObject.getString("location");
 		quizzer_name = jsonObject.getString("quizzer_name");
 		portrait_url = jsonObject.getString("portrait_url");
+		group_id = jsonObject.getInt("group_id") + "";
 		addToDatabase();
 
 		// switch (Integer.parseInt(msg)) {
@@ -181,7 +190,7 @@ file_right
 	}
 
 	private String groupIdstoString(JSONArray jsonArray) {
-			String str = "";
+		String str = "";
 		for (int i = 0; i < jsonArray.size(); i++) {
 			str += "," + jsonArray.getJSONObject(i).getString("group_id") + ",";
 		}
@@ -197,7 +206,7 @@ file_right
 			db = new DatabaseConnection();
 			Connection conn = db.getConnection();
 			//
-			String sql = "INSERT INTO question(left_url,right_url,question_content,quizzer_name,portrait_url,location) VALUES (?,?,?,?,?,?) ";
+			String sql = "INSERT INTO question(left_url,right_url,question_content,quizzer_name,portrait_url,location,group_id) VALUES (?,?,?,?,?,?,?) ";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, left_url);
 			pstmt.setString(2, right_url);
@@ -205,7 +214,8 @@ file_right
 			pstmt.setString(4, quizzer_name);
 			pstmt.setString(5, portrait_url);
 			pstmt.setString(6, location);
-//			pstmt.setString(7, group_ids);
+			pstmt.setString(7, group_id);
+			// pstmt.setString(7, group_ids);
 			pstmt.executeUpdate();
 			out.print("1");
 		} catch (Exception e) {

@@ -43,12 +43,11 @@ public class GroupUtils {
 
 	}
 
-	public static JSONArray getGroupIdsFromFriendId(int f_id) {
+	public static String getGroupIdsFromFriendId(int f_id) {
 
 		// SELECT group_id,name FROM group_info WHERE owner_id = 1
 
-		String sql = "SELECT group_id FROM friend WHERE f_id = "
-				+ f_id;
+		String sql = "SELECT group_id FROM friend WHERE f_id = " + f_id;
 		try {
 
 			ResultSet rs = Tools.queryDatabase(sql);
@@ -60,15 +59,24 @@ public class GroupUtils {
 				temp.put("group_id", group_id);
 				array.add(temp);
 			}
-			return array;
+			String strs = "(";
+			for (int i = 0; i < array.size(); i++) {
+				temp = array.getJSONObject(i);
+				if (i == array.size() - 1) {
+					strs += temp.getString("group_id") + ")";
+					break;
+				}
+				strs += temp.getString("group_id") + ",";
+			}
+			System.out.println("strs:	"+ strs);
+			return strs;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	public static JSONArray getReadableGroupIdsFromQuestionId(int question_id) {
 
+	public static JSONArray getReadableGroupIdsFromQuestionId(int question_id) {
 
 		String sql = "SELECT group_id FROM readable_group WHERE question_id = "
 				+ question_id;
@@ -89,10 +97,7 @@ public class GroupUtils {
 			return null;
 		}
 	}
-	
-	
-	
-	
+
 	/**
 	 * 通过组Id查询GroupMembers
 	 * 
