@@ -1023,4 +1023,81 @@ public class Tools {
 		return resquet;
 	}
 
+	public static JSONArray searchUser(String userId) {
+
+		String sql = "select * from userin where user_id  LIKE '%" + userId
+				+ "%'";
+		try {
+			ResultSet rs = queryDatabase(sql);
+			JSONArray jsonArray = getJsonByArguments("userin", rs);
+			// JSONObject object = new JSONObject();
+			// JSONArray jsonArray = new JSONArray();
+			// while(rs.next()) {
+			// int user_id = rs.getInt(1);
+			// String name = rs.getString(2);
+			// // String phone_number = rs.getString(4);
+			// String sex = rs.getString(5);
+			// String portrait_path = rs.getString(6);
+			// object.put("user_id", user_id);
+			// object.put("name", name);
+			// // object.put("phone_number", phone_number);
+			// object.put("sex", sex);
+			// object.put("portrait_path", portrait_path);
+			// jsonArray.add(object);
+			// }
+			return jsonArray;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static boolean friendIsExist(int userId, int f_id) {
+		DatabaseConnection db;
+
+		String sql1 = "select  * from friend where f_id='" + f_id + "' and "
+				+ "user_id = " + userId;
+
+		try {
+			db = new DatabaseConnection();
+			Connection conn = db.getConnection();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql1);
+			if (rs.next()) {
+				rs.close();
+				stmt.close();
+				return true;
+			} else {
+				rs.close();
+				stmt.close();
+				return false;
+			}
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public static boolean addFriend(int user_id, int f_id) {
+		String sql = "INSERT INTO friend(user_id,f_id) VALUES (?,?) ";
+
+		DatabaseConnection db;
+		try {
+			db = new DatabaseConnection();
+			Connection conn = db.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user_id + "");
+			pstmt.setString(2, f_id + "");
+			if (pstmt.executeUpdate() != 0) {
+				pstmt.close();
+				return true;
+			} else {
+				pstmt.close();
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

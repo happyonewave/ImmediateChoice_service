@@ -74,8 +74,7 @@ public class ImageTextServlet extends HttpServlet {
 					.parseInt(user_id));
 		}
 
-		String json = Tools.getPaging(Integer.parseInt(page), type, group_ids,
-				6);
+		String json = Tools.getPaging(Integer.parseInt(page), type, group_ids,6);
 		// out.print("group_ids:	" + group_ids);
 		out.print(json);
 		// String msg = request.getParameter("msg");

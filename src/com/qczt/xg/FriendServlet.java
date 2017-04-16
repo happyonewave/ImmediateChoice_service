@@ -55,8 +55,19 @@ public class FriendServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
-		String friendJsonArray = Tools.getFriendInfo(user_id);
-		out.print(friendJsonArray);
+		String f_id = request.getParameter("f_id");
+		String requesStr = null;
+		if (f_id != null) {
+			if (Tools.friendIsExist(user_id, Integer.parseInt(f_id))) {
+				requesStr = "他已是你的好友哦！";
+			} else {
+				Tools.addFriend(user_id, Integer.parseInt(f_id));
+				requesStr = "加好友成功！";
+			}
+		} else {
+			requesStr = Tools.getFriendInfo(user_id);
+		}
+		out.print(requesStr);
 
 	}
 

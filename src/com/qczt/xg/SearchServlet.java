@@ -63,8 +63,17 @@ public class SearchServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		String keyword = request.getParameter("keyword");
+		String f_id = request.getParameter("f_id");
 		System.out.println("keyword:	" + keyword);
-		JSONArray array = Tools.searchQuestion(keyword);
+		System.out.println("f_id:	" + f_id);
+
+		JSONArray array = null;
+		if (keyword == null) {
+			array = Tools.searchUser(f_id);
+		} else {
+			array = Tools.searchQuestion(keyword);
+		}
 		out.print(array);
+
 	}
 }
