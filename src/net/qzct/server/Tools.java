@@ -1100,4 +1100,24 @@ public class Tools {
 		}
 	}
 
+	public static boolean deleteFriend(int f_id) {
+		String sql = "DELETE FROM friend WHERE f_id = "+f_id;
+
+		DatabaseConnection db;
+		try {
+			db = new DatabaseConnection();
+			Connection conn = db.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			if (pstmt.executeUpdate() != 0) {
+				pstmt.close();
+				return true;
+			} else {
+				pstmt.close();
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
