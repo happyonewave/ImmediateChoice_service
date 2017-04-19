@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Mysql
-Source Server Version : 50022
-Source Host           : localhost:3306
+Source Server         : Server
+Source Server Version : 50626
+Source Host           : 123.207.31.213:3306
 Source Database       : immediatechoice
 
 Target Server Type    : MYSQL
-Target Server Version : 50022
+Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2017-04-19 03:23:34
+Date: 2017-04-20 01:17:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,10 +21,10 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `question_id` int(11) NOT NULL,
-  `comment_content` varchar(255) default NULL,
-  `commenter_date` varchar(255) default NULL,
-  `commenter_name` varchar(255) default NULL,
-  `commenter_portrait_url` varchar(255) default NULL
+  `comment_content` varchar(255) DEFAULT NULL,
+  `commenter_date` varchar(255) DEFAULT NULL,
+  `commenter_name` varchar(255) DEFAULT NULL,
+  `commenter_portrait_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -123,7 +123,7 @@ DROP TABLE IF EXISTS `friend`;
 CREATE TABLE `friend` (
   `user_id` int(11) NOT NULL,
   `f_id` int(11) NOT NULL,
-  `group_id` int(11) default NULL
+  `group_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -135,18 +135,18 @@ INSERT INTO `friend` VALUES ('1', '2', '2');
 INSERT INTO `friend` VALUES ('2', '3', '1');
 INSERT INTO `friend` VALUES ('3', '2', '2');
 INSERT INTO `friend` VALUES ('6', '1', '1');
-INSERT INTO `friend` VALUES ('1', '14', '1');
+INSERT INTO `friend` VALUES ('1', '8', '1');
 
 -- ----------------------------
 -- Table structure for group_info
 -- ----------------------------
 DROP TABLE IF EXISTS `group_info`;
 CREATE TABLE `group_info` (
-  `group_id` int(11) NOT NULL auto_increment,
+  `group_id` int(11) NOT NULL AUTO_INCREMENT,
   `owner_id` int(11) NOT NULL,
-  `name` varchar(255) default NULL,
-  PRIMARY KEY  (`group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`group_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of group_info
@@ -165,7 +165,7 @@ DROP TABLE IF EXISTS `group_members`;
 CREATE TABLE `group_members` (
   `group_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  PRIMARY KEY  (`group_id`,`user_id`)
+  PRIMARY KEY (`group_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -184,48 +184,52 @@ INSERT INTO `group_members` VALUES ('2', '6');
 -- ----------------------------
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
-  `question_id` int(11) NOT NULL auto_increment,
-  `group_id` int(11) unsigned zerofill default NULL,
-  `topic_id` int(11) unsigned zerofill default NULL,
-  `question_content` varchar(255) default NULL,
-  `left_url` varchar(255) default NULL,
-  `right_url` varchar(255) default NULL,
-  `quizzer_name` varchar(255) default NULL,
-  `portrait_url` varchar(255) default '',
-  `share_count` int(11) default '0',
-  `comment_count` int(11) default '0',
-  `comment` varchar(255) default '',
-  `location` varchar(255) default NULL,
-  `choice_left_ids` varchar(255) default '',
-  `choice_right_ids` varchar(255) default '',
-  `post_time` timestamp NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`question_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `question_id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) unsigned zerofill DEFAULT NULL,
+  `topic_id` int(11) unsigned zerofill DEFAULT NULL,
+  `question_content` varchar(255) DEFAULT NULL,
+  `left_url` varchar(255) DEFAULT NULL,
+  `right_url` varchar(255) DEFAULT NULL,
+  `quizzer_name` varchar(255) DEFAULT NULL,
+  `portrait_url` varchar(255) DEFAULT '',
+  `share_count` int(11) DEFAULT '0',
+  `comment_count` int(11) DEFAULT '0',
+  `comment` varchar(255) DEFAULT '',
+  `location` varchar(255) DEFAULT NULL,
+  `choice_left_ids` varchar(255) DEFAULT '',
+  `choice_right_ids` varchar(255) DEFAULT '',
+  `post_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`question_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of question
 -- ----------------------------
-INSERT INTO `question` VALUES ('6', '00000000001', '00000000001', '高考失利该不该复读？', 'http://123.207.31.213/ImmediateChoice_service/image/(42).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(41).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '30', '89', '当然是冬天才能领略北国风光啦!', '', ',1,,1,,1,,1,,0,', ',1,,2,,0,,0,,0,', '2017-04-19 02:08:48');
-INSERT INTO `question` VALUES ('8', '00000000001', '00000000000', '哪张可以？', 'http://123.207.31.213/ImmediateChoice_service/image/(38).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(37).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '12', '65', '当然是冬天才能领略北国风光啦!', '', ',1,,1,', ',2,,0,,0,', '2017-04-19 02:08:45');
+INSERT INTO `question` VALUES ('6', '00000000001', '00000000001', '高考失利该不该复读？', 'http://123.207.31.213/ImmediateChoice_service/image/(42).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(41).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '30', '89', '当然是冬天才能领略北国风光啦!', '', ',1,,1,,1,,1,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,2,,0,,0,,0,,1,,1,,1,,1,,1,', '2017-04-19 02:08:48');
+INSERT INTO `question` VALUES ('8', '00000000001', '00000000000', '哪张可以？', 'http://123.207.31.213/ImmediateChoice_service/image/(38).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(37).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '12', '65', '当然是冬天才能领略北国风光啦!', '', ',1,,1,,1,,1,,1,,1,', ',2,,0,,0,,1,', '2017-04-19 02:08:45');
 INSERT INTO `question` VALUES ('11', '00000000002', '00000000000', '不管黑猫白猫。。。。', 'http://123.207.31.213/ImmediateChoice_service/image/(32).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(31).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,2,', ',1,,1,,1,,1,,0,', '2017-04-19 02:08:39');
 INSERT INTO `question` VALUES ('12', '00000000002', '00000000000', '帮我看看呗？', 'http://123.207.31.213/ImmediateChoice_service/image/(30).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(29).jpg', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,1,,1,,1,,2,,0,', '2017-04-19 02:08:37');
 INSERT INTO `question` VALUES ('13', '00000000003', '00000000000', '左边还是右边更让你心旷神怡？', 'http://123.207.31.213/ImmediateChoice_service/image/(28).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(27).jpg', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,0,,1,,1,,1,,1,,1,,1,,2,', ',1,,1,,1,,1,,1,,1,,0,', '2017-04-19 02:08:30');
 INSERT INTO `question` VALUES ('14', '00000000002', '00000000000', '听妈妈的话。。', 'http://123.207.31.213/ImmediateChoice_service/image/(26).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(25).jpg', '小芳', 'http://123.207.31.213/ImmediateChoice_service/image/portrait7.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,0,,0,', '2017-04-19 02:09:24');
 INSERT INTO `question` VALUES ('15', '00000000002', '00000000000', '大红花怎么样？', 'http://123.207.31.213/ImmediateChoice_service/image/(24).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(23).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',,,,,,,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,0,,0,', '2017-04-19 02:09:21');
-INSERT INTO `question` VALUES ('20', '00000000000', '00000000000', '冬天还是春天好？', 'http://123.207.31.213/ImmediateChoice_service/image/(14).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(13).jpg', '小红', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,', ',1,,1,,1,,1,,2,,0,,0,', '2017-04-19 02:09:13');
-INSERT INTO `question` VALUES ('21', '00000000000', '00000000000', '选择困难啊，哪件比较好看？？？', 'http://123.207.31.213/ImmediateChoice_service/image/(12).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(11).jpg', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,', ',1,,1,,1,,1,,1,,1,,2,,0,', '2017-04-19 02:09:11');
-INSERT INTO `question` VALUES ('22', '00000000001', '00000000000', '我想买只狗，帮我选选', 'http://123.207.31.213/ImmediateChoice_service/image/(10).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(9).jpg', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,2,,2,', ',1,,2,,2,,0,', '2017-04-19 02:09:10');
-INSERT INTO `question` VALUES ('23', '00000000000', '00000000002', '左边壁纸还是右边壁纸好看？', 'http://123.207.31.213/ImmediateChoice_service/image/(8).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(7).jpg', '小红', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,2,,2,,2,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,0,', '2017-04-19 02:09:08');
+INSERT INTO `question` VALUES ('20', '00000000000', '00000000000', '冬天还是春天好？', 'http://123.207.31.213/ImmediateChoice_service/image/(14).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(13).jpg', '小红', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,1,,2,,0,,0,', '2017-04-19 02:09:13');
+INSERT INTO `question` VALUES ('21', '00000000000', '00000000000', '选择困难啊，哪件比较好看？？？', 'http://123.207.31.213/ImmediateChoice_service/image/(12).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(11).jpg', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,1,,1,,1,', ',1,,1,,1,,1,,1,,1,,2,,0,', '2017-04-19 02:09:11');
+INSERT INTO `question` VALUES ('22', '00000000001', '00000000000', '我想买只狗，帮我选选', 'http://123.207.31.213/ImmediateChoice_service/image/(10).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(9).jpg', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,2,,2,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,2,,2,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', '2017-04-19 02:09:10');
+INSERT INTO `question` VALUES ('23', '00000000000', '00000000002', '左边壁纸还是右边壁纸好看？', 'http://123.207.31.213/ImmediateChoice_service/image/(8).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(7).jpg', '小红', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,2,,2,,2,,1,,1,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,0,', '2017-04-19 02:09:08');
 INSERT INTO `question` VALUES ('24', '00000000000', '00000000000', '帮我选一下', 'http://123.207.31.213/ImmediateChoice_service/image/(6).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(5).jpg', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', '2017-04-15 16:04:27');
-INSERT INTO `question` VALUES ('26', '00000000000', '00000000003', 'lol皮肤比比看', 'http://123.207.31.213/ImmediateChoice_service/image/(4).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(3).jpg', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,2,,2,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,0,', '2017-04-19 02:08:58');
-INSERT INTO `question` VALUES ('27', '00000000000', '00000000000', '哪个皮肤比较好看？', 'http://123.207.31.213/ImmediateChoice_service/image/(2).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(1).jpg', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,2,,1,,0,,0,,2,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,1,,0,', '2017-04-19 02:08:56');
-INSERT INTO `question` VALUES ('61', '00000000000', '00000000000', '金秋VS... 哈哈', 'http://123.207.31.213/ImmediateChoice_service/image/(40).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(39).jpg', '小芳', 'http://123.207.31.213/ImmediateChoice_service/image/portrait7.png', '12', '65', '当然是冬天才能领略北国风光啦!', '', ',1,,2,,2,,2,', ',1,,0,,2,,0,,0,,0,,2,', '2017-04-19 02:08:47');
-INSERT INTO `question` VALUES ('62', '00000000000', '00000000001', '哪只更能震撼你？', 'http://123.207.31.213/ImmediateChoice_service/image/(36).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(35).jpg', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', '12', '50', '当然是冬天才能领略北国风光啦!', '', ',1,,0,,1,,1,,1,,0,,1,,2,,2,,2,', ',1,,0,,1,,1,,1,,0,,0,,2,,0,,0,,2,,2,,2,', '2017-04-19 02:08:44');
-INSERT INTO `question` VALUES ('63', '00000000000', '00000000001', '喵...喵。。。', 'http://123.207.31.213/ImmediateChoice_service/image/(34).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(33).jpg', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,2,,2,', ',1,,1,,1,,1,,1,,1,,2,,0,,2,', '2017-04-19 02:08:42');
+INSERT INTO `question` VALUES ('26', '00000000000', '00000000003', 'lol皮肤比比看', 'http://123.207.31.213/ImmediateChoice_service/image/(4).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(3).jpg', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,2,,2,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,0,,1,', '2017-04-19 02:08:58');
+INSERT INTO `question` VALUES ('27', '00000000000', '00000000000', '哪个皮肤比较好看？', 'http://123.207.31.213/ImmediateChoice_service/image/(2).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(1).jpg', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,2,,1,,0,,0,,2,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,1,,0,,1,,1,,1,,1,', '2017-04-19 02:08:56');
+INSERT INTO `question` VALUES ('61', '00000000000', '00000000000', '金秋VS... 哈哈', 'http://123.207.31.213/ImmediateChoice_service/image/(40).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(39).jpg', '小芳', 'http://123.207.31.213/ImmediateChoice_service/image/portrait7.png', '12', '65', '当然是冬天才能领略北国风光啦!', '', ',1,,2,,2,,2,', ',1,,0,,2,,0,,0,,0,,2,,1,', '2017-04-19 02:08:47');
+INSERT INTO `question` VALUES ('62', '00000000000', '00000000001', '哪只更能震撼你？', 'http://123.207.31.213/ImmediateChoice_service/image/(36).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(35).jpg', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', '12', '50', '当然是冬天才能领略北国风光啦!', '', ',1,,0,,1,,1,,1,,0,,1,,2,,2,,2,,1,', ',1,,0,,1,,1,,1,,0,,0,,2,,0,,0,,2,,2,,2,,1,,1,,1,,1,,1,,0,', '2017-04-19 02:08:44');
+INSERT INTO `question` VALUES ('63', '00000000000', '00000000001', '喵...喵。。。', 'http://123.207.31.213/ImmediateChoice_service/image/(34).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(33).jpg', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,2,,2,,1,,1,', ',1,,1,,1,,1,,1,,1,,2,,0,,2,', '2017-04-19 02:08:42');
 INSERT INTO `question` VALUES ('64', '00000000000', '00000000000', '喜欢我的侧颜吗？', 'http://123.207.31.213/ImmediateChoice_service/image/(22).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(21).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '', ',,,,,,,,,,,1,,1,,1,,1,,1,,2,,2,', ',1,,1,,1,,1,,0,,0,,0,', '2017-04-19 02:09:18');
 INSERT INTO `question` VALUES ('65', '00000000000', '00000000002', '你们喜欢那种阳光？', 'http://123.207.31.213/ImmediateChoice_service/image/(20).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(19).jpg', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',,,,,,,1,,1,,1,,2,', ',1,,0,,1,,1,,2,,0,,0,', '2017-04-19 02:09:16');
-INSERT INTO `question` VALUES ('66', '00000000000', '00000000000', '我要买岛！帮我看看', 'http://123.207.31.213/ImmediateChoice_service/image/(18).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(17).jpg', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,2,,2,', ',1,,0,,0,', '2017-04-19 02:09:15');
-INSERT INTO `question` VALUES ('67', '00000000000', '00000000002', '哪个好吃？急！！！', 'http://123.207.31.213/ImmediateChoice_service/image/(16).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(15).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,', ',1,,1,,1,,2,,0,,0,', '2017-04-19 02:09:14');
+INSERT INTO `question` VALUES ('66', '00000000000', '00000000000', '我要买岛！帮我看看', 'http://123.207.31.213/ImmediateChoice_service/image/(18).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(17).jpg', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,2,,2,,1,,0,,1,,1,,1,,1,,1,', ',1,,0,,0,,1,,1,,1,', '2017-04-19 02:09:15');
+INSERT INTO `question` VALUES ('67', '00000000000', '00000000002', '哪个好吃？急！！！', 'http://123.207.31.213/ImmediateChoice_service/image/(16).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(15).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,2,,0,,0,,1,,0,,0,,1,,1,', '2017-04-19 02:09:14');
+INSERT INTO `question` VALUES ('68', '00000000000', '00000000002', '这风景', 'http://123.207.31.213/ImmediateChoice_service/video/1.mp4', 'http://123.207.31.213/ImmediateChoice_service/video/2.mp4', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,', ',1,,1,,1,,2,,0,,0,,1,', '2017-04-19 02:09:14');
+INSERT INTO `question` VALUES ('69', '00000000000', '00000000002', '星空的感觉', 'http://123.207.31.213/ImmediateChoice_service/video/3.mp4', 'http://123.207.31.213/ImmediateChoice_service/video/4.mp4', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,', ',1,,1,,1,,2,,0,,0,,1,', '2017-04-19 02:09:14');
+INSERT INTO `question` VALUES ('70', '00000000000', '00000000002', '那个比较好？', 'http://123.207.31.213/ImmediateChoice_service/video/5.mp4', 'http://123.207.31.213/ImmediateChoice_service/video/6.mp4', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,', ',1,,1,,1,,2,,0,,0,,1,', '2017-04-19 02:09:14');
+INSERT INTO `question` VALUES ('71', '00000000000', '00000000002', '哪个不错？', 'http://123.207.31.213/ImmediateChoice_service/video/7.mp4', 'http://123.207.31.213/ImmediateChoice_service/video/8.mp4', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,', ',1,,1,,1,,2,,0,,0,,1,', '2017-04-19 02:09:14');
 
 -- ----------------------------
 -- Table structure for readable_group
@@ -234,7 +238,7 @@ DROP TABLE IF EXISTS `readable_group`;
 CREATE TABLE `readable_group` (
   `question_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
-  PRIMARY KEY  (`question_id`,`group_id`)
+  PRIMARY KEY (`question_id`,`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -252,11 +256,11 @@ INSERT INTO `readable_group` VALUES ('37', '2');
 -- ----------------------------
 DROP TABLE IF EXISTS `topic`;
 CREATE TABLE `topic` (
-  `topic_id` int(11) NOT NULL auto_increment,
-  `topic_title` varchar(255) default NULL,
-  `topic_img_url` varchar(255) default NULL,
-  PRIMARY KEY  (`topic_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `topic_id` int(11) NOT NULL AUTO_INCREMENT,
+  `topic_title` varchar(255) DEFAULT NULL,
+  `topic_img_url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`topic_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of topic
@@ -275,7 +279,7 @@ DROP TABLE IF EXISTS `topic_members`;
 CREATE TABLE `topic_members` (
   `topic_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  PRIMARY KEY  (`topic_id`,`user_id`)
+  PRIMARY KEY (`topic_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -294,23 +298,25 @@ INSERT INTO `topic_members` VALUES ('6', '4');
 -- ----------------------------
 DROP TABLE IF EXISTS `userin`;
 CREATE TABLE `userin` (
-  `user_id` int(30) NOT NULL auto_increment,
+  `user_id` int(30) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `phone_number` varchar(255) default NULL,
-  `sex` varchar(255) default NULL,
-  `portrait_url` varchar(255) default NULL,
-  `token` varchar(255) default NULL,
-  PRIMARY KEY  (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `phone_number` varchar(255) DEFAULT NULL,
+  `sex` varchar(255) DEFAULT NULL,
+  `portrait_url` varchar(255) DEFAULT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of userin
 -- ----------------------------
-INSERT INTO `userin` VALUES ('1', '小青', '123456', '15158442585', '男', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '18LyaY+7DAct9px+BRJxCl3lOgyfFg2AjkViYtqQca3pbaogcPqTnfcI34AD9x2wXSWqwKWhvYM=');
-INSERT INTO `userin` VALUES ('2', '小红', '123456', '15158442585', '女', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png', 'G/i7WKl49H6dWLJIf31wg5K2kJJ49pN8xrdowMMx5ayEtxy460ZKgAMWNe5rqcc8kGacuUXe1r87hDlHGJQzBg==');
-INSERT INTO `userin` VALUES ('3', '小微', '123456', '15158442585', '女', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', '');
-INSERT INTO `userin` VALUES ('4', '小远', '123456', '15158442585', '男', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png', 'ElK5OCSKHzSz6/MmKMGAU2bUJQJ0YiPxyCLMxPZZi6yBSXXy/NdJJufpm/NrZa8zNMxwvczUZeUvYFNJjTyqqg==');
-INSERT INTO `userin` VALUES ('5', '小霞', '123456', '15158442585', '女', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png', 'DdZZs6Ye9vUn5leJd8519V3lOgyfFg2AjkViYtqQca2yBGNeFUCOLt6o6VcJyFpM+7RI88NDWsw=');
-INSERT INTO `userin` VALUES ('6', '小进', '123456', '15336714288', '女', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', 'Jv+tmEI8haZVk+0iCvZ3PpK2kJJ49pN8xrdowMMx5ayEtxy460ZKgMvKyZt8ZTaQE22XM40P6bc7hDlHGJQzBg==');
+INSERT INTO `userin` VALUES ('1', '小青', '123456', '15158442585', '男', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', 'CLuuhuZdFa+fruM4tqJbS2bUJQJ0YiPxyCLMxPZZi6zm7/a+LebGtZLBviRQxBXP2voXAtzVdREvYFNJjTyqqg==');
+INSERT INTO `userin` VALUES ('2', '小红', '123456', '15158442585', '女', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png', null);
+INSERT INTO `userin` VALUES ('3', '小微', '123456', '15158442585', '女', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', null);
+INSERT INTO `userin` VALUES ('4', '小远', '123456', '15158442585', '男', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png', 'UrSxvbhngOtfiBhJJDcl3WbUJQJ0YiPxyCLMxPZZi6zm7/a+LebGtWkhWb9Y6uv4ajdMo+jz3HsvYFNJjTyqqg==');
+INSERT INTO `userin` VALUES ('5', '小霞', '123456', '15158442585', '女', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png', null);
+INSERT INTO `userin` VALUES ('6', '小进', '123456', '15336714288', '女', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', null);
 INSERT INTO `userin` VALUES ('7', '小芳', '123456', '15336714238', '女', 'http://123.207.31.213/ImmediateChoice_service/image/portrait7.png', null);
+INSERT INTO `userin` VALUES ('8', '小米', '123456', '15336714238', '男', 'http://server.luckboyqin.cn/ImmediateChoice_service/IMG20170416174153.jpg', '+2eRA83AVlAid3mGF2iqVJK2kJJ49pN8xrdowMMx5ayEtxy460ZKgASoiEpilopBcieo05XaU3s7hDlHGJQzBg==');
+INSERT INTO `userin` VALUES ('9', '小白', '123456', '15336714238', '男', 'http://server.luckboyqin.cn/ImmediateChoice_service/1491543589697.jpg', 'V8yUSbz8Dp/jPI69lJDYe2bUJQJ0YiPxyCLMxPZZi6zm7/a+LebGtRDrVkoez/KBwCXljGd/HvsvYFNJjTyqqg==');

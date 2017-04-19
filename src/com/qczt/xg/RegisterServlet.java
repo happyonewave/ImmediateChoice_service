@@ -22,7 +22,8 @@ import net.qzct.server.Tools;
  * Servlet implementation class Register
  */
 @WebServlet("/RegisterServlet")
-@MultipartConfig(location = "D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\image"
+@MultipartConfig(
+//		location = "D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\image"
 // location="E:\\apache-tomcat-7.0.56\\webapps\\Server\\img"
 )
 public class RegisterServlet extends HttpServlet {
@@ -65,7 +66,8 @@ public class RegisterServlet extends HttpServlet {
 
 		Part portrait = request.getPart("portrait");
 //		String portrait_name = phone_number + ".jpg";
-		portrait.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\image\\" + Tools.getFileName(portrait_url));
+		portrait.write("/yjdata/www/www/ImmediateChoice_service/" + Tools.getFileName(portrait_url));
+//		portrait.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\image\\" + Tools.getFileName(portrait_url));
 
 //		String url_img = "http://123.207.31.213/ImmediateChoice_service/img/";
 //		String portrait_path = url_img + portrait_name;
