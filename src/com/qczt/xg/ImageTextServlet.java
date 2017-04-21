@@ -52,6 +52,8 @@ public class ImageTextServlet extends HttpServlet {
 		// final String GET_MAX_ID = "0";
 		// final String GET_QUESTION = "1";
 		// final String REFRESH_QUESTION = "2";
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
@@ -74,7 +76,8 @@ public class ImageTextServlet extends HttpServlet {
 					.parseInt(user_id));
 		}
 
-		String json = Tools.getPaging(Integer.parseInt(page), type, group_ids,6);
+		String json = Tools.getPaging(Integer.parseInt(page), type, group_ids,
+				6);
 		// out.print("group_ids:	" + group_ids);
 		out.print(json);
 		// String msg = request.getParameter("msg");
