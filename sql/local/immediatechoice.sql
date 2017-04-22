@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50022
 File Encoding         : 65001
 
-Date: 2017-04-22 01:34:21
+Date: 2017-04-22 22:03:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -159,27 +159,6 @@ INSERT INTO `group_info` VALUES ('5', '4', '好友');
 INSERT INTO `group_info` VALUES ('6', '7', '家人');
 
 -- ----------------------------
--- Table structure for group_members
--- ----------------------------
-DROP TABLE IF EXISTS `group_members`;
-CREATE TABLE `group_members` (
-  `group_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY  (`group_id`,`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of group_members
--- ----------------------------
-INSERT INTO `group_members` VALUES ('1', '2');
-INSERT INTO `group_members` VALUES ('1', '3');
-INSERT INTO `group_members` VALUES ('1', '4');
-INSERT INTO `group_members` VALUES ('2', '2');
-INSERT INTO `group_members` VALUES ('2', '4');
-INSERT INTO `group_members` VALUES ('2', '5');
-INSERT INTO `group_members` VALUES ('2', '6');
-
--- ----------------------------
 -- Table structure for question
 -- ----------------------------
 DROP TABLE IF EXISTS `question`;
@@ -235,7 +214,7 @@ CREATE TABLE `questionnaire_choice` (
   `choice_id` int(11) NOT NULL,
   `questionnaire_id` int(11) NOT NULL,
   `questionnaire_quuestion_id` int(11) default NULL,
-  `option_id` varchar(255) default NULL,
+  `num` varchar(255) default NULL,
   PRIMARY KEY  (`choice_id`,`questionnaire_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -245,6 +224,11 @@ CREATE TABLE `questionnaire_choice` (
 INSERT INTO `questionnaire_choice` VALUES ('1', '1', '1', '2');
 INSERT INTO `questionnaire_choice` VALUES ('2', '1', '2', '2');
 INSERT INTO `questionnaire_choice` VALUES ('3', '1', '3', '3');
+INSERT INTO `questionnaire_choice` VALUES ('4', '1', '1', '2');
+INSERT INTO `questionnaire_choice` VALUES ('5', '1', '1', '1');
+INSERT INTO `questionnaire_choice` VALUES ('6', '1', '1', '2');
+INSERT INTO `questionnaire_choice` VALUES ('7', '1', '1', '2');
+INSERT INTO `questionnaire_choice` VALUES ('8', '1', '1', '2');
 
 -- ----------------------------
 -- Table structure for questionnaire_info
@@ -263,27 +247,12 @@ CREATE TABLE `questionnaire_info` (
 INSERT INTO `questionnaire_info` VALUES ('1', '关于学校水果店的调查问卷', '谢谢你参加调查');
 
 -- ----------------------------
--- Table structure for questionnaire_members
--- ----------------------------
-DROP TABLE IF EXISTS `questionnaire_members`;
-CREATE TABLE `questionnaire_members` (
-  `questionnaire_id` int(11) NOT NULL,
-  `questionnaire_question_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of questionnaire_members
--- ----------------------------
-INSERT INTO `questionnaire_members` VALUES ('1', '1');
-INSERT INTO `questionnaire_members` VALUES ('1', '2');
-INSERT INTO `questionnaire_members` VALUES ('1', '3');
-
--- ----------------------------
 -- Table structure for questionnaire_question
 -- ----------------------------
 DROP TABLE IF EXISTS `questionnaire_question`;
 CREATE TABLE `questionnaire_question` (
   `questionnaire_question_id` int(11) NOT NULL auto_increment,
+  `questionnaire_id` int(11) default NULL,
   `title` varchar(255) NOT NULL,
   PRIMARY KEY  (`questionnaire_question_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -291,9 +260,19 @@ CREATE TABLE `questionnaire_question` (
 -- ----------------------------
 -- Records of questionnaire_question
 -- ----------------------------
-INSERT INTO `questionnaire_question` VALUES ('1', '你的性别');
-INSERT INTO `questionnaire_question` VALUES ('2', '您每月的生活费');
-INSERT INTO `questionnaire_question` VALUES ('3', '您平时在哪些地方购买水果');
+INSERT INTO `questionnaire_question` VALUES ('1', '1', '你的性别');
+INSERT INTO `questionnaire_question` VALUES ('2', '1', '您每月的生活费');
+INSERT INTO `questionnaire_question` VALUES ('3', '1', '您平时在哪些地方购买水果');
+INSERT INTO `questionnaire_question` VALUES ('4', '1', '您选择水果店时会考虑最多的是');
+INSERT INTO `questionnaire_question` VALUES ('5', '1', '您每隔多久吃一次水果');
+INSERT INTO `questionnaire_question` VALUES ('6', '1', '您喜欢吃反季水果吗');
+INSERT INTO `questionnaire_question` VALUES ('7', '1', '您平均每周花多少买水果');
+INSERT INTO `questionnaire_question` VALUES ('8', '1', '您对学校水果店的价格怎么看');
+INSERT INTO `questionnaire_question` VALUES ('9', '1', '您喜欢以什么方式吃水果');
+INSERT INTO `questionnaire_question` VALUES ('10', '1', '学校水果店推出在网上可以购买到新鲜水果并且免费配送，您是否原意购买');
+INSERT INTO `questionnaire_question` VALUES ('11', '1', '如果学校水果店推出提供免费送货上门服务（15起送）是否愿意');
+INSERT INTO `questionnaire_question` VALUES ('12', '1', '您认为哪些促销方式更能吸引您');
+INSERT INTO `questionnaire_question` VALUES ('13', '1', '您对学校水果店的服务态度怎么看');
 
 -- ----------------------------
 -- Table structure for questionnaire_quuestion_options
@@ -303,41 +282,22 @@ CREATE TABLE `questionnaire_quuestion_options` (
   `option_id` int(11) NOT NULL,
   `questionnaire_question_id` int(11) default NULL,
   `num` varchar(255) default NULL,
-  `context` varchar(255) default NULL,
+  `content` varchar(255) default NULL,
   PRIMARY KEY  (`option_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of questionnaire_quuestion_options
 -- ----------------------------
-INSERT INTO `questionnaire_quuestion_options` VALUES ('1', '1', 'A', '男');
-INSERT INTO `questionnaire_quuestion_options` VALUES ('2', '1', 'B', 'nv');
-INSERT INTO `questionnaire_quuestion_options` VALUES ('3', '2', 'A', '1000及以下');
-INSERT INTO `questionnaire_quuestion_options` VALUES ('4', '2', 'B', '1000~1500');
-INSERT INTO `questionnaire_quuestion_options` VALUES ('5', '2', 'C', '1500以上');
-INSERT INTO `questionnaire_quuestion_options` VALUES ('6', '3', 'A', '水果店');
-INSERT INTO `questionnaire_quuestion_options` VALUES ('7', '3', 'B', '网上');
-INSERT INTO `questionnaire_quuestion_options` VALUES ('8', '3', 'C', '超市');
-
--- ----------------------------
--- Table structure for readable_group
--- ----------------------------
-DROP TABLE IF EXISTS `readable_group`;
-CREATE TABLE `readable_group` (
-  `question_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
-  PRIMARY KEY  (`question_id`,`group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of readable_group
--- ----------------------------
-INSERT INTO `readable_group` VALUES ('1', '1');
-INSERT INTO `readable_group` VALUES ('2', '1');
-INSERT INTO `readable_group` VALUES ('3', '1');
-INSERT INTO `readable_group` VALUES ('35', '1');
-INSERT INTO `readable_group` VALUES ('36', '1');
-INSERT INTO `readable_group` VALUES ('37', '2');
+INSERT INTO `questionnaire_quuestion_options` VALUES ('1', '1', '1', '男');
+INSERT INTO `questionnaire_quuestion_options` VALUES ('2', '1', '2', '女');
+INSERT INTO `questionnaire_quuestion_options` VALUES ('3', '2', '1', '1000及以下');
+INSERT INTO `questionnaire_quuestion_options` VALUES ('4', '2', '2', '1000~1500');
+INSERT INTO `questionnaire_quuestion_options` VALUES ('5', '2', '3', '1500以上');
+INSERT INTO `questionnaire_quuestion_options` VALUES ('6', '3', '1', '水果店');
+INSERT INTO `questionnaire_quuestion_options` VALUES ('7', '3', '2', '网上');
+INSERT INTO `questionnaire_quuestion_options` VALUES ('8', '3', '3', '超市');
+INSERT INTO `questionnaire_quuestion_options` VALUES ('9', '4', '1', '水果的质量和新鲜度');
 
 -- ----------------------------
 -- Table structure for topic
