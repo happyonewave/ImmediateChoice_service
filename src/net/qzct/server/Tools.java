@@ -253,12 +253,12 @@ public class Tools {
 			ResultSet rs = queryDatabase(sql);
 			JSONObject object = new JSONObject();
 			if (rs.next()) {
-				int user_id = rs.getInt(1);
-				String name = rs.getString(2);
+				int user_id = rs.getInt("user_id");
+				String name = rs.getString("name");
 				// String password = rs.getString(3);
-				String phone_number = rs.getString(4);
-				String sex = rs.getString(5);
-				String portrait_path = rs.getString(6);
+				String phone_number = rs.getString("phone_number");
+				String sex = rs.getString("sex");
+				String portrait_path = rs.getString("portrait_url");
 				object.put("user_id", user_id);
 				object.put("name", name);
 				// json.put("password", password);
@@ -973,12 +973,12 @@ public class Tools {
 				break;
 
 			case "userin":
-				int user_id = rs.getInt(1);
-				String name = rs.getString(2);
-				String password = rs.getString(3);
-				String phone_number = rs.getString(4);
-				String sex = rs.getString(5);
-				String portrait_path = rs.getString(6);
+				int user_id = rs.getInt("user_id");
+				String name = rs.getString("name");
+				String password = rs.getString("password");
+				String phone_number = rs.getString("phone_number");
+				String sex = rs.getString("sex");
+				String portrait_path = rs.getString("portrait_url");
 				json.put("user_id", user_id);
 				json.put("name", name);
 				// json.put("password", password);
@@ -988,8 +988,33 @@ public class Tools {
 				jsonArray.add(json);
 				break;
 
+			case "questionnaire_question_options":
+				int option_id = rs.getInt("option_id");
+				int questionnaire_question_id = rs
+						.getInt("questionnaire_question_id");
+				String num = rs.getString("num");
+				String content = rs.getString("content");
+				json.put("option_id", option_id);
+				json.put("num", num);
+				json.put("questionnaire_question_id", questionnaire_question_id);
+				json.put("content", content);
+				jsonArray.add(json);
+				break;
+
+			case "questionnaire_question":
+				int questionnaire_question_id1 = rs
+						.getInt("questionnaire_question_id");
+				int questionnaire_id = rs.getInt("questionnaire_id");
+				String title = rs.getString("title");
+				json.put("questionnaire_question_id",
+						questionnaire_question_id1);
+				json.put("questionnaire_id", questionnaire_id);
+				json.put("title", title);
+				jsonArray.add(json);
+				break;
+
 			case "friend":
-				int f_id = rs.getInt(2);
+				int f_id = rs.getInt("f_id");
 				json.put("f_id", f_id);
 				jsonArray.add(json);
 				break;
@@ -1101,7 +1126,7 @@ public class Tools {
 	}
 
 	public static boolean deleteFriend(int f_id) {
-		String sql = "DELETE FROM friend WHERE f_id = "+f_id;
+		String sql = "DELETE FROM friend WHERE f_id = " + f_id;
 
 		DatabaseConnection db;
 		try {

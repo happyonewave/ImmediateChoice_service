@@ -87,10 +87,11 @@ public class LoginServlet extends HttpServlet {
 
 	private void getUserInfo() throws Exception {
 		JSONObject json = new JSONObject();
-		int user_id = rs.getInt(1);
-		String phone_number = rs.getString(4);
-		String sex = rs.getString(5);
-		String portrait_path = rs.getString(6);
+		int user_id = rs.getInt("user_id");
+		int user_type = rs.getInt("user_type");
+		String phone_number = rs.getString("phone_number");
+		String sex = rs.getString("sex");
+		String portrait_path = rs.getString("portrait_url");
 		String token = rs.getString("token");
 		System.out.println("直接取token: " + token);
 		// if ("".equals(token)) {
@@ -100,6 +101,7 @@ public class LoginServlet extends HttpServlet {
 			Tools.updateToken(user_id, token);
 		}
 		json.put("user_id", user_id);
+		json.put("user_type", user_type);
 		json.put("name", name);
 		json.put("password", password);
 		json.put("phone_number", phone_number);
