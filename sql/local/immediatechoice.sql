@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50022
 File Encoding         : 65001
 
-Date: 2017-04-25 23:07:22
+Date: 2017-04-27 04:49:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,97 +24,99 @@ CREATE TABLE `comment` (
   `comment_content` varchar(255) default NULL,
   `commenter_date` varchar(255) default NULL,
   `commenter_name` varchar(255) default NULL,
-  `commenter_portrait_url` varchar(255) default NULL
+  `commenter_portrait_url` varchar(255) default NULL,
+  KEY `question_id` (`question_id`),
+  CONSTRAINT `question_id` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES ('17', '评论1', '2017-0311 13:44', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png');
+INSERT INTO `comment` VALUES ('6', '评论1', '2017-0311 13:44', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png');
+INSERT INTO `comment` VALUES ('8', '评论1', '2017-0311 13:44', '小红', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png');
+INSERT INTO `comment` VALUES ('11', '评论1', '2017-0311 13:44', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png');
+INSERT INTO `comment` VALUES ('12', '评论1', '2017-0311 13:44', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png');
+INSERT INTO `comment` VALUES ('13', '评论1', '2017-0311 13:44', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png');
+INSERT INTO `comment` VALUES ('14', '评论1', '2017-0311 13:44', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png');
 INSERT INTO `comment` VALUES ('15', '评论1', '2017-0311 13:44', '小红', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png');
-INSERT INTO `comment` VALUES ('10', '评论1', '2017-0311 13:44', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png');
-INSERT INTO `comment` VALUES ('10', '评论1', '2017-0311 13:44', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png');
-INSERT INTO `comment` VALUES ('12', '评论1', '2017-0311 13:44', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png');
-INSERT INTO `comment` VALUES ('11', '评论1', '2017-0311 13:44', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png');
-INSERT INTO `comment` VALUES ('11', '评论1', '2017-0311 13:44', '小红', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png');
-INSERT INTO `comment` VALUES ('11', '评论1', '2017-0311 13:44', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png');
-INSERT INTO `comment` VALUES ('17', '啊', 'Mar 11, 2017 7:52:06 AM', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png');
-INSERT INTO `comment` VALUES ('17', '棒', 'Mar 11, 2017 7:56:21 AM', '小芳', 'http://123.207.31.213/ImmediateChoice_service/image/portrait7.png');
-INSERT INTO `comment` VALUES ('17', '好', 'Mar 11, 2017 7:59:38 AM', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png');
-INSERT INTO `comment` VALUES ('16', '好好', 'Mar 11, 2017 8:00:54 AM', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png');
-INSERT INTO `comment` VALUES ('17', '选这个', 'Mar 11, 2017 8:03:18 AM', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png');
-INSERT INTO `comment` VALUES ('17', '选哪个', 'Mar 11, 2017 8:05:08 AM', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png');
-INSERT INTO `comment` VALUES ('17', '这个好', 'Mar 11, 2017 8:05:52 AM', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png');
-INSERT INTO `comment` VALUES ('17', '对的', 'Mar 11, 2017 8:06:27 AM', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png');
-INSERT INTO `comment` VALUES ('17', '是呀', 'Mar 11, 2017 8:07:20 AM', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png');
-INSERT INTO `comment` VALUES ('17', '好的', 'Mar 11, 2017 8:13:32 AM', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png');
-INSERT INTO `comment` VALUES ('17', 'ok', 'Mar 11, 2017 8:14:49 AM', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png');
-INSERT INTO `comment` VALUES ('15', '这可以', 'Mar 11, 2017 8:15:13 AM', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png');
-INSERT INTO `comment` VALUES ('17', '就是说呀', '2017年3月11日 下午4:20:01', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png');
-INSERT INTO `comment` VALUES ('17', '嗯', '2017年3月11日 下午4:20:32', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png');
-INSERT INTO `comment` VALUES ('17', '78963', '2017年3月11日 下午4:20:44', 'qin', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', '455', '2017年3月11日 下午4:30:36', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', '', '2017年3月11日 下午4:46:02', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', '', '2017年3月11日 下午5:02:39', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', 'gh', '2017年3月11日 下午5:11:06', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('16', '563', '2017年3月11日 下午5:11:23', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', 'dgh', '2017年3月11日 下午6:13:30', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', 'ddjd', '2017年3月12日 下午5:16:41', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('12', '真的?', '2017年3月12日 下午5:32:47', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('16', '159', 'Mar 14, 2017 11:19:28 PM', '159', 'http://123.207.31.213/ImmediateChoice_service/img/159.jpg');
-INSERT INTO `comment` VALUES ('17', '12', 'Mar 14, 2017 11:23:42 PM', '159', 'http://123.207.31.213/ImmediateChoice_service/img/159.jpg');
-INSERT INTO `comment` VALUES ('17', '大家大家', '2017年3月16日 下午9:49:43', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('16', '沙发上', '2017年3月16日 下午9:49:58', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('18', '吧', '2017年3月16日 下午9:59:13', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('18', '黄家驹', '2017年3月16日 下午9:59:29', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('18', '对的吧', '2017年3月16日 下午9:59:41', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('18', '吃不饱', '2017年3月17日 下午11:38:42', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('18', '对', '2017年3月18日 下午11:43:45', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('18', '谁知道呢', '2017年3月18日 下午11:49:20', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('9', '刚刚', '2017年3月18日 下午11:52:20', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('9', '谁知道呀', '2017年3月18日 下午11:52:33', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('18', '据', '2017年3月19日 上午12:13:08', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('9', '嗯', '2017年3月19日 上午12:16:11', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', '对呀', '2017年3月19日 下午5:07:18', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('18', '快乐', '2017年3月19日 下午5:11:09', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', '啦', '2017年3月19日 下午5:11:22', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', '俺', '2017年3月19日 下午5:12:09', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', '扼杀', '2017年3月19日 下午5:12:33', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', '嗯嗯嗯', '2017年3月19日 下午5:15:32', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', 'fhdhdhd', '2017年3月19日 下午5:16:45', 'qin', 'http://123.207.31.213/ImmediateChoice_service/img/159.jpg');
-INSERT INTO `comment` VALUES ('7', 'I', '2017年3月19日 下午6:13:00', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('17', '谁知道呀', '2017年3月22日 上午4:02:37', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('24', '1', '2017年3月22日 上午4:12:43', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('20', '评论1', '2017-0311 13:44', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png');
+INSERT INTO `comment` VALUES ('21', '啊', 'Mar 11, 2017 7:52:06 AM', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png');
+INSERT INTO `comment` VALUES ('22', '棒', 'Mar 11, 2017 7:56:21 AM', '小芳', 'http://123.207.31.213/ImmediateChoice_service/image/portrait7.png');
+INSERT INTO `comment` VALUES ('23', '好', 'Mar 11, 2017 7:59:38 AM', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png');
+INSERT INTO `comment` VALUES ('24', '好好', 'Mar 11, 2017 8:00:54 AM', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png');
+INSERT INTO `comment` VALUES ('26', '选这个', 'Mar 11, 2017 8:03:18 AM', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png');
+INSERT INTO `comment` VALUES ('27', '选哪个', 'Mar 11, 2017 8:05:08 AM', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png');
+INSERT INTO `comment` VALUES ('61', '这个好', 'Mar 11, 2017 8:05:52 AM', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png');
+INSERT INTO `comment` VALUES ('62', '对的', 'Mar 11, 2017 8:06:27 AM', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png');
+INSERT INTO `comment` VALUES ('63', '是呀', 'Mar 11, 2017 8:07:20 AM', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png');
+INSERT INTO `comment` VALUES ('64', '好的', 'Mar 11, 2017 8:13:32 AM', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png');
+INSERT INTO `comment` VALUES ('65', 'ok', 'Mar 11, 2017 8:14:49 AM', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png');
+INSERT INTO `comment` VALUES ('66', '这可以', 'Mar 11, 2017 8:15:13 AM', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png');
+INSERT INTO `comment` VALUES ('67', '就是说呀', '2017年3月11日 下午4:20:01', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png');
+INSERT INTO `comment` VALUES ('6', '嗯', '2017年3月11日 下午4:20:32', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png');
+INSERT INTO `comment` VALUES ('8', '78963', '2017年3月11日 下午4:20:44', 'qin', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('11', '455', '2017年3月11日 下午4:30:36', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('12', '', '2017年3月11日 下午4:46:02', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('13', '', '2017年3月11日 下午5:02:39', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('14', 'gh', '2017年3月11日 下午5:11:06', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('15', '563', '2017年3月11日 下午5:11:23', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('20', 'dgh', '2017年3月11日 下午6:13:30', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('21', 'ddjd', '2017年3月12日 下午5:16:41', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('22', '真的?', '2017年3月12日 下午5:32:47', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('23', '159', 'Mar 14, 2017 11:19:28 PM', '159', 'http://123.207.31.213/ImmediateChoice_service/img/159.jpg');
+INSERT INTO `comment` VALUES ('24', '12', 'Mar 14, 2017 11:23:42 PM', '159', 'http://123.207.31.213/ImmediateChoice_service/img/159.jpg');
+INSERT INTO `comment` VALUES ('26', '大家大家', '2017年3月16日 下午9:49:43', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('27', '沙发上', '2017年3月16日 下午9:49:58', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('61', '吧', '2017年3月16日 下午9:59:13', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('62', '黄家驹', '2017年3月16日 下午9:59:29', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('63', '对的吧', '2017年3月16日 下午9:59:41', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('64', '吃不饱', '2017年3月17日 下午11:38:42', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('65', '对', '2017年3月18日 下午11:43:45', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('66', '谁知道呢', '2017年3月18日 下午11:49:20', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('67', '刚刚', '2017年3月18日 下午11:52:20', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('6', '谁知道呀', '2017年3月18日 下午11:52:33', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('8', '据', '2017年3月19日 上午12:13:08', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('11', '嗯', '2017年3月19日 上午12:16:11', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('12', '对呀', '2017年3月19日 下午5:07:18', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('13', '快乐', '2017年3月19日 下午5:11:09', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('14', '啦', '2017年3月19日 下午5:11:22', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('15', '俺', '2017年3月19日 下午5:12:09', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('20', '扼杀', '2017年3月19日 下午5:12:33', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('21', '嗯嗯嗯', '2017年3月19日 下午5:15:32', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('22', 'fhdhdhd', '2017年3月19日 下午5:16:45', 'qin', 'http://123.207.31.213/ImmediateChoice_service/img/159.jpg');
+INSERT INTO `comment` VALUES ('23', 'I', '2017年3月19日 下午6:13:00', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('24', '谁知道呀', '2017年3月22日 上午4:02:37', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('26', '1', '2017年3月22日 上午4:12:43', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
 INSERT INTO `comment` VALUES ('27', '嗨', '2017年3月22日 上午4:32:08', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('29', '28', '2017年3月22日 上午6:39:43', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('23', '嗯', '2017年3月22日 下午12:24:36', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('27', 'good', '2017年3月22日 下午12:31:40', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
-INSERT INTO `comment` VALUES ('31', 'yes', '2017年3月22日 下午2:11:07', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('26', 'fh', '2017年3月22日 下午2:27:06', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('26', '谁知道呀', '2017年3月24日 下午8:39:30', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('9', '嗨', '2017年3月26日 上午10:56:56', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('9', '1', '2017年3月26日 上午10:57:18', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('9', '1', '2017年3月26日 上午11:07:27', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('9', '对', '2017年3月26日 上午11:12:45', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('9', '你', '2017年3月26日 上午11:13:10', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('17', '好', '2017年3月26日 下午12:17:48', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('24', '1', '2017年3月26日 下午12:52:35', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('24', '1', '2017年3月26日 下午12:52:44', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('24', '1', '2017年3月26日 下午12:52:48', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('24', '1', '2017年3月26日 下午12:52:53', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('24', '1', '2017年3月26日 下午12:52:57', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('24', '45', '2017年3月26日 下午12:53:06', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('61', '28', '2017年3月22日 上午6:39:43', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('62', '嗯', '2017年3月22日 下午12:24:36', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('63', 'good', '2017年3月22日 下午12:31:40', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/img/2.jpg');
+INSERT INTO `comment` VALUES ('64', 'yes', '2017年3月22日 下午2:11:07', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('65', 'fh', '2017年3月22日 下午2:27:06', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('66', '谁知道呀', '2017年3月24日 下午8:39:30', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('67', '嗨', '2017年3月26日 上午10:56:56', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('6', '1', '2017年3月26日 上午10:57:18', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('8', '1', '2017年3月26日 上午11:07:27', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('11', '对', '2017年3月26日 上午11:12:45', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('12', '你', '2017年3月26日 上午11:13:10', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('13', '好', '2017年3月26日 下午12:17:48', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('14', '1', '2017年3月26日 下午12:52:35', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('15', '1', '2017年3月26日 下午12:52:44', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('20', '1', '2017年3月26日 下午12:52:48', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('21', '1', '2017年3月26日 下午12:52:53', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('22', '1', '2017年3月26日 下午12:52:57', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('23', '45', '2017年3月26日 下午12:53:06', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
 INSERT INTO `comment` VALUES ('24', '4', '2017年3月26日 下午12:53:12', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('24', '54', '2017年3月26日 下午12:53:16', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('24', 'q', '2017年3月26日 下午12:53:38', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('9', '·', '2017年3月26日 下午2:18:42', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('9', '1', '2017年3月26日 下午2:21:06', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('9', 'dsdv的风格的是的范德萨', '2017年3月26日 下午2:32:31', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('9', '嗯', '2017年3月26日 下午7:35:30', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('9', '哈哈', '2017年3月26日 下午7:36:34', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
-INSERT INTO `comment` VALUES ('40', '对', '2017年4月13日 下午11:30:40', '游客', 'android.resource://com.qzct.immediatechoice/mipmap/default_portrait');
-INSERT INTO `comment` VALUES ('21', '右边的不错', '2017年4月14日 下午9:49:18', '游客', 'android.resource://com.qzct.immediatechoice/mipmap/default_portrait');
-INSERT INTO `comment` VALUES ('16', '都不喜欢', '2017年4月15日 下午6:47:58', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('26', '54', '2017年3月26日 下午12:53:16', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('27', 'q', '2017年3月26日 下午12:53:38', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('61', '·', '2017年3月26日 下午2:18:42', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('62', '1', '2017年3月26日 下午2:21:06', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('63', 'dsdv的风格的是的范德萨', '2017年3月26日 下午2:32:31', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('64', '嗯', '2017年3月26日 下午7:35:30', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('65', '哈哈', '2017年3月26日 下午7:36:34', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
+INSERT INTO `comment` VALUES ('66', '对', '2017年4月13日 下午11:30:40', '游客', 'android.resource://com.qzct.immediatechoice/mipmap/default_portrait');
+INSERT INTO `comment` VALUES ('67', '右边的不错', '2017年4月14日 下午9:49:18', '游客', 'android.resource://com.qzct.immediatechoice/mipmap/default_portrait');
+INSERT INTO `comment` VALUES ('67', '都不喜欢', '2017年4月15日 下午6:47:58', '小梨子', 'http://123.207.31.213/ImmediateChoice_service/image/2.jpg');
 
 -- ----------------------------
 -- Table structure for friend
@@ -123,7 +125,7 @@ DROP TABLE IF EXISTS `friend`;
 CREATE TABLE `friend` (
   `user_id` int(11) NOT NULL,
   `f_id` int(11) NOT NULL,
-  `group_id` int(11) default NULL
+  `group_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -135,7 +137,7 @@ INSERT INTO `friend` VALUES ('1', '2', '2');
 INSERT INTO `friend` VALUES ('2', '3', '1');
 INSERT INTO `friend` VALUES ('3', '2', '2');
 INSERT INTO `friend` VALUES ('6', '1', '1');
-INSERT INTO `friend` VALUES ('1', '9', null);
+INSERT INTO `friend` VALUES ('1', '9', '0');
 
 -- ----------------------------
 -- Table structure for group_info
@@ -164,8 +166,8 @@ INSERT INTO `group_info` VALUES ('6', '7', '家人');
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `question_id` int(11) NOT NULL auto_increment,
-  `group_id` int(11) unsigned zerofill default NULL,
-  `topic_id` int(11) unsigned zerofill default NULL,
+  `group_id` int(11) default NULL,
+  `topic_id` int(11) default NULL,
   `question_content` varchar(255) default NULL,
   `left_url` varchar(255) default NULL,
   `right_url` varchar(255) default NULL,
@@ -178,33 +180,35 @@ CREATE TABLE `question` (
   `choice_left_ids` varchar(255) default '',
   `choice_right_ids` varchar(255) default '',
   `post_time` timestamp NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`question_id`)
+  PRIMARY KEY  (`question_id`),
+  KEY `topic_id` (`topic_id`),
+  KEY `group_id` (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of question
 -- ----------------------------
-INSERT INTO `question` VALUES ('6', '00000000001', '00000000001', '高考失利该不该复读？', 'http://123.207.31.213/ImmediateChoice_service/image/(42).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(41).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '30', '89', '当然是冬天才能领略北国风光啦!', '', ',1,,1,,1,,1,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,2,,0,,0,,0,,1,,1,,1,,1,,1,', '2017-04-19 02:08:48');
-INSERT INTO `question` VALUES ('8', '00000000001', '00000000000', '哪张可以？', 'http://123.207.31.213/ImmediateChoice_service/image/(38).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(37).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '12', '65', '当然是冬天才能领略北国风光啦!', '', ',1,,1,,1,,1,,1,,1,', ',2,,0,,0,,1,,1,,1,', '2017-04-19 02:08:45');
-INSERT INTO `question` VALUES ('11', '00000000002', '00000000000', '不管黑猫白猫。。。。', 'http://123.207.31.213/ImmediateChoice_service/image/(32).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(31).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,2,', ',1,,1,,1,,1,,0,', '2017-04-19 02:08:39');
-INSERT INTO `question` VALUES ('12', '00000000002', '00000000000', '帮我看看呗？', 'http://123.207.31.213/ImmediateChoice_service/image/(30).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(29).jpg', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,1,,1,,1,,2,,0,', '2017-04-19 02:08:37');
-INSERT INTO `question` VALUES ('13', '00000000003', '00000000000', '左边还是右边更让你心旷神怡？', 'http://123.207.31.213/ImmediateChoice_service/image/(28).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(27).jpg', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,0,,1,,1,,1,,1,,1,,1,,2,', ',1,,1,,1,,1,,1,,1,,0,', '2017-04-19 02:08:30');
-INSERT INTO `question` VALUES ('14', '00000000002', '00000000000', '听妈妈的话。。', 'http://123.207.31.213/ImmediateChoice_service/image/(26).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(25).jpg', '小芳', 'http://123.207.31.213/ImmediateChoice_service/image/portrait7.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,0,,0,', '2017-04-19 02:09:24');
-INSERT INTO `question` VALUES ('15', '00000000002', '00000000000', '大红花怎么样？', 'http://123.207.31.213/ImmediateChoice_service/image/(24).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(23).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',,,,,,,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,0,,0,', '2017-04-19 02:09:21');
-INSERT INTO `question` VALUES ('20', '00000000000', '00000000000', '冬天还是春天好？', 'http://123.207.31.213/ImmediateChoice_service/image/(14).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(13).jpg', '小红', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,,0,,0,,0,', ',1,,1,,1,,1,,2,,0,,0,,1,', '2017-04-19 02:09:13');
-INSERT INTO `question` VALUES ('21', '00000000000', '00000000000', '选择困难啊，哪件比较好看？？？', 'http://123.207.31.213/ImmediateChoice_service/image/(12).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(11).jpg', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,1,,1,,1,,0,', ',1,,1,,1,,1,,1,,1,,2,,0,', '2017-04-19 02:09:11');
-INSERT INTO `question` VALUES ('22', '00000000001', '00000000000', '我想买只狗，帮我选选', 'http://123.207.31.213/ImmediateChoice_service/image/(10).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(9).jpg', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,2,,2,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,2,,2,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', '2017-04-19 02:09:10');
-INSERT INTO `question` VALUES ('23', '00000000000', '00000000002', '左边壁纸还是右边壁纸好看？', 'http://123.207.31.213/ImmediateChoice_service/image/(8).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(7).jpg', '小红', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,2,,2,,2,,1,,1,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,0,', '2017-04-19 02:09:08');
-INSERT INTO `question` VALUES ('24', '00000000000', '00000000000', '帮我选一下', 'http://123.207.31.213/ImmediateChoice_service/image/(6).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(5).jpg', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', '2017-04-15 16:04:27');
-INSERT INTO `question` VALUES ('26', '00000000000', '00000000003', 'lol皮肤比比看', 'http://123.207.31.213/ImmediateChoice_service/image/(4).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(3).jpg', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,2,,2,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,0,,1,', '2017-04-19 02:08:58');
-INSERT INTO `question` VALUES ('27', '00000000000', '00000000000', '哪个皮肤比较好看？', 'http://123.207.31.213/ImmediateChoice_service/image/(2).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(1).jpg', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,2,,1,,0,,0,,2,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,1,,0,,1,,1,,1,,1,', '2017-04-19 02:08:56');
-INSERT INTO `question` VALUES ('61', '00000000000', '00000000000', '金秋VS... 哈哈', 'http://123.207.31.213/ImmediateChoice_service/image/(40).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(39).jpg', '小芳', 'http://123.207.31.213/ImmediateChoice_service/image/portrait7.png', '12', '65', '当然是冬天才能领略北国风光啦!', '', ',1,,2,,2,,2,,0,', ',1,,0,,2,,0,,0,,0,,2,,1,', '2017-04-19 02:08:47');
-INSERT INTO `question` VALUES ('62', '00000000000', '00000000001', '哪只更能震撼你？', 'http://123.207.31.213/ImmediateChoice_service/image/(36).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(35).jpg', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', '12', '50', '当然是冬天才能领略北国风光啦!', '', ',1,,0,,1,,1,,1,,0,,1,,2,,2,,2,,1,', ',1,,0,,1,,1,,1,,0,,0,,2,,0,,0,,2,,2,,2,,1,,1,,1,,1,,1,,0,', '2017-04-19 02:08:44');
-INSERT INTO `question` VALUES ('63', '00000000000', '00000000001', '喵...喵。。。', 'http://123.207.31.213/ImmediateChoice_service/image/(34).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(33).jpg', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,2,,2,,1,,1,', ',1,,1,,1,,1,,1,,1,,2,,0,,2,,0,,0,', '2017-04-19 02:08:42');
-INSERT INTO `question` VALUES ('64', '00000000000', '00000000000', '喜欢我的侧颜吗？', 'http://123.207.31.213/ImmediateChoice_service/image/(22).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(21).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '', ',,,,,,,,,,,1,,1,,1,,1,,1,,2,,2,,0,', ',1,,1,,1,,1,,0,,0,,0,', '2017-04-19 02:09:18');
-INSERT INTO `question` VALUES ('65', '00000000000', '00000000002', '你们喜欢那种阳光？', 'http://123.207.31.213/ImmediateChoice_service/image/(20).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(19).jpg', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',,,,,,,1,,1,,1,,2,,0,', ',1,,0,,1,,1,,2,,0,,0,', '2017-04-19 02:09:16');
-INSERT INTO `question` VALUES ('66', '00000000000', '00000000000', '我要买岛！帮我看看', 'http://123.207.31.213/ImmediateChoice_service/image/(18).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(17).jpg', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,2,,2,,1,,0,,1,,1,,1,,1,,1,', ',1,,0,,0,,1,,1,,1,,1,,0,,0,', '2017-04-19 02:09:15');
-INSERT INTO `question` VALUES ('67', '00000000000', '00000000002', '哪个好吃？急！！！', 'http://123.207.31.213/ImmediateChoice_service/image/(16).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(15).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,2,,0,,0,,1,,0,,0,,1,,1,,1,', '2017-04-19 02:09:14');
+INSERT INTO `question` VALUES ('6', '1', '1', '高考失利该不该复读？', 'http://123.207.31.213/ImmediateChoice_service/image/(42).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(41).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '30', '89', '当然是冬天才能领略北国风光啦!', '', ',1,,1,,1,,1,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,2,,0,,0,,0,,1,,1,,1,,1,,1,', '2017-04-19 02:08:48');
+INSERT INTO `question` VALUES ('8', '1', '0', '哪张可以？', 'http://123.207.31.213/ImmediateChoice_service/image/(38).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(37).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '12', '65', '当然是冬天才能领略北国风光啦!', '', ',1,,1,,1,,1,,1,,1,', ',2,,0,,0,,1,,1,,1,,1,', '2017-04-19 02:08:45');
+INSERT INTO `question` VALUES ('11', '2', '0', '不管黑猫白猫。。。。', 'http://123.207.31.213/ImmediateChoice_service/image/(32).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(31).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,2,', ',1,,1,,1,,1,,0,', '2017-04-19 02:08:39');
+INSERT INTO `question` VALUES ('12', '2', '0', '帮我看看呗？', 'http://123.207.31.213/ImmediateChoice_service/image/(30).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(29).jpg', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,1,,1,,1,,2,,0,', '2017-04-19 02:08:37');
+INSERT INTO `question` VALUES ('13', '3', '0', '左边还是右边更让你心旷神怡？', 'http://123.207.31.213/ImmediateChoice_service/image/(28).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(27).jpg', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,0,,1,,1,,1,,1,,1,,1,,2,', ',1,,1,,1,,1,,1,,1,,0,', '2017-04-19 02:08:30');
+INSERT INTO `question` VALUES ('14', '2', '0', '听妈妈的话。。', 'http://123.207.31.213/ImmediateChoice_service/image/(26).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(25).jpg', '小芳', 'http://123.207.31.213/ImmediateChoice_service/image/portrait7.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,0,,0,', '2017-04-19 02:09:24');
+INSERT INTO `question` VALUES ('15', '2', '0', '大红花怎么样？', 'http://123.207.31.213/ImmediateChoice_service/image/(24).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(23).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',,,,,,,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,0,,0,', '2017-04-19 02:09:21');
+INSERT INTO `question` VALUES ('20', '0', '0', '冬天还是春天好？', 'http://123.207.31.213/ImmediateChoice_service/image/(14).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(13).jpg', '小红', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,,0,,0,,0,', ',1,,1,,1,,1,,2,,0,,0,,1,', '2017-04-19 02:09:13');
+INSERT INTO `question` VALUES ('21', '0', '0', '选择困难啊，哪件比较好看？？？', 'http://123.207.31.213/ImmediateChoice_service/image/(12).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(11).jpg', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,1,,1,,1,,0,', ',1,,1,,1,,1,,1,,1,,2,,0,', '2017-04-19 02:09:11');
+INSERT INTO `question` VALUES ('22', '1', '0', '我想买只狗，帮我选选', 'http://123.207.31.213/ImmediateChoice_service/image/(10).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(9).jpg', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,2,,2,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,2,,2,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', '2017-04-19 02:09:10');
+INSERT INTO `question` VALUES ('23', '0', '2', '左边壁纸还是右边壁纸好看？', 'http://123.207.31.213/ImmediateChoice_service/image/(8).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(7).jpg', '小红', 'http://123.207.31.213/ImmediateChoice_service/image/portrait2.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,2,,2,,2,,1,,1,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,0,', '2017-04-19 02:09:08');
+INSERT INTO `question` VALUES ('24', '0', '0', '帮我选一下', 'http://123.207.31.213/ImmediateChoice_service/image/(6).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(5).jpg', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', '2017-04-15 16:04:27');
+INSERT INTO `question` VALUES ('26', '0', '3', 'lol皮肤比比看', 'http://123.207.31.213/ImmediateChoice_service/image/(4).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(3).jpg', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,2,,2,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,0,,1,', '2017-04-19 02:08:58');
+INSERT INTO `question` VALUES ('27', '0', '0', '哪个皮肤比较好看？', 'http://123.207.31.213/ImmediateChoice_service/image/(2).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(1).jpg', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', '0', '0', '', '在衢州职业技术学院继续教育学院附近', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,2,,2,,1,,0,,0,,2,', ',1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,2,,2,,1,,0,,1,,1,,1,,1,', '2017-04-19 02:08:56');
+INSERT INTO `question` VALUES ('61', '0', '0', '金秋VS... 哈哈', 'http://123.207.31.213/ImmediateChoice_service/image/(40).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(39).jpg', '小芳', 'http://123.207.31.213/ImmediateChoice_service/image/portrait7.png', '12', '65', '当然是冬天才能领略北国风光啦!', '', ',1,,2,,2,,2,,0,', ',1,,0,,2,,0,,0,,0,,2,,1,', '2017-04-19 02:08:47');
+INSERT INTO `question` VALUES ('62', '0', '1', '哪只更能震撼你？', 'http://123.207.31.213/ImmediateChoice_service/image/(36).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(35).jpg', '小微', 'http://123.207.31.213/ImmediateChoice_service/image/portrait3.png', '12', '50', '当然是冬天才能领略北国风光啦!', '', ',1,,0,,1,,1,,1,,0,,1,,2,,2,,2,,1,', ',1,,0,,1,,1,,1,,0,,0,,2,,0,,0,,2,,2,,2,,1,,1,,1,,1,,1,,0,', '2017-04-19 02:08:44');
+INSERT INTO `question` VALUES ('63', '0', '1', '喵...喵。。。', 'http://123.207.31.213/ImmediateChoice_service/image/(34).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(33).jpg', '小远', 'http://123.207.31.213/ImmediateChoice_service/image/portrait4.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,2,,2,,1,,1,', ',1,,1,,1,,1,,1,,1,,2,,0,,2,,0,,0,', '2017-04-19 02:08:42');
+INSERT INTO `question` VALUES ('64', '0', '0', '喜欢我的侧颜吗？', 'http://123.207.31.213/ImmediateChoice_service/image/(22).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(21).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '', ',,,,,,,,,,,1,,1,,1,,1,,1,,2,,2,,0,', ',1,,1,,1,,1,,0,,0,,0,', '2017-04-19 02:09:18');
+INSERT INTO `question` VALUES ('65', '0', '2', '你们喜欢那种阳光？', 'http://123.207.31.213/ImmediateChoice_service/image/(20).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(19).jpg', '小霞', 'http://123.207.31.213/ImmediateChoice_service/image/portrait5.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',,,,,,,1,,1,,1,,2,,0,', ',1,,0,,1,,1,,2,,0,,0,', '2017-04-19 02:09:16');
+INSERT INTO `question` VALUES ('66', '0', '0', '我要买岛！帮我看看', 'http://123.207.31.213/ImmediateChoice_service/image/(18).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(17).jpg', '小进', 'http://123.207.31.213/ImmediateChoice_service/image/portrait6.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,2,,2,,1,,0,,1,,1,,1,,1,,1,', ',1,,0,,0,,1,,1,,1,,1,,0,,0,', '2017-04-19 02:09:15');
+INSERT INTO `question` VALUES ('67', '0', '2', '哪个好吃？急！！！', 'http://123.207.31.213/ImmediateChoice_service/image/(16).jpg', 'http://123.207.31.213/ImmediateChoice_service/image/(15).jpg', '小青', 'http://123.207.31.213/ImmediateChoice_service/image/portrait1.png', '0', '0', '', '在衢州市职业技术学院滨江校区附近', ',1,,1,,1,,1,,1,,0,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,,1,', ',1,,1,,1,,2,,0,,0,,1,,0,,0,,1,,1,,1,', '2017-04-19 02:09:14');
 
 -- ----------------------------
 -- Table structure for questionnaire_choice
@@ -272,16 +276,16 @@ INSERT INTO `questionnaire_choice` VALUES ('44', '13', '0', '2');
 DROP TABLE IF EXISTS `questionnaire_info`;
 CREATE TABLE `questionnaire_info` (
   `questionnaire_id` int(11) NOT NULL auto_increment,
-  `user_id` int(11) default NULL,
+  `user_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `hint` varchar(255) default NULL,
-  PRIMARY KEY  (`questionnaire_id`)
+  PRIMARY KEY  (`questionnaire_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of questionnaire_info
 -- ----------------------------
-INSERT INTO `questionnaire_info` VALUES ('1', '1', '关于学校水果店的调查问卷', '谢谢你参加调查');
+INSERT INTO `questionnaire_info` VALUES ('1', '1', '关于水果店的调查问卷', '谢谢你参加调查');
 
 -- ----------------------------
 -- Table structure for questionnaire_question
@@ -291,7 +295,9 @@ CREATE TABLE `questionnaire_question` (
   `questionnaire_question_id` int(11) NOT NULL auto_increment,
   `questionnaire_id` int(11) default NULL,
   `title` varchar(255) NOT NULL,
-  PRIMARY KEY  (`questionnaire_question_id`)
+  PRIMARY KEY  (`questionnaire_question_id`),
+  KEY `questionnaire_id` (`questionnaire_id`),
+  CONSTRAINT `questionnaire_id` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire_info` (`questionnaire_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -301,8 +307,8 @@ INSERT INTO `questionnaire_question` VALUES ('1', '1', '你的性别');
 INSERT INTO `questionnaire_question` VALUES ('2', '1', '您每月的生活费');
 INSERT INTO `questionnaire_question` VALUES ('3', '1', '您平时在哪些地方购买水果');
 INSERT INTO `questionnaire_question` VALUES ('4', '1', '您选择水果店时会考虑最多的是');
-INSERT INTO `questionnaire_question` VALUES ('5', '1', '您每隔多久吃一次水果');
-INSERT INTO `questionnaire_question` VALUES ('6', '1', '您喜欢吃反季水果吗');
+INSERT INTO `questionnaire_question` VALUES ('5', '1', '您对大部分水果店的水果质量和新鲜度是否满意');
+INSERT INTO `questionnaire_question` VALUES ('6', '1', '您每隔多久吃一次水果');
 INSERT INTO `questionnaire_question` VALUES ('7', '1', '您平均每周花多少买水果');
 INSERT INTO `questionnaire_question` VALUES ('8', '1', '您对学校水果店的价格怎么看');
 INSERT INTO `questionnaire_question` VALUES ('9', '1', '您喜欢以什么方式吃水果');
@@ -320,7 +326,9 @@ CREATE TABLE `questionnaire_question_options` (
   `questionnaire_question_id` int(11) default NULL,
   `num` varchar(255) default NULL,
   `content` varchar(255) default NULL,
-  PRIMARY KEY  (`option_id`)
+  PRIMARY KEY  (`option_id`),
+  KEY `questionnaire_question_id` (`questionnaire_question_id`),
+  CONSTRAINT `questionnaire_question_id` FOREIGN KEY (`questionnaire_question_id`) REFERENCES `questionnaire_question` (`questionnaire_question_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -339,13 +347,13 @@ INSERT INTO `questionnaire_question_options` VALUES ('10', '4', '2', '距离');
 INSERT INTO `questionnaire_question_options` VALUES ('11', '4', '3', '价格');
 INSERT INTO `questionnaire_question_options` VALUES ('12', '4', '4', '水果品种多样');
 INSERT INTO `questionnaire_question_options` VALUES ('13', '4', '5', '其它');
-INSERT INTO `questionnaire_question_options` VALUES ('14', '5', '1', '每天都吃');
-INSERT INTO `questionnaire_question_options` VALUES ('15', '5', '2', '一周几次');
-INSERT INTO `questionnaire_question_options` VALUES ('16', '5', '3', '偶尔一次');
-INSERT INTO `questionnaire_question_options` VALUES ('17', '5', '4', '很少吃');
-INSERT INTO `questionnaire_question_options` VALUES ('18', '5', '5', '基本不吃');
-INSERT INTO `questionnaire_question_options` VALUES ('19', '6', '1', '喜欢');
-INSERT INTO `questionnaire_question_options` VALUES ('20', '6', '2', '不喜欢');
+INSERT INTO `questionnaire_question_options` VALUES ('14', '5', '1', '满意');
+INSERT INTO `questionnaire_question_options` VALUES ('15', '5', '2', '不满意');
+INSERT INTO `questionnaire_question_options` VALUES ('16', '5', '1', '每天都吃');
+INSERT INTO `questionnaire_question_options` VALUES ('17', '5', '2', '偶尔一次');
+INSERT INTO `questionnaire_question_options` VALUES ('18', '5', '3', '基本不吃');
+INSERT INTO `questionnaire_question_options` VALUES ('19', '6', '4', '很少吃');
+INSERT INTO `questionnaire_question_options` VALUES ('20', '6', '5', '基本不吃');
 INSERT INTO `questionnaire_question_options` VALUES ('21', '7', '1', '10元以下');
 INSERT INTO `questionnaire_question_options` VALUES ('22', '7', '2', '10元到30元');
 INSERT INTO `questionnaire_question_options` VALUES ('23', '7', '3', '30元到60元');
@@ -400,26 +408,28 @@ DROP TABLE IF EXISTS `topic_members`;
 CREATE TABLE `topic_members` (
   `topic_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  PRIMARY KEY  (`topic_id`,`user_id`)
+  PRIMARY KEY  (`topic_id`,`user_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `userin` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of topic_members
 -- ----------------------------
 INSERT INTO `topic_members` VALUES ('2', '1');
-INSERT INTO `topic_members` VALUES ('2', '7');
 INSERT INTO `topic_members` VALUES ('3', '1');
 INSERT INTO `topic_members` VALUES ('4', '2');
 INSERT INTO `topic_members` VALUES ('5', '3');
-INSERT INTO `topic_members` VALUES ('5', '5');
 INSERT INTO `topic_members` VALUES ('6', '4');
+INSERT INTO `topic_members` VALUES ('5', '5');
+INSERT INTO `topic_members` VALUES ('2', '7');
 
 -- ----------------------------
 -- Table structure for userin
 -- ----------------------------
 DROP TABLE IF EXISTS `userin`;
 CREATE TABLE `userin` (
-  `user_id` int(30) NOT NULL auto_increment,
+  `user_id` int(11) NOT NULL auto_increment,
   `user_type` int(11) unsigned zerofill default NULL,
   `name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
