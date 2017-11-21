@@ -1,5 +1,6 @@
 package com.qczt.xg;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
 
 import net.qzct.server.DatabaseConnection;
 import net.qzct.server.Tools;
@@ -64,11 +66,22 @@ public class RegisterServlet extends HttpServlet {
 		String phone_number = request.getParameter("phone_number");
 		String sex = request.getParameter("sex");
 		String portrait_url = request.getParameter("portrait_url");
-
+		System.out.println("name:" + name);
+		System.out.println("user_type:" + user_type);
+		System.out.println("password:" + password);
+		System.out.println("phone_number:" + phone_number);
+		System.out.println("sex:" + sex);
+		System.out.println("portrait_url:" + portrait_url);
 		Part portrait = request.getPart("portrait");
 		// String portrait_name = phone_number + ".jpg";
-		portrait.write("/yjdata/www/www/ImmediateChoice_service/"
-				+ Tools.getFileName(portrait_url));
+		
+
+		String path = getParent(request.getRealPath(request.getContextPath())) + File.separator + "image"
+				+ File.separator + Tools.getFileName(portrait_url);
+		portrait.write(path);
+		
+//		portrait.write("/yjdata/www/www/ImmediateChoice_service/"
+//				+ Tools.getFileName(portrait_url));
 //		 portrait.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\image\\"
 //		 + Tools.getFileName(portrait_url));
 
@@ -112,4 +125,19 @@ public class RegisterServlet extends HttpServlet {
 
 	}
 
+
+	public static String getParent(String sub) {
+		int lastIndex;
+		if (sub.contains("http")) {
+			lastIndex = sub.lastIndexOf("/");
+		} else {
+			// lastIndex = sub.lastIndexOf("\\");
+			lastIndex = sub.lastIndexOf(File.separator);
+
+		}
+		return sub.substring(0, lastIndex);
+
+	}
+
+	
 }

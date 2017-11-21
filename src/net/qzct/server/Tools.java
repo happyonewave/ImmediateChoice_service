@@ -1,6 +1,7 @@
 package net.qzct.server;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -1144,5 +1145,18 @@ public class Tools {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public static  String getParent(String sub) {
+		int lastIndex;
+		if (sub.contains("http")) {
+			lastIndex = sub.lastIndexOf("/");
+		} else {
+			// lastIndex = sub.lastIndexOf("\\");
+			lastIndex = sub.lastIndexOf(File.separator);
+
+		}
+		return sub.substring(0, lastIndex);
+
 	}
 }

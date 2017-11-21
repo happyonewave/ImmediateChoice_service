@@ -1,5 +1,6 @@
 package com.qczt.xg;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -83,12 +84,23 @@ public class UploadServlet extends HttpServlet {
 		// group_ids = groupIdstoString(jsonArray);
 		left_url = jsonObject.getString("left_url");
 		right_url = jsonObject.getString("right_url");
-		 file_left
-		 .write("/yjdata/www/www/ImmediateChoice_service/"
-		 + msg + "/" + Tools.getFileName(left_url));
-		 file_right
-		 .write("/yjdata/www/www/ImmediateChoice_service/"
-		 + msg + "/" + Tools.getFileName(right_url));
+
+		String file_left_path = Tools.getParent(request.getRealPath(request.getContextPath())) + File.separator + msg
+				+ File.separator + Tools.getFileName(left_url);
+		String file_right_path = Tools.getParent(request.getRealPath(request.getContextPath())) + File.separator + msg
+				+ File.separator + Tools.getFileName(right_url);
+		
+
+		 file_left.write(file_left_path);
+		 file_right.write(file_right_path);
+		
+		
+//		 file_left
+//		 .write("/yjdata/www/www/ImmediateChoice_service/"
+//		 + msg + "/" + Tools.getFileName(left_url));
+//		 file_right
+//		 .write("/yjdata/www/www/ImmediateChoice_service/"
+//		 + msg + "/" + Tools.getFileName(right_url));
 		
 //		file_left
 //				.write("D:\\Program Files\\apache-tomcat-7.0.56\\webapps\\Server\\"
