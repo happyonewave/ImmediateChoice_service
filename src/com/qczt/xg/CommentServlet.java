@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.tools.Tool;
+
 
 import net.qzct.server.DatabaseConnection;
 import net.qzct.server.Tools;
@@ -87,6 +90,7 @@ public class CommentServlet extends HttpServlet {
 				pstmt.setString(5, commenter_portrait_url);
 				pstmt.executeUpdate();
 				out.print("1");
+				addCommentCount(conn,Integer.parseInt(question_id));
 			} catch (Exception e) {
 				// out.print("0");
 				e.printStackTrace();
@@ -116,6 +120,20 @@ public class CommentServlet extends HttpServlet {
 
 		}
 
+	}
+
+	private void addCommentCount(Connection conn,int question_id) {
+		// TODO Auto-generated method stub
+		//
+		String sql = "update question set comment_count=comment_count+1 where question_id = ?; ";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, question_id);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private int countPercent(int question_id, String left_or_right) {
