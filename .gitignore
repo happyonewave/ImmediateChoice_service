@@ -1,0 +1,12 @@
+# Compiled class files
+*.class
+
+# About IntelliJ
+#*.iml
+#/.idea/
+/.idea/workspace.xml
+/out/
+/build/
+
+# macOS
+.DS_Store
