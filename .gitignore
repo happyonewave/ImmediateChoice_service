@@ -4,6 +4,7 @@
 # About IntelliJ
 #*.iml
 #/.idea/
+/.idea/workspace.xml
 /out/
 /build/
 
