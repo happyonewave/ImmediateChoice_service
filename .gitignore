@@ -2,8 +2,8 @@
 *.class
 
 # About IntelliJ
-*.iml
-/.idea/
+#*.iml
+#/.idea/
 /out/
 /build/
 

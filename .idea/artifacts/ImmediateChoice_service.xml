@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ImmediateChoice_service">
+    <output-path>$PROJECT_DIR$/out/artifacts/ImmediateChoice_service</output-path>
+    <root id="archive" name="ImmediateChoice_service.war">
+      <element id="artifact" artifact-name="ImmediateChoice_service:Web exploded" />
+    </root>
+  </artifact>
+</component>
