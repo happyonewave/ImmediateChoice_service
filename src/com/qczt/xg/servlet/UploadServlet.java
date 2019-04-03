@@ -40,6 +40,7 @@ public class UploadServlet extends HttpServlet {
 	private String quizzer_name;
 	private String portrait_url;
 	private String group_id;
+	private String topic_id;
 
 	// private String group_ids;
 
@@ -118,6 +119,7 @@ public class UploadServlet extends HttpServlet {
 		quizzer_name = jsonObject.getString("quizzer_name");
 		portrait_url = jsonObject.getString("portrait_url");
 		group_id = jsonObject.getInt("group_id") + "";
+		topic_id = jsonObject.getInt("topic_id") + "";
 		addToDatabase();
 
 		// switch (Integer.parseInt(msg)) {
@@ -217,7 +219,7 @@ public class UploadServlet extends HttpServlet {
 			db = new DatabaseConnection();
 			Connection conn = db.getConnection();
 			//
-			String sql = "INSERT INTO question(left_url,right_url,question_content,quizzer_name,portrait_url,location,group_id) VALUES (?,?,?,?,?,?,?) ";
+			String sql = "INSERT INTO question(left_url,right_url,question_content,quizzer_name,portrait_url,location,group_id,topic_id) VALUES (?,?,?,?,?,?,?,?) ";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, left_url);
 			pstmt.setString(2, right_url);
@@ -226,6 +228,7 @@ public class UploadServlet extends HttpServlet {
 			pstmt.setString(5, portrait_url);
 			pstmt.setString(6, location);
 			pstmt.setString(7, group_id);
+			pstmt.setString(8, topic_id);
 			// pstmt.setString(7, group_ids);
 			pstmt.executeUpdate();
 			out.print("1");
