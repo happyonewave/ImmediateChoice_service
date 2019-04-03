@@ -1,10 +1,9 @@
-package net.qzct.server;
+package com.qczt.xg.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -19,7 +18,6 @@ import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-import java.util.logging.Handler;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -28,14 +26,6 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-
-import sun.applet.resources.MsgAppletViewer;
-import sun.nio.cs.ext.ISCII91;
-import sun.security.provider.MD5;
-import sun.security.rsa.RSASignature.MD5withRSA;
-import sun.tools.jar.resources.jar;
-
-import com.sun.org.apache.bcel.internal.classfile.Code;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

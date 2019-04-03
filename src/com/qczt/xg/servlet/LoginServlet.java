@@ -1,11 +1,9 @@
-package com.qczt.xg;
+package com.qczt.xg.servlet;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.servlet.ServletException;
@@ -14,9 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.qzct.server.DatabaseConnection;
-import net.qzct.server.Tools;
-import net.sf.json.JSONArray;
+import com.qczt.xg.util.DatabaseConnection;
+import com.qczt.xg.util.Tools;
 import net.sf.json.JSONObject;
 
 /**

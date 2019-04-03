@@ -1,7 +1,6 @@
-package com.qczt.xg;
+package com.qczt.xg.servlet;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.qzct.server.Tools;
+import com.qczt.xg.util.Tools;
 import net.sf.json.JSONArray;
 
 /**

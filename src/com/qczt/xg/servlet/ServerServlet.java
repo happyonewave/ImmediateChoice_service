@@ -1,4 +1,4 @@
-package com.qczt.xg;
+package com.qczt.xg.servlet;
 
 import java.io.IOException;
 import java.io.OutputStream;

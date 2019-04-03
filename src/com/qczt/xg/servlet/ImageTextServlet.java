@@ -1,11 +1,7 @@
-package com.qczt.xg;
+package com.qczt.xg.servlet;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.qzct.server.GroupUtils;
-import net.qzct.server.Tools;
-import net.sf.json.JSONArray;
+import com.qczt.xg.util.GroupUtils;
+import com.qczt.xg.util.Tools;
 
 /**
  * Servlet implementation class ImageText

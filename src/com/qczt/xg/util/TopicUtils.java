@@ -1,9 +1,8 @@
-package net.qzct.server;
+package com.qczt.xg.util;
 
 import java.sql.ResultSet;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 public class TopicUtils {
 	public static JSONArray getQuestionFromTopicId(int topic_id) {

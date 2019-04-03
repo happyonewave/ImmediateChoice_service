@@ -1,11 +1,8 @@
-package net.qzct.server;
+package com.qczt.xg.util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.concurrent.CountDownLatch;
-
-import com.sun.deploy.uitoolkit.impl.fx.Utils;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

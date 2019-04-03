@@ -1,11 +1,7 @@
-package com.qczt.xg;
+package com.qczt.xg.servlet;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,22 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.qzct.server.DatabaseConnection;
-import net.qzct.server.Tools;
+import com.qczt.xg.util.GroupUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/FriendServlet")
-public class FriendServlet extends HttpServlet {
+@WebServlet("/GroupServlet")
+public class GroupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public FriendServlet() {
+	public GroupServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -54,27 +49,30 @@ public class FriendServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 
-		int user_id = Integer.parseInt(request.getParameter("user_id"));
-		String f_id = request.getParameter("f_id");
-		String update_type = request.getParameter("update_type");
-		String requesStr = null;
-		if (f_id != null && update_type == null) {
-			if (Tools.friendIsExist(user_id, Integer.parseInt(f_id))) {
-				requesStr = "他已是你的好友哦！";
-			} else {
-				Tools.addFriend(user_id, Integer.parseInt(f_id));
-				requesStr = "加好友成功！";
-			}
-		} else if ("delete".equals(update_type)) {
-			if (Tools.deleteFriend(Integer.parseInt(f_id))) {
-				requesStr = "删除好友成功！";
-			}else {
-				requesStr = "删除好友失败";
-			}
-		} else {
-			requesStr = Tools.getFriendInfo(user_id);
+		int owner_id = Integer.parseInt(request.getParameter("owner_id"));
+		JSONArray groupInfoArray = GroupUtils.getGroupInfo(owner_id);
+//		JSONArray groupRequest = new JSONArray();
+//		for (int i = 0; i < groupInfoArray.size(); i++) {
+//			JSONObject temp = groupInfoArray.getJSONObject(i);
+//			int group_id = temp.getInt("group_id");
+//			String name = temp.getString("name");
+//			JSONArray groupMemberArray = GroupUtils.getGroupMembers(group_id);
+//			temp.put("group_id", group_id);
+//			temp.put("name", name);
+//			temp.put("members", groupMemberArray);
+//			groupRequest.add(temp);
+//		}
+		
+		JSONArray groupRequest = new JSONArray();
+		groupRequest.add(groupInfoArray);
+		for (int i = 0; i < groupInfoArray.size(); i++) {
+			JSONObject temp = groupInfoArray.getJSONObject(i);
+			int group_id = temp.getInt("group_id");
+			JSONArray groupMemberArray = GroupUtils.getGroupMembers(group_id);
+			temp.put("members", groupMemberArray);
+			groupRequest.add(temp);
 		}
-		out.print(requesStr);
+		out.print(groupRequest.toString());
 
 	}
 

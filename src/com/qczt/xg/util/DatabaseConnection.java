@@ -1,8 +1,7 @@
-package net.qzct.server;
+package com.qczt.xg.util;
 
 import java.sql.* ;
 
-import javax.swing.JOptionPane;
 public class DatabaseConnection {
 	private static final String DBDRIVER = "com.mysql.jdbc.Driver" ;
  	private static final String DBURL = "jdbc:mysql://localhost:3306/immediatechoice?useSSL=true";

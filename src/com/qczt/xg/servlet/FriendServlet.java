@@ -1,7 +1,6 @@
-package com.qczt.xg;
+package com.qczt.xg.servlet;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -10,20 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.qzct.server.Tools;
-import net.sf.json.JSONArray;
+import com.qczt.xg.util.Tools;
 
 /**
- * Servlet implementation class ImageText
+ * Servlet implementation class Login
  */
-@WebServlet("/QuestionVideoServlet")
-public class QuestionVideoServlet extends HttpServlet {
+@WebServlet("/FriendServlet")
+public class FriendServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public QuestionVideoServlet() {
+	public FriendServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -34,7 +32,7 @@ public class QuestionVideoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		// TODO Auto-generated method stub
 		doPost(request, response);
 	}
 
@@ -45,42 +43,31 @@ public class QuestionVideoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		final String GET_MAX_ID = "0";
-		final String GET_QUESTION = "1";
-		final String REFRESH_QUESTION = "2";
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 
-		String msg = request.getParameter("msg");
-		int maxid = 0;
-		String a;
-		int startId = 0;
-		String json = null;
-		switch (msg) {
-		case GET_MAX_ID:
-			maxid = Tools.getMaxId("question_video");
-			out.print(maxid + "");
-			break;
-		case GET_QUESTION:
-			a = request.getParameter("startId");
-			startId = Integer.parseInt(a);
-//			json = Tools.getPagingOld("question_video", startId);
-			out.print(json);
-			break;
-		case REFRESH_QUESTION:
-			a = request.getParameter("startId");
-			startId = Integer.parseInt(a);
-			json = Tools.refreshPaging("question_video", startId);
-			// if (json != "-1") {
-			out.print(json);
-			// }else{
-			// }
-			break;
-
-		default:
-			break;
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
+		String f_id = request.getParameter("f_id");
+		String update_type = request.getParameter("update_type");
+		String requesStr = null;
+		if (f_id != null && update_type == null) {
+			if (Tools.friendIsExist(user_id, Integer.parseInt(f_id))) {
+				requesStr = "他已是你的好友哦！";
+			} else {
+				Tools.addFriend(user_id, Integer.parseInt(f_id));
+				requesStr = "加好友成功！";
+			}
+		} else if ("delete".equals(update_type)) {
+			if (Tools.deleteFriend(Integer.parseInt(f_id))) {
+				requesStr = "删除好友成功！";
+			}else {
+				requesStr = "删除好友失败";
+			}
+		} else {
+			requesStr = Tools.getFriendInfo(user_id);
 		}
+		out.print(requesStr);
 
 	}
 

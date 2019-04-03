@@ -1,4 +1,4 @@
-package com.qczt.xg;
+package com.qczt.xg.servlet;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 
-import net.qzct.server.DatabaseConnection;
-import net.qzct.server.Tools;
+import com.qczt.xg.util.DatabaseConnection;
+import com.qczt.xg.util.Tools;
 
 /**
  * Servlet implementation class Register
