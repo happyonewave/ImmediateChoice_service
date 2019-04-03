@@ -2,21 +2,23 @@ package com.qczt.xg.util;
 
 import java.sql.* ;
 
+import javax.swing.JOptionPane;
 public class DatabaseConnection {
 	private static final String DBDRIVER = "com.mysql.jdbc.Driver" ;
- 	private static final String DBURL = "jdbc:mysql://localhost:3306/immediatechoice?useSSL=true";
+	private static final String DBURL = "jdbc:mysql://dbinstance.ceiqosmwua3s.ap-northeast-2.rds.amazonaws.com:3306/immediatechoice?useUnicode=true&characterEncoding=utf-8&useSSL=false";
 	private static final String DBUSER = "root" ;
-	private static final String DBPASSWORD = "123456" ;
+	private static final String DBPASSWORD = "qinsdatabases" ;
+	//    private static final String DBPASSWORD = "Chin's 1 password" ;
 	private Connection conn = null ;
-	
+
 	public DatabaseConnection() throws Exception{
-			try {
-				Class.forName(DBDRIVER) ;
-				this.conn = DriverManager.getConnection(DBURL,DBUSER,DBPASSWORD) ;
+		try {
+			Class.forName(DBDRIVER) ;
+			this.conn = DriverManager.getConnection(DBURL,DBUSER,DBPASSWORD) ;
 //				System.out.println("JDBCdrive connected");
-			} catch (Exception e) {
-e.printStackTrace();
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 	public Connection getConnection(){
@@ -27,13 +29,13 @@ e.printStackTrace();
 			try{
 				this.conn.close() ;
 			}catch(Exception e){
-			
+
 			}
 		}
 	}
-	
 
-	
+
+
 	public static void main(String[] args) throws Exception {
 		new  DatabaseConnection();
 	}
