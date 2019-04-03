@@ -20,6 +20,8 @@
           <element id="library" level="module" name="json-lib-2.4-jdk15.jar" module-name="ImmediateChoice_service" />
           <element id="library" level="module" name="mysql-connector-java-5.1.39-bin.jar" module-name="ImmediateChoice_service" />
           <element id="library" level="module" name="xom-1.2.6.jar" module-name="ImmediateChoice_service" />
+          <element id="library" level="project" name="Spring" />
+          <element id="library" level="project" name="Spring MVC-4.3.18.RELEASE" />
         </element>
       </element>
     </root>

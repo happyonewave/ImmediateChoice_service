@@ -32,6 +32,13 @@
         <sourceRoots />
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/WebContent/WEB-INF/dispatcher-servlet.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager">
     <output url="file://$MODULE_DIR$/build/classes" />
@@ -151,5 +158,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.5.39" level="application_server_libraries" />
+    <orderEntry type="library" name="Spring" level="project" />
+    <orderEntry type="library" name="Spring MVC-4.3.18.RELEASE" level="project" />
   </component>
 </module>
