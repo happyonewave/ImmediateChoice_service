@@ -7,6 +7,7 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="Spring" />
           <element id="library" level="project" name="Spring MVC-4.3.18.RELEASE" />
+          <element id="library" level="module" name="commons-fileupload" module-name="ImmediateChoice_service" />
         </element>
       </element>
     </root>
